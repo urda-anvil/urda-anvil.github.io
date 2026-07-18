@@ -460,6 +460,12 @@ hr {
 .foot a:hover { text-decoration: underline; }
 .foot .sep { margin: 0 10px; opacity: .5; }
 
+/* an optional project colophon row (repo, license, version) between the family
+   links and the creed; project sites only, dimmer than the family row */
+.foot-project { margin: 12px 0 0; font-size: 12px; }
+.foot-project a { color: var(--muted); }
+.foot-project a:hover { color: var(--ember); }
+
 /* the Anvil creed, appended under the shared .foot */
 .creed { margin: 14px 0 0; font-style: italic; line-height: 1.6; }
 .creed-attr { font-style: normal; font-size: .9em; }
