@@ -18,16 +18,18 @@
   <link rel="apple-touch-icon" href="res/img/apple-touch-icon.png">
   <link rel="manifest" href="res/img/site.webmanifest">
   <link rel="stylesheet" href="res/css/anvil-core.css">
+  <script src="res/js/anvil-local.js" defer></script>
 </head>
 <body>
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="./">
         <img src="res/img/icon-192.png" alt="" width="28" height="28">
         <span>Urda Anvil</span>
       </a>
       <div class="navlinks">
-        <a href="index.html" class="active" aria-current="page">Home</a>
+        <a href="./" class="active" aria-current="page">Home</a>
+        <a href="forged-statusline/">Forged Status Line</a>
       </div>
     </div>
   </nav>
@@ -47,6 +49,10 @@
         <a class="nav-card" href="balancing-the-anvil/">
           <p class="card-title">Balancing the Anvil <span class="arrow" aria-hidden="true">&rarr;</span></p>
           <p class="card-desc">The models on the anvil, each run with a simple <code>riff-*</code>.</p>
+        </a>
+        <a class="nav-card" href="forged-statusline/">
+          <p class="card-title">Forged Status Line <span class="arrow" aria-hidden="true">&rarr;</span></p>
+          <p class="card-desc">A bash-powered Claude Code status line: model, directory, and live context and rate-limit gauges.</p>
         </a>
       </nav>
     </section>
