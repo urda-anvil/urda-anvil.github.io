@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Anvil spark: six-ray glyph in ember (#FF8C2F, matches the ember token). Inline
+       hero variant: the vault/favicon version has a rounded #0b0e14 tile; it's
+       removed here so only the rays show when placed in a heading. Flat stroke
+       attributes only, no style block. -->
+  <g stroke="#FF8C2F" stroke-width="7" stroke-linecap="round">
+    <line x1="32" y1="12" x2="32" y2="52"/>
+    <line x1="14.68" y1="22" x2="49.32" y2="42"/>
+    <line x1="14.68" y1="42" x2="49.32" y2="22"/>
+  </g>
+</svg>

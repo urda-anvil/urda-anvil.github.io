@@ -1,0 +1,29 @@
+/* Page rider for styleguide/, loaded after anvil-core.css, deliberately
+   unlayered so it always wins over the layered core. This page is the
+   visual regression check for anvil-core.css itself, so almost everything
+   rendered on it should already be styled by core; everything below is
+   demo furniture only - swatches, sample wrappers, page-only labels -
+   never a primitive definition. A rule graduates to core only when a
+   second page needs it. */
+
+/* ---- token swatches ---- */
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.swatch {
+  width: 132px;
+  padding: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.swatch .fill { height: 34px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+.swatch code { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* ---- inline demo rows (buttons, chips) ---- */
+.chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0; }
+
+/* ---- hero demo frame ---- */
+.demo-hero { border: 1px dashed var(--border); border-radius: var(--radius); padding: 28px 16px; }
+.demo-hero .hero { margin-bottom: 0; }
+
+/* ---- terminal demo content ---- */
+.term-sample { margin: 0; font-family: var(--mono); font-size: 13px; color: var(--ink); }

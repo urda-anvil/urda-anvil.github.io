@@ -1,0 +1,69 @@
+/* Page rider for balancing-the-anvil/, loaded after anvil-core.css,
+   deliberately unlayered so it always wins over the layered core. Holds
+   only what this page alone uses; a rule graduates to core only when a
+   second page needs it. */
+
+/* Categorical rail palette for this page's AI and tool vendors. Validated
+   against the dark surface for CVD separation, the normal-vision floor, and
+   contrast across every pair. Ember exceeds the strict dark lightness band;
+   accepted as the site's brand accent. */
+:root {
+  --rail-anthropic: var(--ember);
+  --rail-openai: #3987e5;
+  --rail-google: #008300;
+  --rail-jetbrains: #d55181;
+}
+
+/* ---- table size nudges ---- */
+/* Slightly larger than the core defaults, tuned for these two tables only
+   (scoped so the cost/matrix tables keep the base sizes). */
+.datatable thead th { text-align: center; }
+.datatable.grid .marklabel { font-size: .8em; }    /* riff-* captions under the matrix dots */
+.datatable.effort tbody td { font-size: 15px; text-align: center; } /* effort values and change marks */
+
+/* .wide: drop the footnote's 40rem reading cap so an aside used as a
+   full-width intro note (e.g. the Cost section's JetBrains caveat) lines up
+   with the lede above it instead of wrapping early at half the container. */
+.flow-aside.wide { max-width: none; }
+
+/* ---- reasoning-effort change mark ---- */
+/* The "Change" column: how the riff target compares to the vendor default.
+   = unchanged (muted), NE arrow raised (green), SE arrow lowered (red).
+   Plain Unicode heavy arrows, colored by role. */
+.movemark { font-weight: 700; font-size: 1.3em; line-height: 1; vertical-align: middle; }
+.movemark.up { color: var(--sl-green); }
+.movemark.down { color: var(--sl-red); }
+.movemark.eq { color: var(--muted); }
+
+/* ---- vendor group coloring ---- */
+/* Binds the generic .datatable group-divider styling (anvil-core.css) to
+   this page's vendor rail tokens. Both the tokens and vendor mappings are
+   page-specific. */
+.g-anthropic .gdot { background: var(--rail-anthropic); }
+.g-anthropic .glabel { color: var(--rail-anthropic); }
+.g-openai .gdot { background: var(--rail-openai); }
+.g-openai .glabel { color: var(--rail-openai); }
+.g-google .gdot { background: var(--rail-google); }
+.g-google .glabel { color: var(--rail-google); }
+
+/* ---- cost comparison table ---- */
+/* One "ladder" table: tiers across the top, vendors down the side. Each vendor
+   row merges the tiers a plan covers into a single span, so the row reads as a
+   step chart and the comparison is structural rather than a grid to diff. Body
+   figures lead with the monthly and show the yearly beneath; the totals row
+   leads with the effective (blended) monthly and a dim exact yearly. */
+.datatable.compare { table-layout: fixed; min-width: 640px; }
+.datatable.compare tbody td { text-align: center; white-space: nowrap; }
+/* plan/product name: the readable label heading each cell (and the bare "Free"
+   cells); ink like the other tables' row labels, while the figures stay muted
+   so this table matches the Effort and Coverage tables rather than shouting */
+.datatable.compare td .plan { display: block; margin-bottom: 2px; color: var(--ink); }
+/* yearly sits under the monthly, same muted weight as the rest of the table */
+.datatable.compare td .yr { display: block; margin-top: 1px; }
+.datatable.compare td .per { color: var(--muted); }             /* the /yr and /mo suffixes, dimmed so the numbers read first */
+/* step edge: a 3px vendor-colored left border (color set inline) on the cell
+   where a plan upgrades, marking exactly where the ladder steps up */
+.datatable.compare td.step { border-left: 3px solid; }
+/* single totals row: effective (blended) monthly leads, exact yearly on the
+   line beneath, both carried at the row's bold ink weight */
+.datatable.compare tr.total .peryr { display: block; margin-top: 2px; }

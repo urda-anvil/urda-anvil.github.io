@@ -3,25 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>anvil.urda.com</title>
-  <style>
-    html { color-scheme: dark; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-content: center;
-      background: #0d1117;
-      color: #e6edf3;
-      font: 16px/1.5 system-ui, sans-serif;
-      text-align: center;
-    }
-    h1 { margin: 0 0 .25rem; font-size: 1.75rem; }
-    p { margin: 0; color: #8b949e; }
-  </style>
+  <title>Urda Anvil</title>
+  <meta name="description" content="An anvil: the tools, settings, prompts, and software that blend into one workbench for building better software with LLMs.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Urda Anvil">
+  <meta property="og:description" content="An anvil: the tools, settings, prompts, and software that blend into one workbench for building better software with LLMs.">
+  <meta property="og:url" content="https://anvil.urda.com/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/">
+  <link rel="icon" href="res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="res/img/apple-touch-icon.png">
+  <link rel="manifest" href="res/img/site.webmanifest">
+  <link rel="stylesheet" href="res/css/anvil-core.css">
 </head>
 <body>
-  <h1>anvil.urda.com</h1>
-  <p>Wiring in progress. Real site later.</p>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="index.html">
+        <img src="res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="index.html" class="active" aria-current="page">Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div class="hero">
+      <img class="logo" src="res/img/icon-192.png" alt="" width="88" height="88">
+      <h1>Urda Anvil</h1>
+      <p class="tagline">An anvil: the tools, settings, prompts, and software
+        that blend into one workbench for building better software with
+        LLMs.</p>
+    </div>
+
+    <section class="section">
+      <h2>From the Forge</h2>
+      <nav class="cards" aria-label="From the Forge">
+        <a class="nav-card" href="balancing-the-anvil/">
+          <p class="card-title">Balancing the Anvil <span class="arrow" aria-hidden="true">&rarr;</span></p>
+          <p class="card-desc">The models on the anvil, each run with a simple <code>riff-*</code>.</p>
+        </a>
+      </nav>
+    </section>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
 </body>
 </html>

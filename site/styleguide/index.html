@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; Styleguide</title>
+  <meta name="description" content="Every shared Anvil core primitive, rendered on one page and checked against anvil-core.css.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Urda Anvil Styleguide">
+  <meta property="og:description" content="Every shared Anvil core primitive, rendered on one page and checked against anvil-core.css.">
+  <meta property="og:url" content="https://anvil.urda.com/styleguide/">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/styleguide/">
+  <link rel="icon" href="../res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="../res/img/apple-touch-icon.png">
+  <link rel="manifest" href="../res/img/site.webmanifest">
+  <link rel="stylesheet" href="../res/css/anvil-core.css">
+  <link rel="stylesheet" href="styleguide.css">
+  <script src="../res/js/prism.js" defer></script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="../index.html">
+        <img src="../res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="../index.html">Home</a>
+        <a href="index.html" class="active" aria-current="page">Styleguide</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1><img class="spark" src="../res/img/spark.svg" alt=""> Styleguide</h1>
+      <a class="btn" href="../res/css/anvil-core.css">View anvil-core.css</a>
+    </div>
+
+    <p class="hint">
+      Every shared primitive from <code>anvil-core.css</code>, rendered once. This page is
+      the visual regression check for the family core: if it looks right here, the
+      contract holds. It is already demonstrating three of them: the heading row above
+      is <code>.page-head</code> with a <code>.btn</code>, this callout is <code>.hint</code>,
+      and each block below sits in a <code>.section</code>.
+    </p>
+
+    <section class="section">
+      <h2>Design tokens</h2>
+      <p>The shared vocabulary: surfaces, text, the forge accent, and the status line palette.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="fill" style="background: var(--bg)"></div><code>--bg</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--panel)"></div><code>--panel</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--panel-bar)"></div><code>--panel-bar</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--screen); border-color: var(--muted)"></div><code>--screen</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--ink)"></div><code>--ink</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--muted)"></div><code>--muted</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--ember)"></div><code>--ember</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--border)"></div><code>--border</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-green)"></div><code>--sl-green</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-yellow)"></div><code>--sl-yellow</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-red)"></div><code>--sl-red</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-cyan)"></div><code>--sl-cyan</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-blue)"></div><code>--sl-blue</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-gray)"></div><code>--sl-gray</code></div>
+        <div class="swatch"><div class="fill" style="background: var(--sl-white)"></div><code>--sl-white</code></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Hero</h2>
+      <p><code>.hero</code> centers a <code>.logo</code> mark, an <code>h1</code>, and a
+        <code>.tagline</code> - see the real thing on the home page. The dashed frame is
+        demo furniture; the heading inside it is a real <code>h1</code> so the specimen
+        exercises the core rule itself, at the cost of a second h1 on this page.</p>
+      <div class="demo-hero">
+        <div class="hero">
+          <img class="logo" src="../res/img/icon-192.png" alt="" width="72" height="72">
+          <h1>Hero heading</h1>
+          <p class="tagline">A centered, balanced tagline with a <a href="#">link</a> and
+            some <code>inline code</code> to exercise the descendant styles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Terminal window</h2>
+      <p><code>.terminal</code>: a windowed dark surface with a titlebar and traffic-light
+        dots, for demoing CLI output or other terminal-styled content. <code>.screen</code>
+        sizes to its own container via <code>container-type: inline-size</code>, not the
+        viewport. <code>.demo</code> is the plain margin wrapper around a standalone block
+        like this one.</p>
+      <div class="demo">
+        <div class="terminal">
+          <div class="titlebar">
+            <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+            <span class="title">example</span>
+          </div>
+          <div class="screen">
+            <p class="term-sample">$ echo "hello from the terminal window"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Nav cards</h2>
+      <p>A <code>.cards</code> grid of <code>.nav-card</code> tiles. Hover for the ember border.</p>
+      <nav class="cards" aria-label="Demo cards">
+        <a class="nav-card" href="#">
+          <p class="card-title">A destination <span class="arrow">&rarr;</span></p>
+          <p class="card-desc">One line on where this card goes.</p>
+        </a>
+        <a class="nav-card" href="#">
+          <p class="card-title">Another destination <span class="arrow">&rarr;</span></p>
+          <p class="card-desc">Cards flow into as many columns as fit.</p>
+        </a>
+      </nav>
+    </section>
+
+    <section class="section">
+      <h2>Buttons</h2>
+      <p><code>.btn</code> is the outline default; <code>.btn-primary</code> adds a filled
+        ember variant for the primary action in a group.</p>
+      <div class="chiprow">
+        <a class="btn" href="#">Outline</a>
+        <a class="btn btn-primary" href="#">Primary</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Chips</h2>
+      <p><code>.chip</code> takes its accent from <code>--chip</code> and derives its fill and
+        ring via <code>color-mix</code>; with no accent set it falls back to muted.</p>
+      <div class="chiprow">
+        <span class="chip" style="--chip: var(--sl-green)">sl-green</span>
+        <span class="chip" style="--chip: var(--sl-yellow)">sl-yellow</span>
+        <span class="chip" style="--chip: var(--sl-red)">sl-red</span>
+        <span class="chip" style="--chip: var(--sl-cyan)">sl-cyan</span>
+        <span class="chip" style="--chip: var(--sl-blue)">sl-blue</span>
+        <span class="chip" style="--chip: var(--ember)">ember</span>
+        <span class="chip">no accent</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Rule</h2>
+      <p>A bare <code>hr</code> is a hairline divider in <code>--border</code>, matching the footer's top rule.</p>
+      <hr>
+    </section>
+
+    <section class="section">
+      <h2>Reference table</h2>
+      <p>The <code>.kv</code> key/value table for reference material.</p>
+      <table class="kv">
+        <thead><tr><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--ember</code></td><td>The forge accent that carries the family identity.</td></tr>
+          <tr><td><code>--radius</code></td><td>Shared corner radius for panels and controls.</td></tr>
+          <tr><td><code>--chip</code></td><td>Per-chip accent; one custom property drives text, fill, and ring.</td></tr>
+        </tbody>
+      </table>
+      <p><code>.glyph</code> keeps an emoji/icon column fixed-width so it doesn't jitter next
+        to variable-width text, meant for a <code>.kv</code> cell.</p>
+      <table class="kv">
+        <thead><tr><th>Icon</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="glyph">&#128293;</span></td><td>A glyph cell: fixed-width regardless of the emoji's natural width.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Tabbed panel</h2>
+      <p><code>.tabgroup</code>: pure-CSS tabs, hidden radios plus adjacent-sibling
+        selectors, zero JS. The group's own heading is <code>.visually-hidden</code> so it
+        doesn't add a visible label.</p>
+      <fieldset class="tabgroup">
+        <legend class="visually-hidden">Styleguide demo tabs</legend>
+        <input class="tabradio" type="radio" name="sg-tabs" id="sg-tabs-0" checked>
+        <label class="tab" for="sg-tabs-0">First</label>
+        <div class="tabpanel"><p>Content for the first tab.</p></div>
+        <input class="tabradio" type="radio" name="sg-tabs" id="sg-tabs-1">
+        <label class="tab" for="sg-tabs-1">Second</label>
+        <div class="tabpanel"><p>Content for the second tab.</p></div>
+        <input class="tabradio" type="radio" name="sg-tabs" id="sg-tabs-2">
+        <label class="tab" for="sg-tabs-2">Third</label>
+        <div class="tabpanel"><p>Content for the third tab.</p></div>
+      </fieldset>
+    </section>
+
+    <section class="section">
+      <h2>Code block</h2>
+      <p><code>.codeblock</code> for fenced configuration and shell samples, highlighted by
+        the vendored Prism bundle (<code>../res/js/prism.js</code>) using the token theme
+        below. Currently supported: <code>json</code> and <code>bash</code>.</p>
+      <pre class="codeblock"><code class="language-json">{
+  "forge": {
+    "accent": "#ff8c2f",
+    "radius": "10px"
+  }
+}</code></pre>
+      <pre class="codeblock"><code class="language-bash">riff-fable() { _riff_shell claude 248 205 002 --model "fable" --effort "high" "/color yellow"; }</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Lede</h2>
+      <p><code>.lede</code>: the intro paragraph under a left-aligned <code>h1</code>, e.g.
+        a document's opening line. Same code treatment as <code>.tagline</code> but without
+        the centering.</p>
+      <p class="lede">A short lede paragraph, the kind that opens a document with
+        <code>inline code</code> in the flow of the sentence.</p>
+    </section>
+
+    <section class="section">
+      <h2>Divider heading &amp; subhead</h2>
+      <p><code>.divider-heading</code>: a mono, uppercase heading with a rule above it, for
+        breaking a long document into major parts. <code>.subhead</code> is the smaller mono
+        subheading beneath it, with an optional muted <code>.note</code> span inline.</p>
+      <h2 class="divider-heading">Example divider heading</h2>
+      <div class="subhead">An example subhead <span class="note">(a muted inline note)</span></div>
+    </section>
+
+    <section class="section">
+      <h2>Bulleted list</h2>
+      <p><code>.ulist</code>: a bulleted list with an optional bold lead-in, for a
+        takeaways box or a plain-prose bill of rights.</p>
+      <ul class="ulist">
+        <li><b>Bold lead-in.</b> The rest of the line stays muted.</li>
+        <li><b>Another lead-in.</b> Same treatment, second item.</li>
+        <li>A plain item with no lead-in at all.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Footnote aside</h2>
+      <p><code>.flow-aside</code>: a small muted footnote under a table or code block, e.g.
+        an asterisked caveat.</p>
+      <p class="flow-aside">*A footnote-sized aside, capped to a comfortable reading width.</p>
+    </section>
+
+    <section class="section">
+      <h2>Data table: reference</h2>
+      <p>A plain <code>.datatable</code> inside its <code>.datatable-wrap</code> panel, no
+        shape modifier: the base bordered, striped-on-hover grid.</p>
+      <div class="datatable-wrap">
+        <table class="datatable">
+          <thead><tr><th scope="col">Token</th><th scope="col">Kind</th><th scope="col">Used by</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">--ember</th><td>color</td><td>buttons, spark, chips</td></tr>
+            <tr><th scope="row">--radius</th><td>length</td><td>panels, controls</td></tr>
+            <tr><th scope="row">--mono</th><td>font stack</td><td>code, data tables</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Data table: availability matrix</h2>
+      <p><code>.datatable.grid</code>: a centered matrix with <code>.rowlabel-col</code> /
+        <code>.rowlabel</code> and a colored <code>.rail</code> per row, <code>td.c</code>
+        mark cells, and <code>tr.group</code> divider rows (one <code>tbody</code> per
+        group) carrying a <code>.glabel</code> and <code>.gdot</code>. A
+        <code>.datalegend</code> of <code>.legend-swatch</code> pills keys the marks; each
+        cell pairs a <code>.datamark</code> with a <code>.marklabel</code> in a
+        <code>.markstack</code>. The <code>.gdot</code> has no color in core - each page
+        sets it inline from its own rail tokens, done here directly from core's status
+        colors since this is a demo, not a real vendor row.</p>
+      <div class="datalegend">
+        <div class="item"><span class="legend-swatch primary"></span><span class="lbl"><b>Primary</b></span></div>
+        <div class="item"><span class="legend-swatch secondary"></span><span class="lbl"><b>Secondary</b></span></div>
+        <div class="item"><span class="legend-swatch soon"></span><span class="lbl"><b>Upcoming</b></span></div>
+        <div class="item"><span class="legend-swatch unavailable"></span><span class="lbl"><b>Unavailable</b></span></div>
+      </div>
+      <div class="datatable-wrap">
+        <table class="datatable grid">
+          <caption class="visually-hidden">Demo availability matrix exercising every mark and group-divider variant.</caption>
+          <thead>
+            <tr><th class="rowlabel-col" scope="col">Tool</th><th scope="col">Alpha</th><th scope="col">Beta</th><th scope="col">Gamma</th></tr>
+          </thead>
+          <tbody>
+            <tr class="group"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot" style="background: var(--ember)"></span>Group one</span></th></tr>
+            <tr style="--mk: var(--ember)"><th class="rowlabel" scope="row"><span class="rail" style="background: var(--ember)"></span>Item A</th>
+              <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="marklabel">now</span></span></td>
+              <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="marklabel">beta</span></span></td>
+              <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            </tr>
+            <tr style="--mk: var(--ember)"><th class="rowlabel" scope="row"><span class="rail" style="background: var(--ember)"></span>Item B</th>
+              <td class="c"><span class="markstack"><span class="datamark soon"></span><span class="marklabel">soon</span></span></td>
+              <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+              <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="marklabel">now</span></span></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="group"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot" style="background: var(--sl-cyan)"></span>Group two</span></th></tr>
+            <tr style="--mk: var(--sl-cyan)"><th class="rowlabel" scope="row"><span class="rail" style="background: var(--sl-cyan)"></span>Item C</th>
+              <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="marklabel">beta</span></span></td>
+              <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="marklabel">now</span></span></td>
+              <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Data table: numeric</h2>
+      <p><code>.datatable.numeric</code>: right-aligned tabular figures. <code>th.labelcol</code>
+        and <code>th.widecol</code> are opt-in width utilities for any fixed-layout table, and
+        <code>tr.total</code> bolds a summary row.</p>
+      <div class="datatable-wrap">
+        <table class="datatable numeric">
+          <thead><tr><th class="labelcol" scope="col">Line item</th><th class="widecol" scope="col">Description</th><th scope="col">Cost</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Forge</th><td>Base accent token set</td><td>$12.00</td></tr>
+            <tr><th scope="row">Screen</th><td>Terminal surface and mono stack</td><td>$8.00</td></tr>
+            <tr class="total"><th scope="row">Total</th><td></td><td>$20.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+</body>
+</html>
