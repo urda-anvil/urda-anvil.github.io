@@ -1,4 +1,4 @@
-/* Page rider for balancing-the-anvil/, loaded after anvil-core.css,
+/* Page rider for forge/balancing-the-anvil/, loaded after anvil-core.css,
    deliberately unlayered so it always wins over the layered core. Holds
    only what this page alone uses; a rule graduates to core only when a
    second page needs it. */
@@ -20,6 +20,19 @@
 .datatable thead th { text-align: center; }
 .datatable.grid .marklabel { font-size: .8em; }    /* riff-* captions under the matrix dots */
 .datatable.effort tbody td { font-size: 15px; text-align: center; } /* effort values and change marks */
+
+/* min-width overrides core's defaults (600px grid / no default for effort)
+   so the 190px sticky rowlabel plus this page's nowrap data columns never
+   shrink past their content under fixed layout. 190px rowlabel + 3 even
+   columns: the widest nowrap cell is the "Vendor Default" header (mono,
+   .78em of 14px = ~11px, 14 chars) at ~123px including its 28px padding;
+   630px gives each column ~147px, clearing that with room to spare. */
+.datatable.effort { min-width: 630px; }
+/* 190px rowlabel + 4 even columns: the widest cell is the "riff-gemini-flash"
+   marklabel (mono, .8em of 14px = ~11px, 17 chars) at ~144px including its
+   28px padding, and it must also clear the 3px --mk rail on the last
+   column; 880px gives each column ~172px, clearing both with room to spare. */
+.datatable.grid { min-width: 880px; }
 
 /* .wide: drop the footnote's 40rem reading cap so an aside used as a
    full-width intro note (e.g. the Cost section's JetBrains caveat) lines up

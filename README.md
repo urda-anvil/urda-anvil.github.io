@@ -19,7 +19,7 @@ Static HTML, no build step. Open `site/index.html` directly in a browser
 no server needed). GitHub Pages serves `site/` verbatim on every push to
 `master`.
 
-Two caveats on `file://`: a directory-style link (like `balancing-the-anvil/`)
+Two caveats on `file://`: a directory-style link (like `forge/balancing-the-anvil/`)
 shows a file listing instead of auto-opening its `index.html`, and
 `404.html` uses root-absolute paths, so it only renders correctly when
 actually served.
@@ -30,7 +30,7 @@ Every page loads `site/res/css/anvil-core.css`, the one shared design
 system. Tokens and every primitive used across the site's pages live here.
 
 A page that genuinely diverges ships a small "rider" stylesheet next to its
-own `index.html` (e.g. `site/balancing-the-anvil/balancing-the-anvil.css`),
+own `index.html` (e.g. `site/forge/balancing-the-anvil/balancing-the-anvil.css`),
 loaded after core. It adds only page-specific variants and narrowly scoped
 overrides without duplicating core primitives. A rule graduates from rider to
 core only when a second page needs it.
@@ -83,11 +83,11 @@ any one language, so every grammar the bundle carries is already styled.
 
 Tag highlighted code `<code class="language-xxx">` and load the script from
 the relative path appropriate to the page: `res/js/prism.js` from
-`site/index.html`, or `../res/js/prism.js` from a page one directory below
-`site/`. With JS disabled, the block still renders as plain monospace, same as
-before Prism runs.
+`site/index.html`, `../res/js/prism.js` from a page one directory below
+`site/`, and so on for each additional level of depth. With JS disabled, the
+block still renders as plain monospace, same as before Prism runs.
 
-Currently supported: `json`, `bash` (aliases: `sh`, `shell`) - `site/balancing-the-anvil/`
+Currently supported: `json`, `bash` (aliases: `sh`, `shell`) - `site/forge/balancing-the-anvil/`
 uses the latter for its example. To add another language, append the
 same-version `prism-<lang>.min.js` component (from
 `unpkg.com/prismjs@<version>/components/`) to `site/res/js/prism.js` and add
