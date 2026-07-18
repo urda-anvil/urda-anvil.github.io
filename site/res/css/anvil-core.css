@@ -565,21 +565,29 @@ hr {
 .datatable tbody tr:not(.group):hover th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
 
 /* ---- sticky identity column ----
-   Every .datatable's first column (the row label, plus the header corner
-   and the total row's label) stays pinned to the left edge of the
-   .datatable-wrap scroller, so a wide table can scroll its data columns
-   horizontally without losing which row is which. Three requirements fall
-   out of pinning a column over content that scrolls beneath it: an opaque
-   background (var(--panel) / var(--panel-bar), matching each cell's normal
-   background) so scrolled-past data doesn't show through, and a z-index
-   ladder so the pieces that overlap at the top-left corner stack in the
-   right order - the corner header cell (3) above the sticky data header
-   row (2) above the sticky body row labels (1). */
+   Every .datatable's first column - every non-group body row's th, plus
+   the header corner - stays pinned to the left edge of the .datatable-wrap
+   scroller, so a wide table can scroll its data columns horizontally
+   without losing which row is which. The pin below is generic: it matches
+   every tbody row header except group dividers (those have no identity
+   cell to pin - see the .glabel note further down, which sticks the label
+   text itself instead). .rowlabel layers a colored rail and extra left
+   padding on top of that pin for tables that want one; tables that don't
+   opt into .rowlabel still get the pin, just without the rail. Three
+   requirements fall out of pinning a column over content that scrolls
+   beneath it: an opaque background (var(--panel) / var(--panel-bar),
+   matching each cell's normal background) so scrolled-past data doesn't
+   show through, and a z-index ladder so the pieces that overlap at the
+   top-left corner stack in the right order - the corner header cell (3)
+   above the sticky data header row (2) above the sticky body row labels
+   (1). */
+.datatable tbody tr:not(.group) th { position: sticky; left: 0; z-index: 1; background: var(--panel); }
 
-/* row label with a colored rail strip down its left edge. The column width
-   is set here (not per table-shape modifier) so it's identical everywhere,
-   including between two stacked tables that list the same rows. */
-.datatable th.rowlabel { position: sticky; left: 0; z-index: 1; padding-left: 26px; background: var(--panel); }
+/* row label with a colored rail strip down its left edge, on top of the
+   generic pin above. The column width is set here (not per table-shape
+   modifier) so it's identical everywhere, including between two stacked
+   tables that list the same rows. */
+.datatable th.rowlabel { padding-left: 26px; }
 /* the vendor colour bar. It fills the label cell but is masked down to a 3px
    strip on the LEFT and RIGHT edges, so the first column reads as bracketed on
    both sides. The colour is each row's inline background on .rail, so this needs
@@ -653,10 +661,8 @@ hr {
 /* summary row, e.g. a total under a numeric table */
 .datatable tbody tr.total td,
 .datatable tbody tr.total th { font-weight: 700; color: var(--ink); border-top: 2px solid var(--border); }
-/* the total row's label isn't a .rowlabel (no rail), but it's still the
-   row's identity cell and needs the same pin - see the sticky identity
-   column note above .datatable th.rowlabel */
-.datatable tbody tr.total th { position: sticky; left: 0; z-index: 1; background: var(--panel); }
+/* the total row's th isn't a .rowlabel (no rail), but it's still a
+   non-.group body row header, so the generic pin above already covers it */
 
 /* ---- Status mark ---- */
 /* A small primary (filled) / secondary (ring) / upcoming (star) indicator
