@@ -17,8 +17,13 @@ if (location.protocol === 'file:') {
         continue;
       }
 
-      if (href === '.' || href === '..' || href.endsWith('/')) {
-        anchor.setAttribute('href', href.replace(/\/?$/, '/') + 'index.html');
+      // Split any #fragment off so directory-style detection sees the path.
+      const hashIndex = href.indexOf('#');
+      const path = hashIndex === -1 ? href : href.slice(0, hashIndex);
+      const hash = hashIndex === -1 ? '' : href.slice(hashIndex);
+
+      if (path === '.' || path === '..' || path.endsWith('/')) {
+        anchor.setAttribute('href', path.replace(/\/?$/, '/') + 'index.html' + hash);
       }
     }
   });
