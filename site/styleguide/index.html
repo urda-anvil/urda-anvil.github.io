@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="styleguide.css">
   <script src="../res/js/prism.js" defer></script>
   <script src="../res/js/anvil-local.js" defer></script>
+  <script src="../res/js/anvil-anchors.js" defer></script>
 </head>
 <body>
   <nav class="topnav" aria-label="Primary">
@@ -51,7 +52,7 @@
     </p>
 
     <section class="section">
-      <h2>Design tokens</h2>
+      <h2 id="design-tokens">Design tokens</h2>
       <p>The shared vocabulary: surfaces, text, the forge accent, and the status line palette.</p>
       <div class="swatches">
         <div class="swatch"><div class="fill" style="background: var(--bg)"></div><code>--bg</code></div>
@@ -73,7 +74,7 @@
     </section>
 
     <section class="section">
-      <h2>Hero</h2>
+      <h2 id="hero">Hero</h2>
       <p><code>.hero</code> centers a <code>.logo</code> mark, an <code>h1</code>, and a
         <code>.tagline</code> - see the real thing on the home page. The dashed frame is
         demo furniture; the heading inside it is a real <code>h1</code> so the specimen
@@ -89,7 +90,7 @@
     </section>
 
     <section class="section">
-      <h2>Terminal window</h2>
+      <h2 id="terminal-window">Terminal window</h2>
       <p><code>.terminal</code>: a windowed dark surface with a titlebar and traffic-light
         dots, for demoing CLI output or other terminal-styled content. <code>.screen</code>
         sizes to its own container via <code>container-type: inline-size</code>, not the
@@ -109,7 +110,7 @@
     </section>
 
     <section class="section">
-      <h2>Nav cards</h2>
+      <h2 id="nav-cards">Nav cards</h2>
       <p>A <code>.cards</code> grid of <code>.nav-card</code> tiles. Hover for the ember border.</p>
       <nav class="cards" aria-label="Demo cards">
         <a class="nav-card" href="#">
@@ -124,7 +125,7 @@
     </section>
 
     <section class="section">
-      <h2>Buttons</h2>
+      <h2 id="buttons">Buttons</h2>
       <p><code>.btn</code> is the outline default; <code>.btn-primary</code> adds a filled
         ember variant for the primary action in a group.</p>
       <div class="chiprow">
@@ -134,7 +135,7 @@
     </section>
 
     <section class="section">
-      <h2>Chips</h2>
+      <h2 id="chips">Chips</h2>
       <p><code>.chip</code> takes its accent from <code>--chip</code> and derives its fill and
         ring via <code>color-mix</code>; with no accent set it falls back to muted.</p>
       <div class="chiprow">
@@ -149,13 +150,13 @@
     </section>
 
     <section class="section">
-      <h2>Rule</h2>
+      <h2 id="rule">Rule</h2>
       <p>A bare <code>hr</code> is a hairline divider in <code>--border</code>, matching the footer's top rule.</p>
       <hr>
     </section>
 
     <section class="section">
-      <h2>Footer</h2>
+      <h2 id="footer">Footer</h2>
       <p><code>.foot</code> is the family footer: the three family links, then the
         <code>.creed</code>. A project site inserts one <code>.foot-project</code> row
         between them - a smaller, dimmer colophon for its repo, license, and version
@@ -177,7 +178,7 @@
     </section>
 
     <section class="section">
-      <h2>Reference table</h2>
+      <h2 id="reference-table">Reference table</h2>
       <p>The <code>.kv</code> key/value table for reference material.</p>
       <table class="kv">
         <thead><tr><th>Key</th><th>Description</th></tr></thead>
@@ -198,7 +199,7 @@
     </section>
 
     <section class="section">
-      <h2>Tabbed panel</h2>
+      <h2 id="tabbed-panel">Tabbed panel</h2>
       <p><code>.tabgroup</code>: pure-CSS tabs, hidden radios plus adjacent-sibling
         selectors, zero JS. The group's own heading is <code>.visually-hidden</code> so it
         doesn't add a visible label.</p>
@@ -217,7 +218,7 @@
     </section>
 
     <section class="section">
-      <h2>Code block</h2>
+      <h2 id="code-block">Code block</h2>
       <p><code>.codeblock</code> for fenced configuration and shell samples, highlighted by
         the vendored Prism bundle (<code>../res/js/prism.js</code>) using the token theme
         below. Currently supported: <code>json</code> and <code>bash</code>.</p>
@@ -231,7 +232,7 @@
     </section>
 
     <section class="section">
-      <h2>Lede</h2>
+      <h2 id="lede">Lede</h2>
       <p><code>.lede</code>: the intro paragraph under a left-aligned <code>h1</code>, e.g.
         a document's opening line. Same code treatment as <code>.tagline</code> but without
         the centering.</p>
@@ -240,7 +241,7 @@
     </section>
 
     <section class="section">
-      <h2>Divider heading &amp; subhead</h2>
+      <h2 id="divider-heading-subhead">Divider heading &amp; subhead</h2>
       <p><code>.divider-heading</code>: a mono, uppercase heading with a rule above it, for
         breaking a long document into major parts. <code>.subhead</code> is the smaller mono
         subheading beneath it, with an optional muted <code>.note</code> span inline.</p>
@@ -249,7 +250,7 @@
     </section>
 
     <section class="section">
-      <h2>Bulleted list</h2>
+      <h2 id="bulleted-list">Bulleted list</h2>
       <p><code>.ulist</code>: a bulleted list with an optional bold lead-in, for a
         takeaways box or a plain-prose bill of rights.</p>
       <ul class="ulist">
@@ -260,14 +261,14 @@
     </section>
 
     <section class="section">
-      <h2>Footnote aside</h2>
+      <h2 id="footnote-aside">Footnote aside</h2>
       <p><code>.flow-aside</code>: a small muted footnote under a table or code block, e.g.
         an asterisked caveat.</p>
       <p class="flow-aside">*A footnote-sized aside, capped to a comfortable reading width.</p>
     </section>
 
     <section class="section">
-      <h2>Data table: reference</h2>
+      <h2 id="data-table-reference">Data table: reference</h2>
       <p>A plain <code>.datatable</code> inside its <code>.datatable-wrap</code> panel, no
         shape modifier: the base bordered, striped-on-hover grid.</p>
       <div class="datatable-wrap">
@@ -283,7 +284,7 @@
     </section>
 
     <section class="section">
-      <h2>Data table: availability matrix</h2>
+      <h2 id="data-table-availability-matrix">Data table: availability matrix</h2>
       <p><code>.datatable.grid</code>: a centered matrix with <code>.rowlabel-col</code> /
         <code>.rowlabel</code> and a colored <code>.rail</code> per row, <code>td.c</code>
         mark cells, and <code>tr.group</code> divider rows (one <code>tbody</code> per
@@ -331,7 +332,7 @@
     </section>
 
     <section class="section">
-      <h2>Data table: numeric</h2>
+      <h2 id="data-table-numeric">Data table: numeric</h2>
       <p><code>.datatable.numeric</code>: right-aligned tabular figures. <code>th.labelcol</code>
         and <code>th.widecol</code> are opt-in width utilities for any fixed-layout table, and
         <code>tr.total</code> bolds a summary row.</p>

@@ -507,6 +507,26 @@ hr {
   border-top: 1px solid var(--border);
 }
 
+/* "#" permalink anvil-anchors.js appends to any h2/h3 that already has an
+   id, so a reader can grab a direct link to that section. Hidden until the
+   heading is hovered or the link itself gets keyboard focus. */
+.heading-anchor {
+  margin-left: .45em;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+h2:hover > .heading-anchor,
+h3:hover > .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: var(--ember);
+}
+
 /* smaller mono subheading with an optional inline note */
 .subhead { font-family: var(--mono); font-size: .8rem; font-weight: 600; color: var(--ink); margin: 28px 0 9px; }
 .subhead .note { font-family: var(--sans); font-size: .72rem; font-weight: 400; color: var(--muted); }

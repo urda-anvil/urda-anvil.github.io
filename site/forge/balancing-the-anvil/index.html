@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="balancing-the-anvil.css">
   <script src="../../res/js/prism.js" defer></script>
   <script src="../../res/js/anvil-local.js" defer></script>
+  <script src="../../res/js/anvil-anchors.js" defer></script>
 </head>
 <body>
   <nav class="topnav" aria-label="Primary">
@@ -42,7 +43,7 @@
     </header>
     <p class="lede">These are the models on the anvil, the frontier. Each runs with a simple <code>riff-*</code>, so you can focus on the model and the work at hand.</p>
 
-    <h2 class="divider-heading">Model Coverage</h2>
+    <h2 class="divider-heading" id="model-coverage">Model Coverage</h2>
 
     <div class="datalegend">
       <div class="item"><span class="legend-swatch primary"></span><span class="lbl"><b>Default Harness</b></span></div>
@@ -114,7 +115,7 @@
       </table>
     </div>
 
-    <h2 class="divider-heading">Effort per Model</h2>
+    <h2 class="divider-heading" id="effort-per-model">Effort per Model</h2>
 
     <div class="datatable-wrap">
       <table class="datatable effort">
@@ -151,7 +152,7 @@
       </table>
     </div>
 
-    <h2 class="divider-heading">Cost</h2>
+    <h2 class="divider-heading" id="cost">Cost</h2>
 
     <p class="lede">Every tier keeps the JetBrains IDEs; each step up the ladder adds a single upgrade, first ChatGPT Plus, then the jump to Max 20x, then paid Google access.</p>
 
@@ -170,7 +171,7 @@
     </div>
     <p class="flow-aside wide"><span style="color:var(--rail-jetbrains)">*JetBrains All Products Pack</span> is $299 the first year, $239 the second, then $179 onwards. This anvil example qualifies for the $179 rate.</p>
 
-    <h2 class="divider-heading">The riff bill of rights</h2>
+    <h2 class="divider-heading" id="the-riff-bill-of-rights">The riff bill of rights</h2>
     <p class="lede">What is a <code>riff-*</code>? A short shell command, named after a musical riff, a phrase you play again and again. A riff bakes in your model of choice and any additional arguments you want. You can have as many as you like; think of them as shortcuts you reach for often.</p>
     <ul class="ulist">
       <li>It is a bare shell command whose name starts with <code>riff-</code>.</li>
