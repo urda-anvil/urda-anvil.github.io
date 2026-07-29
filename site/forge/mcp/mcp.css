@@ -1,0 +1,66 @@
+/* ---- MCP catalog ---- */
+/* tool-count line on the overview cards, below .card-desc */
+.card-meta {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* The card grid carries no bottom margin of its own, so the first server
+   heading would otherwise sit directly against the last card. */
+#server-cards { margin-bottom: 48px; }
+
+/* per-server section: prefix + reference line under the heading */
+.server { scroll-margin-top: 24px; }
+.server-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin: 0 2px 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.server-meta code {
+  font-family: var(--mono);
+  color: var(--ember);
+  background: color-mix(in srgb, var(--ember) 12%, transparent);
+  padding: 1px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.server-meta a { color: var(--ember); text-decoration: none; }
+.server-meta a:hover { text-decoration: underline; }
+
+/* type and permission pills: both a core .chip plus MCP's typography, each
+   drawing from a different half of the palette so the two tag families
+   read as distinct at a glance. Type (what the tool does) uses the cool
+   tones: read is blue, search is cyan, write is ember. Permission (what
+   Claude may do with it) uses the warm traffic-light tones: allow is
+   go-green, ask is caution-yellow, deny is stop-red. */
+.type-chip,
+.permission-chip {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.type-chip.read { --chip: var(--sl-blue); }
+.type-chip.search { --chip: var(--sl-cyan); }
+.type-chip.write { --chip: var(--ember); }
+.permission-chip.allow { --chip: var(--sl-green); }
+.permission-chip.ask { --chip: var(--sl-yellow); }
+.permission-chip.deny { --chip: var(--sl-red); }
+
+/* a tool can carry two type chips (e.g. "read, write"); space them out */
+.kv td .chip + .chip { margin-left: 6px; }
+
+/* sub-group heading within a server section, e.g. "Requires confirmation" */
+.section h3 { margin: 26px 0 4px; font-size: 14px; color: var(--ink); }
+
+/* the two sample pills shown inline in the intro hint */
+.hint .legend { display: inline-flex; gap: 6px; margin: 0 4px; vertical-align: middle; }
+
+/* config block labels (replace the old Servers/Permissions tabs) */
+.config-label { margin: 22px 0 8px; font-family: var(--mono); font-size: 13px; color: var(--muted); }

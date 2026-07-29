@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; MCP</title>
+  <meta name="description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Urda Anvil &middot; MCP">
+  <meta property="og:description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
+  <meta property="og:url" content="https://anvil.urda.com/forge/mcp/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/forge/mcp/">
+  <link rel="icon" href="../../res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="../../res/img/apple-touch-icon.png">
+  <link rel="manifest" href="../../res/img/site.webmanifest">
+  <link rel="stylesheet" href="../../res/css/anvil-core.css">
+  <link rel="stylesheet" href="mcp.css">
+  <script src="../../res/js/prism.js" defer></script>
+  <script src="../../res/js/anvil-local.js" defer></script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="../../">
+        <img src="../../res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="../../">Home</a>
+        <a href="../../forged-statusline/">Forged Status Line</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header>
+      <h1><img class="spark" src="../../res/img/spark.svg" alt=""> MCP</h1>
+    </header>
+    <p class="lede">The MCP servers the Urda Anvil runs by default, and
+      exactly what permission each tool carries.</p>
+
+    <p class="hint">
+      Every tool below carries two tags: what it does
+      <span class="legend">
+        <span class="chip type-chip read">read</span>
+        <span class="chip type-chip search">search</span>
+        <span class="chip type-chip write">write</span>
+      </span>
+      and what Claude is allowed to do with it
+      <span class="legend">
+        <span class="chip permission-chip allow">allow</span>
+        <span class="chip permission-chip ask">ask</span>
+        <span class="chip permission-chip deny">deny</span>
+      </span>.
+      Allow runs without asking, ask prompts for confirmation, and deny is
+      blocked outright. The allow and deny rules are shown under
+      Configuration; ask carries no rule of its own, because Claude Code
+      prompts for anything a rule has not already allowed or denied.
+    </p>
+
+    <nav class="cards" id="server-cards" aria-label="Servers"></nav>
+
+    <div id="server-detail"></div>
+
+    <section class="section" id="configuration">
+      <h2>Configuration</h2>
+      <p>Server registration lives in <code>~/.claude.json</code>; the permission
+        allow-list lives in <code>~/.claude/settings.json</code>.</p>
+
+      <p class="config-label">Servers &middot; ~/.claude.json</p>
+<pre class="codeblock"><code class="language-json">{
+  "atlassian": {
+    "type": "http",
+    "url": "https://mcp.atlassian.com/v1/mcp/authv2"
+  },
+  "aws-knowledge-mcp-server": {
+    "type": "http",
+    "url": "https://knowledge-mcp.global.api.aws"
+  },
+  "context7": {
+    "type": "http",
+    "url": "https://mcp.context7.com/mcp"
+  },
+  "grep": {
+    "type": "http",
+    "url": "https://mcp.grep.app"
+  }
+}</code></pre>
+
+      <p class="config-label">Permissions &middot; allow / ask / deny</p>
+<pre class="codeblock"><code class="language-json">{
+  "allow": [
+    "mcp__atlassian__atlassianUserInfo",
+    "mcp__atlassian__fetch",
+    "mcp__atlassian__getAccessibleAtlassianResources",
+    "mcp__atlassian__getConfluenceCommentChildren",
+    "mcp__atlassian__getConfluencePage",
+    "mcp__atlassian__getConfluencePageDescendants",
+    "mcp__atlassian__getConfluencePageFooterComments",
+    "mcp__atlassian__getConfluencePageInlineComments",
+    "mcp__atlassian__getConfluenceSpaces",
+    "mcp__atlassian__getIssueLinkTypes",
+    "mcp__atlassian__getJiraIssue",
+    "mcp__atlassian__getJiraIssueRemoteIssueLinks",
+    "mcp__atlassian__getJiraIssueTypeMetaWithFields",
+    "mcp__atlassian__getJiraProjectIssueTypesMetadata",
+    "mcp__atlassian__getPagesInConfluenceSpace",
+    "mcp__atlassian__getTransitionsForJiraIssue",
+    "mcp__atlassian__getVisibleJiraProjects",
+    "mcp__atlassian__lookupJiraAccountId",
+    "mcp__atlassian__search",
+    "mcp__atlassian__searchConfluenceUsingCql",
+    "mcp__atlassian__searchJiraIssuesUsingJql",
+    "mcp__aws-knowledge-mcp-server__aws___get_regional_availability",
+    "mcp__aws-knowledge-mcp-server__aws___list_regions",
+    "mcp__aws-knowledge-mcp-server__aws___read_documentation",
+    "mcp__aws-knowledge-mcp-server__aws___retrieve_skill",
+    "mcp__aws-knowledge-mcp-server__aws___search_documentation",
+    "mcp__context7__query-docs",
+    "mcp__context7__resolve-library-id",
+    "mcp__grep__searchGitHub"
+  ],
+  "ask": [],
+  "deny": [
+    "mcp__atlassian__addTeamworkGraphContext",
+    "mcp__atlassian__bitbucketDeployment",
+    "mcp__atlassian__bitbucketEnvironment",
+    "mcp__atlassian__bitbucketPipeline",
+    "mcp__atlassian__bitbucketPullRequest",
+    "mcp__atlassian__bitbucketRepoContent",
+    "mcp__atlassian__bitbucketRepository",
+    "mcp__atlassian__bitbucketUser",
+    "mcp__atlassian__bitbucketWorkspace",
+    "mcp__atlassian__createCompassComponent",
+    "mcp__atlassian__createCompassComponentRelationship",
+    "mcp__atlassian__createCompassCustomFieldDefinition",
+    "mcp__atlassian__getCompassComponent",
+    "mcp__atlassian__getCompassComponents",
+    "mcp__atlassian__getCompassComponentActivityEvents",
+    "mcp__atlassian__getCompassComponentLabels",
+    "mcp__atlassian__getCompassComponentTypes",
+    "mcp__atlassian__getCompassComponentsOwnedByMyTeams",
+    "mcp__atlassian__getCompassCustomFieldDefinitions",
+    "mcp__atlassian__getJsmOpsAlerts",
+    "mcp__atlassian__getJsmOpsScheduleInfo",
+    "mcp__atlassian__getJsmOpsTeamInfo",
+    "mcp__atlassian__getTeamworkGraphContext",
+    "mcp__atlassian__getTeamworkGraphObject",
+    "mcp__atlassian__updateJsmOpsAlert"
+  ]
+}</code></pre>
+    </section>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+
+  <script>
+    // Each server carries its prefix, a reference link, and its full
+    // read / search tool table.
+    const SERVERS = [
+      {
+        id: "atlassian",
+        name: "atlassian",
+        blurb: "Atlassian Rovo MCP. Read and search freely; writes need confirmation.",
+        prefix: "mcp__atlassian__",
+        ref: { label: "Supported tools", url: "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/supported-tools/" },
+        categories: [
+          {
+            heading: "Platform",
+            tools: [
+              { name: "atlassianUserInfo", type: "read", permission: "allow", desc: "Get the current authenticated user's account information." },
+              { name: "fetch", type: "read", permission: "allow", desc: "Fetch a single Atlassian resource (Jira issue or Confluence page) by ID or ARI." },
+              { name: "getAccessibleAtlassianResources", type: "read", permission: "allow", desc: "List accessible Atlassian sites and apps with their cloudId values." },
+              { name: "search", type: "search", permission: "allow", desc: "Natural-language search across Jira and Confluence." },
+            ],
+          },
+          {
+            heading: "Jira",
+            tools: [
+              { name: "addCommentToJiraIssue", type: "write", permission: "ask", desc: "Add a comment to a Jira issue." },
+              { name: "addWorklogToJiraIssue", type: "write", permission: "ask", desc: "Add a time-tracking worklog to a Jira issue." },
+              { name: "createIssueLink", type: "write", permission: "ask", desc: "Create a link between two Jira issues." },
+              { name: "createJiraIssue", type: "write", permission: "ask", desc: "Create a new Jira issue." },
+              { name: "editJiraIssue", type: "write", permission: "ask", desc: "Update fields on an existing Jira issue." },
+              { name: "getIssueLinkTypes", type: "read", permission: "allow", desc: "List available issue link types." },
+              { name: "getJiraIssue", type: "read", permission: "allow", desc: "Get a Jira issue by ID or key." },
+              { name: "getJiraIssueRemoteIssueLinks", type: "read", permission: "allow", desc: "List remote issue links on a Jira issue." },
+              { name: "getJiraIssueTypeMetaWithFields", type: "read", permission: "allow", desc: "Get create-field metadata for a project and issue type." },
+              { name: "getJiraProjectIssueTypesMetadata", type: "read", permission: "allow", desc: "List issue types available in a Jira project." },
+              { name: "getTransitionsForJiraIssue", type: "read", permission: "allow", desc: "List available workflow transitions for an issue." },
+              { name: "getVisibleJiraProjects", type: "read", permission: "allow", desc: "List Jira projects the user can access." },
+              { name: "lookupJiraAccountId", type: "read", permission: "allow", desc: "Find Jira user account IDs by name or email." },
+              { name: "searchJiraIssuesUsingJql", type: "search", permission: "allow", desc: "Search Jira issues using a JQL query." },
+              { name: "transitionJiraIssue", type: "write", permission: "ask", desc: "Perform a workflow transition on a Jira issue." },
+            ],
+          },
+          {
+            heading: "Confluence",
+            tools: [
+              { name: "createConfluenceFooterComment", type: "write", permission: "ask", desc: "Add a footer comment to a Confluence page." },
+              { name: "createConfluenceInlineComment", type: "write", permission: "ask", desc: "Add an inline comment to a Confluence page." },
+              { name: "createConfluencePage", type: "write", permission: "ask", desc: "Create a new Confluence page." },
+              { name: "getConfluenceCommentChildren", type: "read", permission: "allow", desc: "List child comments (replies) of a comment." },
+              { name: "getConfluencePage", type: "read", permission: "allow", desc: "Get a Confluence page or live doc by ID." },
+              { name: "getConfluencePageDescendants", type: "read", permission: "allow", desc: "List descendant pages under a parent page." },
+              { name: "getConfluencePageFooterComments", type: "read", permission: "allow", desc: "List footer comments on a page." },
+              { name: "getConfluencePageInlineComments", type: "read", permission: "allow", desc: "List inline comments on a page." },
+              { name: "getConfluenceSpaces", type: "read", permission: "allow", desc: "List Confluence spaces." },
+              { name: "getPagesInConfluenceSpace", type: "read", permission: "allow", desc: "List pages in a space." },
+              { name: "searchConfluenceUsingCql", type: "search", permission: "allow", desc: "Search Confluence content using CQL." },
+              { name: "updateConfluencePage", type: "write", permission: "ask", desc: "Update an existing Confluence page." },
+            ],
+          },
+          {
+            heading: "Compass",
+            note: "Compass is not in use.",
+            tools: [
+              { name: "createCompassComponent", type: "write", permission: "deny", desc: "Create a Compass component." },
+              { name: "createCompassComponentRelationship", type: "write", permission: "deny", desc: "Link two Compass components." },
+              { name: "createCompassCustomFieldDefinition", type: "write", permission: "deny", desc: "Create a Compass custom field." },
+              { name: "getCompassComponent", type: "read", permission: "deny", desc: "Get a Compass component." },
+              { name: "getCompassComponentActivityEvents", type: "read", permission: "deny", desc: "List a component's activity events (documented, not seen live)." },
+              { name: "getCompassComponentLabels", type: "read", permission: "deny", desc: "List a component's labels (documented, not seen live)." },
+              { name: "getCompassComponents", type: "read", permission: "deny", desc: "List Compass components." },
+              { name: "getCompassComponentsOwnedByMyTeams", type: "read", permission: "deny", desc: "List components owned by the caller's teams (documented, not seen live)." },
+              { name: "getCompassComponentTypes", type: "read", permission: "deny", desc: "List configured component types (documented, not seen live)." },
+              { name: "getCompassCustomFieldDefinitions", type: "read", permission: "deny", desc: "List Compass custom field definitions." },
+            ],
+          },
+          {
+            heading: "Teamwork Graph",
+            note: "Teamwork Graph is not in use.",
+            tools: [
+              { name: "addTeamworkGraphContext", type: "write", permission: "deny", desc: "Add a Teamwork Graph relationship." },
+              { name: "getTeamworkGraphContext", type: "read", permission: "deny", desc: "Get Teamwork Graph context for an entity." },
+              { name: "getTeamworkGraphObject", type: "read", permission: "deny", desc: "Get full detail for a Teamwork Graph object." },
+            ],
+          },
+          {
+            heading: "Bitbucket",
+            note: "Bitbucket is not in use.",
+            tools: [
+              { name: "bitbucketDeployment", type: "read", permission: "deny", desc: "List or get a Bitbucket deployment." },
+              { name: "bitbucketEnvironment", type: "read, write", permission: "deny", desc: "Read or write a Bitbucket deployment environment." },
+              { name: "bitbucketPipeline", type: "read, write", permission: "deny", desc: "Read or run a Bitbucket pipeline." },
+              { name: "bitbucketPullRequest", type: "read, write", permission: "deny", desc: "Read or write a Bitbucket pull request." },
+              { name: "bitbucketRepoContent", type: "read, write", permission: "deny", desc: "Read or write Bitbucket repository content." },
+              { name: "bitbucketRepository", type: "read", permission: "deny", desc: "List or get a Bitbucket repository." },
+              { name: "bitbucketUser", type: "read", permission: "deny", desc: "List a user's Bitbucket pull requests." },
+              { name: "bitbucketWorkspace", type: "read", permission: "deny", desc: "List or get a Bitbucket workspace." },
+            ],
+          },
+          {
+            heading: "Jira Service Management",
+            note: "Jira Service Management is not in use.",
+            tools: [
+              { name: "getJsmOpsAlerts", type: "read", permission: "deny", desc: "List Jira Service Management ops alerts." },
+              { name: "getJsmOpsScheduleInfo", type: "read", permission: "deny", desc: "Get an on-call schedule." },
+              { name: "getJsmOpsTeamInfo", type: "read", permission: "deny", desc: "Get ops team info." },
+              { name: "updateJsmOpsAlert", type: "write", permission: "deny", desc: "Modify an ops alert." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "aws-knowledge-mcp-server",
+        name: "aws-knowledge-mcp-server",
+        blurb: "Managed remote MCP for up-to-date AWS docs, skills, and regional-availability knowledge.",
+        desc: "A fully managed remote MCP server that provides up-to-date documentation, code samples, agent skills, knowledge about the regional availability of AWS APIs and CloudFormation resources, and other official AWS content.",
+        prefix: "mcp__aws-knowledge-mcp-server__aws___",
+        ref: { label: "Server docs", url: "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server" },
+        tools: [
+          { name: "get_regional_availability", type: "read", permission: "allow", desc: "Retrieve AWS regional availability information for Services, Features, SDK service APIs and CloudFormation resources" },
+          { name: "list_regions", type: "read", permission: "allow", desc: "Retrieve a list of all AWS regions, including their identifiers and names" },
+          { name: "read_documentation", type: "read", permission: "allow", desc: "Retrieve and convert AWS documentation and Strands Agents (strandsagents.com) pages to markdown" },
+          { name: "retrieve_skill", type: "read", permission: "allow", desc: "Retrieve an AWS agent skill that provides domain-specific expertise, workflows, and step-by-step procedures for AWS tasks" },
+          { name: "search_documentation", type: "search", permission: "allow", desc: "Search across all AWS documentation, agent skills, and Strands Agents SDK docs with optional topic-based filtering for more targeted results" },
+        ],
+      },
+      {
+        id: "context7",
+        name: "context7",
+        blurb: "Upstash Context7. Up-to-date library and framework docs for LLMs.",
+        prefix: "mcp__context7__",
+        ref: { label: "MCP tools", url: "https://github.com/upstash/context7#mcp-tools" },
+        tools: [
+          { name: "query-docs", type: "search", permission: "allow", desc: "Retrieve documentation for a library using a Context7-compatible library ID." },
+          { name: "resolve-library-id", type: "search", permission: "allow", desc: "Resolve a general library name into a Context7-compatible library ID." },
+        ],
+      },
+      {
+        id: "grep",
+        name: "grep",
+        blurb: "grep.app. Literal code-pattern search across public GitHub repos.",
+        prefix: "mcp__grep__",
+        ref: { label: "Announcement", url: "https://vercel.com/blog/grep-a-million-github-repositories-via-mcp" },
+        tools: [
+          { name: "searchGitHub", type: "search", permission: "allow", desc: "Find real-world code examples from over a million public GitHub repositories to help answer programming questions." },
+        ],
+      },
+    ];
+
+    // Small helpers: colored pills for a tool's type and its permission.
+    function typeChip(type) {
+      const pill = document.createElement("span");
+      pill.className = "chip type-chip " + type;
+      pill.textContent = type;
+      return pill;
+    }
+
+    function permissionPill(permission) {
+      const pill = document.createElement("span");
+      pill.className = "chip permission-chip " + permission;
+      pill.textContent = permission;
+      return pill;
+    }
+
+    // Total tool count for a server's nav-card teaser. For a server with
+    // product categories, count only allow/ask tools (what Claude can
+    // actually use, gated or not) -- denied tools are documented but not
+    // usable, so including them would overstate the teaser.
+    function toolCount(server) {
+      const n = server.categories
+        ? server.categories.reduce(
+            (sum, cat) => sum + cat.tools.filter((t) => t.permission !== "deny").length,
+            0,
+          )
+        : server.tools.length;
+      return n + (n === 1 ? " tool" : " tools");
+    }
+
+    // Build a `.kv` table (Tool / Type / Permission / Description) from a
+    // tools array. Each tool carries its own type and permission.
+    function buildToolTable(tools) {
+      const table = document.createElement("table");
+      table.className = "kv";
+      table.innerHTML =
+        "<thead><tr><th>Tool</th><th>Type</th><th>Permission</th><th>Description</th></tr></thead>";
+      const tbody = document.createElement("tbody");
+      for (const tool of tools) {
+        const tr = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        const code = document.createElement("code");
+        code.textContent = tool.name;
+        nameCell.appendChild(code);
+        tr.appendChild(nameCell);
+
+        const typeCell = document.createElement("td");
+        for (const t of tool.type.split(", ")) {
+          typeCell.appendChild(typeChip(t));
+        }
+        tr.appendChild(typeCell);
+
+        const permCell = document.createElement("td");
+        permCell.appendChild(permissionPill(tool.permission));
+        tr.appendChild(permCell);
+
+        const descCell = document.createElement("td");
+        descCell.textContent = tool.desc;
+        tr.appendChild(descCell);
+
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      return table;
+    }
+
+    // Overview: one nav card per server, anchor-linking to its section below.
+    const cards = document.getElementById("server-cards");
+    for (const server of SERVERS) {
+      const card = document.createElement("a");
+      card.className = "nav-card";
+      card.href = "#" + server.id;
+
+      const title = document.createElement("p");
+      title.className = "card-title";
+      title.innerHTML = server.name + ' <span class="arrow">&rarr;</span>';
+      card.appendChild(title);
+
+      const desc = document.createElement("p");
+      desc.className = "card-desc";
+      desc.textContent = server.blurb;
+      card.appendChild(desc);
+
+      const meta = document.createElement("p");
+      meta.className = "card-meta";
+      meta.textContent = toolCount(server);
+      card.appendChild(meta);
+
+      cards.appendChild(card);
+    }
+
+    // Detail: one section per server, each with its prefix, reference, and tool table.
+    const root = document.getElementById("server-detail");
+    for (const server of SERVERS) {
+      const sec = document.createElement("section");
+      sec.className = "section server";
+      sec.id = server.id;
+
+      const h2 = document.createElement("h2");
+      h2.textContent = server.name;
+      sec.appendChild(h2);
+
+      const meta = document.createElement("p");
+      meta.className = "server-meta";
+      const prefix = document.createElement("code");
+      prefix.textContent = server.prefix;
+      meta.appendChild(prefix);
+      const ref = document.createElement("a");
+      ref.href = server.ref.url;
+      ref.target = "_blank";
+      ref.rel = "noopener noreferrer";
+      ref.textContent = server.ref.label + " ↗";
+      meta.appendChild(ref);
+      sec.appendChild(meta);
+
+      if (server.desc) {
+        const p = document.createElement("p");
+        p.textContent = server.desc;
+        sec.appendChild(p);
+      }
+
+      if (server.categories) {
+        for (const cat of server.categories) {
+          const h3 = document.createElement("h3");
+          h3.textContent = cat.heading;
+          sec.appendChild(h3);
+
+          if (cat.note) {
+            const note = document.createElement("p");
+            note.textContent = cat.note;
+            sec.appendChild(note);
+          }
+
+          sec.appendChild(buildToolTable(cat.tools));
+        }
+      } else {
+        sec.appendChild(buildToolTable(server.tools));
+      }
+
+      root.appendChild(sec);
+    }
+  </script>
+</body>
+</html>
