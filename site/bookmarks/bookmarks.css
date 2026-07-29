@@ -18,21 +18,27 @@
 }
 
 .bm-list { list-style: none; margin: 0; padding: 0; }
+/* The whole row is the anchor; the name and URL inside it light up together. */
 .bm-row {
   display: flex;
   align-items: baseline;
   gap: 10px;
   padding: 5px 0;
+  color: inherit;
+  text-decoration: none;
 }
+.bm-row:focus-visible { outline: 2px solid var(--rail, var(--ember)); outline-offset: 2px; }
 .bm-name {
   flex: 0 0 auto;
   white-space: nowrap;
   color: var(--ink);
-  text-decoration: none;
   font-weight: 500;
   font-size: 14px;
 }
-.bm-name:hover { color: var(--rail, var(--ember)); }
+.bm-row:hover .bm-name,
+.bm-row:focus-visible .bm-name { color: var(--rail, var(--ember)); }
+.bm-row:hover .bm-url,
+.bm-row:focus-visible .bm-url { color: var(--ink); }
 
 /* empty spacer; the dotted line lifted off the baseline to sit mid-text */
 .bm-leader {

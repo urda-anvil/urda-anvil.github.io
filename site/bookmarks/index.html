@@ -143,27 +143,32 @@
 
       for (const link of section.links) {
         const li = document.createElement("li");
-        li.className = "bm-row";
 
-        const a = document.createElement("a");
-        a.className = "bm-name";
-        a.href = link.url;
-        a.target = "_blank";          // always open bookmarks in a new tab
-        a.rel = "noopener noreferrer";
-        a.textContent = link.title;
-        li.appendChild(a);
+        // The row itself is the anchor, so the name, the leader, and the
+        // visible URL are all one click target rather than the name alone.
+        const row = document.createElement("a");
+        row.className = "bm-row";
+        row.href = link.url;
+        row.target = "_blank";          // always open bookmarks in a new tab
+        row.rel = "noopener noreferrer";
+
+        const name = document.createElement("span");
+        name.className = "bm-name";
+        name.textContent = link.title;
+        row.appendChild(name);
 
         const leader = document.createElement("span");
         leader.className = "bm-leader";
         leader.setAttribute("aria-hidden", "true");
-        li.appendChild(leader);
+        row.appendChild(leader);
 
         const url = document.createElement("span");
         url.className = "bm-url";
         url.textContent = link.url.replace(/^https?:\/\//, "");
-        url.title = link.url;
-        li.appendChild(url);
+        url.title = link.url;           // the displayed URL is shortened and can ellipsis
+        row.appendChild(url);
 
+        li.appendChild(row);
         list.appendChild(li);
       }
 
