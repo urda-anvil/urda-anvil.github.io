@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; Bookmarks</title>
+  <meta name="description" content="A dark, readable view of the Anvil bookmarks.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bookmarks">
+  <meta property="og:description" content="A dark, readable view of the Anvil bookmarks.">
+  <meta property="og:url" content="https://anvil.urda.com/bookmarks/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/bookmarks/">
+  <link rel="icon" href="../res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="../res/img/apple-touch-icon.png">
+  <link rel="manifest" href="../res/img/site.webmanifest">
+  <link rel="stylesheet" href="../res/css/anvil-core.css">
+  <link rel="stylesheet" href="bookmarks.css">
+  <script src="../res/js/anvil-local.js" defer></script>
+  <script src="../res/js/anvil-anchors.js" defer></script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="../">
+        <img src="../res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="../">Home</a>
+        <a href="../forged-statusline/">Forged Status Line</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1><img class="spark" src="../res/img/spark.svg" alt=""> Bookmarks</h1>
+    </div>
+
+    <div id="bookmarks"></div>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+
+  <script>
+    // Bookmark data, grouped. Each group renders as its own rail-accented section.
+    // Titles drop the group prefix the source Firefox names carry; the section
+    // header supplies that context. Tags are retained on each link as the
+    // grouping metadata (a future filter can use them).
+    const BOOKMARKS = [
+      {
+        group: "Claude",
+        links: [
+          { title: "Claude", url: "https://claude.ai/", tags: ["Claude"] },
+          { title: "Cookbook", url: "https://platform.claude.com/cookbook/", tags: ["Claude"] },
+          { title: "Customize", url: "https://claude.ai/customize", tags: ["Claude"] },
+          { title: "Recent Chats", url: "https://claude.ai/recents", tags: ["Claude"] },
+          { title: "Status", url: "https://status.claude.com/", tags: ["Claude", "Status Page"] },
+          { title: "Usage", url: "https://claude.ai/settings/usage", tags: ["Claude"] },
+        ],
+      },
+      {
+        group: "Claude Code",
+        links: [
+          { title: "Claude Code", url: "https://claude.ai/code", tags: ["Claude Code"] },
+          { title: "Artifacts", url: "https://claude.ai/code/artifacts", tags: ["Claude Code"] },
+          { title: "Routines", url: "https://claude.ai/code/routines", tags: ["Claude Code"] },
+        ],
+      },
+      {
+        group: "Claude Code - Docs",
+        links: [
+          { title: "CHANGELOG", url: "https://code.claude.com/docs/en/changelog", tags: ["Claude Code - Docs"] },
+          { title: "Env Vars", url: "https://code.claude.com/docs/en/env-vars", tags: ["Claude Code - Docs"] },
+          { title: "Hooks", url: "https://code.claude.com/docs/en/hooks", tags: ["Claude Code - Docs"] },
+          { title: "MCP", url: "https://code.claude.com/docs/en/mcp", tags: ["Claude Code - Docs"] },
+          { title: "Permissions", url: "https://code.claude.com/docs/en/permissions", tags: ["Claude Code - Docs"] },
+          { title: "Plugin Marketplaces", url: "https://code.claude.com/docs/en/plugin-marketplaces", tags: ["Claude Code - Docs"] },
+          { title: "Settings", url: "https://code.claude.com/docs/en/settings", tags: ["Claude Code - Docs"] },
+          { title: "Status Line", url: "https://code.claude.com/docs/en/statusline", tags: ["Claude Code - Docs"] },
+          { title: "The .claude Directory", url: "https://code.claude.com/docs/en/claude-directory", tags: ["Claude Code - Docs"] },
+        ],
+      },
+      {
+        group: "Claude Platform Docs",
+        links: [
+          { title: "Effort", url: "https://platform.claude.com/docs/en/build-with-claude/effort", tags: ["Claude Platform Docs"] },
+          { title: "Models", url: "https://platform.claude.com/docs/en/about-claude/models/overview", tags: ["Claude Platform Docs"] },
+          { title: "Models - Comparison", url: "https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison", tags: ["Claude Platform Docs"] },
+        ],
+      },
+    ];
+
+    // Per-group rail accent, drawn from the shared forge palette in anvil-core.css.
+    // Known groups are mapped intentionally; a new group gets a stable palette
+    // pick so its rail is still colored without a config change.
+    const GROUP_ACCENTS = {
+      "Claude": "var(--sl-blue)",
+      "Claude Code": "var(--sl-green)",
+      "Claude Code - Docs": "var(--sl-cyan)",
+      "Claude Platform Docs": "var(--sl-yellow)",
+    };
+    const ACCENT_PALETTE = [
+      "var(--sl-blue)", "var(--sl-green)", "var(--sl-cyan)",
+      "var(--sl-yellow)", "var(--sl-red)", "var(--ember)",
+    ];
+    function groupAccent(group) {
+      if (GROUP_ACCENTS[group]) return GROUP_ACCENTS[group];
+      let hash = 0;
+      for (let i = 0; i < group.length; i++) hash = (hash * 31 + group.charCodeAt(i)) >>> 0;
+      return ACCENT_PALETTE[hash % ACCENT_PALETTE.length];
+    }
+
+    // Render one rail-accented section per group: colored left rail + uppercase
+    // header, then compact rows of name / dotted leader / shortened URL. Static.
+    const root = document.getElementById("bookmarks");
+
+    for (const section of BOOKMARKS) {
+      const group = document.createElement("section");
+      group.className = "bm-group";
+      group.style.setProperty("--rail", groupAccent(section.group));
+
+      const title = document.createElement("h2");
+      title.className = "bm-group-title";
+      // Stable fragment id so anvil-anchors.js can hang a permalink on it.
+      title.id = section.group.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      title.textContent = section.group;
+      group.appendChild(title);
+
+      const list = document.createElement("ul");
+      list.className = "bm-list";
+
+      for (const link of section.links) {
+        const li = document.createElement("li");
+        li.className = "bm-row";
+
+        const a = document.createElement("a");
+        a.className = "bm-name";
+        a.href = link.url;
+        a.target = "_blank";          // always open bookmarks in a new tab
+        a.rel = "noopener noreferrer";
+        a.textContent = link.title;
+        li.appendChild(a);
+
+        const leader = document.createElement("span");
+        leader.className = "bm-leader";
+        leader.setAttribute("aria-hidden", "true");
+        li.appendChild(leader);
+
+        const url = document.createElement("span");
+        url.className = "bm-url";
+        url.textContent = link.url.replace(/^https?:\/\//, "");
+        url.title = link.url;
+        li.appendChild(url);
+
+        list.appendChild(li);
+      }
+
+      group.appendChild(list);
+      root.appendChild(group);
+    }
+  </script>
+</body>
+</html>

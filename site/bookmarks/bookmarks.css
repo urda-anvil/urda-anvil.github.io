@@ -1,0 +1,64 @@
+/* ---- Bookmarks: compact rail ---- */
+/* Each group is a section with a colored left rail (--rail, set inline per
+   group by the renderer) and dense rows: name, dotted leader, short URL. */
+#bookmarks { display: flex; flex-direction: column; gap: 24px; }
+
+.bm-group {
+  border-left: 3px solid var(--rail, var(--ember));
+  padding-left: 16px;
+}
+.bm-group-title {
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rail, var(--ember));
+}
+
+.bm-list { list-style: none; margin: 0; padding: 0; }
+.bm-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+}
+.bm-name {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+.bm-name:hover { color: var(--rail, var(--ember)); }
+
+/* empty spacer; the dotted line lifted off the baseline to sit mid-text */
+.bm-leader {
+  flex: 1 1 auto;
+  min-width: 16px;
+  border-bottom: 1px dotted var(--border);
+  position: relative;
+  top: -0.3em;
+}
+
+.bm-url {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* Narrow screens: drop the leader, stack the URL under the name so the long
+   docs URLs wrap instead of overflowing. */
+@media (max-width: 560px) {
+  .bm-row { flex-wrap: wrap; gap: 1px 0; }
+  .bm-name { flex: 1 1 100%; white-space: normal; }
+  .bm-leader { display: none; }
+  .bm-url { flex: 1 1 100%; white-space: normal; word-break: break-all; }
+}
