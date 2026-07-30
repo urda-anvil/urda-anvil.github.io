@@ -7,7 +7,7 @@
   <meta name="description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
   <meta property="og:site_name" content="Urda Anvil">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Urda Anvil &middot; MCP">
+  <meta property="og:title" content="MCP">
   <meta property="og:description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
   <meta property="og:url" content="https://anvil.urda.com/forge/mcp/">
   <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
@@ -41,8 +41,9 @@
     <header>
       <h1 id="top"><img class="spark" src="../../res/img/spark.svg" alt=""> MCP</h1>
     </header>
-    <p class="lede">The MCP servers the Urda Anvil runs by default, and
-      exactly what permission each tool carries.</p>
+    <p class="lede">The <a href="https://modelcontextprotocol.io/">Model Context
+      Protocol</a> (MCP) servers the Urda Anvil runs by default, and exactly
+      what permission each tool carries.</p>
 
     <p class="hint">
       Every tool below carries two tags: what it does
@@ -237,11 +238,11 @@
               { name: "createCompassComponentRelationship", type: "write", permission: "deny", desc: "Link two Compass components." },
               { name: "createCompassCustomFieldDefinition", type: "write", permission: "deny", desc: "Create a Compass custom field." },
               { name: "getCompassComponent", type: "read", permission: "deny", desc: "Get a Compass component." },
-              { name: "getCompassComponentActivityEvents", type: "read", permission: "deny", desc: "List a component's activity events (documented, not seen live)." },
-              { name: "getCompassComponentLabels", type: "read", permission: "deny", desc: "List a component's labels (documented, not seen live)." },
+              { name: "getCompassComponentActivityEvents", type: "read", permission: "deny", desc: "List a component's activity events." },
+              { name: "getCompassComponentLabels", type: "read", permission: "deny", desc: "List a component's labels." },
               { name: "getCompassComponents", type: "read", permission: "deny", desc: "List Compass components." },
-              { name: "getCompassComponentsOwnedByMyTeams", type: "read", permission: "deny", desc: "List components owned by the caller's teams (documented, not seen live)." },
-              { name: "getCompassComponentTypes", type: "read", permission: "deny", desc: "List configured component types (documented, not seen live)." },
+              { name: "getCompassComponentsOwnedByMyTeams", type: "read", permission: "deny", desc: "List components owned by the caller's teams." },
+              { name: "getCompassComponentTypes", type: "read", permission: "deny", desc: "List configured component types." },
               { name: "getCompassCustomFieldDefinitions", type: "read", permission: "deny", desc: "List Compass custom field definitions." },
             ],
           },
@@ -337,23 +338,26 @@
     // product categories, count only allow/ask tools (what Claude can
     // actually use, gated or not) -- denied tools are documented but not
     // usable, so including them would overstate the teaser.
+    // The teaser has to agree with the rows the reader then sees, so it counts
+    // every documented tool and names the usable subset only where some are denied.
     function toolCount(server) {
-      const n = server.categories
-        ? server.categories.reduce(
-            (sum, cat) => sum + cat.tools.filter((t) => t.permission !== "deny").length,
-            0,
-          )
-        : server.tools.length;
-      return n + (n === 1 ? " tool" : " tools");
+      const all = server.categories
+        ? server.categories.flatMap((cat) => cat.tools)
+        : server.tools;
+      const usable = all.filter((t) => t.permission !== "deny").length;
+      const label = all.length + (all.length === 1 ? " tool" : " tools");
+      return usable === all.length ? label : label + ", " + usable + " usable";
     }
 
     // Build a `.kv` table (Tool / Type / Permission / Description) from a
     // tools array. Each tool carries its own type and permission.
-    function buildToolTable(tools) {
+    function buildToolTable(tools, caption) {
       const table = document.createElement("table");
       table.className = "kv";
       table.innerHTML =
-        "<thead><tr><th>Tool</th><th>Type</th><th>Permission</th><th>Description</th></tr></thead>";
+        '<caption class="visually-hidden">' + caption + "</caption>" +
+        '<thead><tr><th scope="col">Tool</th><th scope="col">Type</th>' +
+        '<th scope="col">Permission</th><th scope="col">Description</th></tr></thead>';
       const tbody = document.createElement("tbody");
       for (const tool of tools) {
         const tr = document.createElement("tr");
@@ -459,10 +463,20 @@
             sec.appendChild(note);
           }
 
-          sec.appendChild(buildToolTable(cat.tools));
+          sec.appendChild(
+            buildToolTable(
+              cat.tools,
+              server.name + " " + cat.heading + " tools, with the type and permission each carries.",
+            ),
+          );
         }
       } else {
-        sec.appendChild(buildToolTable(server.tools));
+        sec.appendChild(
+          buildToolTable(
+            server.tools,
+            server.name + " tools, with the type and permission each carries.",
+          ),
+        );
       }
 
       root.appendChild(sec);
