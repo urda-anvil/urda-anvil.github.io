@@ -79,6 +79,17 @@ h1 {
   padding: 48px 24px 80px;
 }
 
+/* Links in body prose. Without this a link in ordinary copy falls through to
+   the browser's default blue, which is how each page ended up patching the
+   gap for itself.
+   :where() is load-bearing, not decoration: it zeroes the selector's
+   specificity to (0,0,0) so this acts as a default that ANY component rule
+   overrides. Written plainly as `.wrap p a` it would score (0,1,2) and
+   outrank .btn, .foot-project a, and .tagline a, repainting the 404 button
+   and the footer's project links. */
+:where(.wrap p a) { color: var(--ember); text-decoration: none; }
+:where(.wrap p a:hover) { text-decoration: underline; }
+
 /* ---- Rule ---- */
 hr {
   border: 0;
