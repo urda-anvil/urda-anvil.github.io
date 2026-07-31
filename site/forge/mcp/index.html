@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Urda Anvil &middot; MCP</title>
-  <meta name="description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
+  <meta name="description" content="The default MCP servers Urda runs, and exactly what each tool is allowed to do in Claude and Codex.">
   <meta property="og:site_name" content="Urda Anvil">
   <meta property="og:type" content="website">
   <meta property="og:title" content="MCP">
-  <meta property="og:description" content="The default Claude MCP servers Urda runs, and exactly what each tool is allowed to do.">
+  <meta property="og:description" content="The default MCP servers Urda runs, and exactly what each tool is allowed to do in Claude and Codex.">
   <meta property="og:url" content="https://anvil.urda.com/forge/mcp/">
   <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
   <meta name="twitter:card" content="summary">
@@ -61,7 +61,7 @@
       </span>.
       Allow runs without asking, ask prompts for confirmation, and deny is
       blocked outright. The allow and deny rules are shown under
-      Configuration; ask carries no rule of its own, because Claude Code
+      Configuration &middot; Claude; ask carries no rule of its own, because Claude Code
       prompts for anything a rule has not already allowed or denied.
     </p>
 
@@ -167,6 +167,124 @@
     "mcp__atlassian__updateJsmOpsAlert"
   ]
 }</code></pre>
+    </section>
+
+    <section class="section">
+      <h2 id="configuration-codex">Configuration &middot; Codex</h2>
+      <p>Codex keeps registration and permissions in one file,
+        <code>~/.codex/config.toml</code>, instead of splitting them across two.
+        Same five servers, same URLs, same decisions: Claude's
+        <code>allow</code> list is Codex's <code>enabled_tools</code>, and its
+        <code>deny</code> list is <code>disabled_tools</code>. Every entry
+        matches server for server, so the permission tag on each tool above
+        holds under either agent.</p>
+      <p><code>default_tools_approval_mode</code> reads backwards. Per the
+        <a href="https://developers.openai.com/codex/mcp">Codex MCP reference</a>,
+        <code>approve</code> means allow every tool without prompting; the mode
+        that stops and asks is <code>prompt</code>. So <code>approve</code> here
+        is Codex spelling what Claude spells <code>allow</code>.</p>
+
+      <p class="config-label">Servers &middot; ~/.codex/config.toml</p>
+<pre class="codeblock"><code class="language-toml">[mcp_servers]
+
+[mcp_servers.atlassian]
+enabled = true
+required = false
+url = "https://mcp.atlassian.com/v1/mcp/authv2"
+enabled_tools = [
+  "atlassianUserInfo",
+  "fetch",
+  "getAccessibleAtlassianResources",
+  "getConfluenceCommentChildren",
+  "getConfluencePage",
+  "getConfluencePageDescendants",
+  "getConfluencePageFooterComments",
+  "getConfluencePageInlineComments",
+  "getConfluenceSpaces",
+  "getIssueLinkTypes",
+  "getJiraIssue",
+  "getJiraIssueRemoteIssueLinks",
+  "getJiraIssueTypeMetaWithFields",
+  "getJiraProjectIssueTypesMetadata",
+  "getPagesInConfluenceSpace",
+  "getTransitionsForJiraIssue",
+  "getVisibleJiraProjects",
+  "lookupJiraAccountId",
+  "search",
+  "searchConfluenceUsingCql",
+  "searchJiraIssuesUsingJql",
+]
+disabled_tools = [
+  "addTeamworkGraphContext",
+  "bitbucketDeployment",
+  "bitbucketEnvironment",
+  "bitbucketPipeline",
+  "bitbucketPullRequest",
+  "bitbucketRepoContent",
+  "bitbucketRepository",
+  "bitbucketUser",
+  "bitbucketWorkspace",
+  "createCompassComponent",
+  "createCompassComponentRelationship",
+  "createCompassCustomFieldDefinition",
+  "getCompassComponent",
+  "getCompassComponentActivityEvents",
+  "getCompassComponentLabels",
+  "getCompassComponents",
+  "getCompassComponentsOwnedByMyTeams",
+  "getCompassComponentTypes",
+  "getCompassCustomFieldDefinitions",
+  "getJsmOpsAlerts",
+  "getJsmOpsScheduleInfo",
+  "getJsmOpsTeamInfo",
+  "getTeamworkGraphContext",
+  "getTeamworkGraphObject",
+  "updateJsmOpsAlert",
+]
+default_tools_approval_mode = "approve"
+
+[mcp_servers.aws-knowledge-mcp-server]
+enabled = true
+required = false
+url = "https://knowledge-mcp.global.api.aws"
+enabled_tools = [
+  "aws___get_regional_availability",
+  "aws___list_regions",
+  "aws___read_documentation",
+  "aws___retrieve_skill",
+  "aws___search_documentation",
+]
+default_tools_approval_mode = "approve"
+
+[mcp_servers.context7]
+enabled = true
+required = false
+url = "https://mcp.context7.com/mcp"
+enabled_tools = [
+  "query-docs",
+  "resolve-library-id",
+]
+default_tools_approval_mode = "approve"
+
+[mcp_servers.grep]
+enabled = true
+required = false
+url = "https://mcp.grep.app"
+enabled_tools = [
+  "searchGitHub",
+]
+default_tools_approval_mode = "approve"
+
+[mcp_servers.schema-store]
+enabled = true
+required = false
+url = "https://mcp.schemastore.org"
+enabled_tools = [
+  "getSchema",
+  "listSchemas",
+  "searchSchemas"
+]
+default_tools_approval_mode = "approve"</code></pre>
     </section>
       </div>
     </div>
@@ -521,6 +639,7 @@
     // labelled with its agent because the permission model below is Claude
     // Code's; a second agent would need its own section, not a merge into this
     railEntries.push({ id: "configuration", label: "Configuration · Claude", sub: false, ruled: true });
+    railEntries.push({ id: "configuration-codex", label: "Configuration · Codex", sub: false });
 
     const railTitle = document.createElement("p");
     railTitle.className = "rail-title";
