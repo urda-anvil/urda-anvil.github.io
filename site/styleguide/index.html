@@ -222,7 +222,7 @@
       <h2 id="code-block">Code block</h2>
       <p><code>.codeblock</code> for fenced configuration and shell samples, highlighted by
         the vendored Prism bundle (<code>../res/js/prism.js</code>) using the token theme
-        below. Currently supported: <code>json</code> and <code>bash</code>.</p>
+        below. Currently supported: <code>json</code>, <code>bash</code>, and <code>toml</code>.</p>
       <pre class="codeblock"><code class="language-json">{
   "forge": {
     "accent": "#ff8c2f",
@@ -230,6 +230,13 @@
   }
 }</code></pre>
       <pre class="codeblock"><code class="language-bash">riff-fable() { _riff_shell claude 248 205 002 --model "fable" --effort "high" "/color yellow"; }</code></pre>
+      <pre class="codeblock"><code class="language-toml">[mcp_servers.grep]
+# the theme has no table or key rule; their class-name and property aliases color them
+enabled = true
+url = "https://mcp.grep.app"
+enabled_tools = [
+  "searchGitHub",
+]</code></pre>
     </section>
 
     <section class="section">
