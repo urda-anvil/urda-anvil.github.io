@@ -50,6 +50,9 @@
    outline rather than reading as its first entry */
 .rail a.totop::before { content: "\2191"; margin-right: 6px; }
 .rail li:first-child { margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+/* Configuration is the page's own section rather than a server, so the same
+   divider closes the server list above it */
+.rail li.ruled { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--border); }
 .rail a:hover { color: var(--ink); }
 .rail a.on { color: var(--ember); border-left-color: var(--ember); }
 .rail a:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
