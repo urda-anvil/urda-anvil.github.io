@@ -10,16 +10,14 @@
    and "OpenAI" mean the same color everywhere on the site. */
 .bm-vendor {
   margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--rail, var(--ember));
   font-family: var(--mono);
   font-size: 22px;
   font-weight: 800;
   letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--rail, var(--ember));
-}
-.bm-vendor.ruled {
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
 }
 
 .bm-group {

@@ -180,9 +180,9 @@
     // name / dotted leader / shortened URL. Static.
     const root = document.getElementById("bookmarks");
 
-    VENDORS.forEach((vendorBlock, vi) => {
+    VENDORS.forEach((vendorBlock) => {
       const vendorHeading = document.createElement("h2");
-      vendorHeading.className = "bm-vendor" + (vi > 0 ? " ruled" : "");
+      vendorHeading.className = "bm-vendor";
       vendorHeading.style.setProperty("--rail", VENDOR_ACCENTS[vendorBlock.vendor] || "var(--ember)");
       // Stable fragment id so anvil-anchors.js can hang a permalink on it.
       vendorHeading.id = vendorBlock.vendor.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
