@@ -1,3 +1,8 @@
+/* Page rider for forge/mcp/, loaded after anvil-core.css,
+   deliberately unlayered so it always wins over the layered core. Holds
+   only what this page alone uses; a rule graduates to core only when a
+   second page needs it. */
+
 /* ---- MCP catalog ---- */
 /* tool-count line on the overview cards, below .card-desc */
 .card-meta {

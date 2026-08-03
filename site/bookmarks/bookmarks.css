@@ -1,3 +1,8 @@
+/* Page rider for bookmarks/, loaded after anvil-core.css,
+   deliberately unlayered so it always wins over the layered core. Holds
+   only what this page alone uses; a rule graduates to core only when a
+   second page needs it. */
+
 /* ---- Bookmarks: compact rail ---- */
 /* Each group is a section with a colored left rail (--rail, set inline per
    group by the renderer) and dense rows: name, dotted leader, short URL. */
