@@ -156,6 +156,9 @@ hr {
 
 /* ---- Hero ---- */
 .hero { text-align: center; margin-bottom: 44px; }
+/* text-align only centers inline content; the spark heading below is a flex
+   row now (see .spark), so it needs its own centering to match. */
+.hero h1:has(> .spark) { justify-content: center; }
 .tagline {
   margin: 0 auto;
   max-width: 580px;
@@ -178,8 +181,13 @@ hr {
 /* Anvil's identity mark: the spark icon (res/img/spark*.svg) inline in page
    headings. The SVG's rounded tile is filled --bg (#0b0e14), so it blends
    into the page and only the colored spark rays show. Sized relative to the
-   heading's font so it tracks the h1. */
-.spark { height: 1.45em; width: auto; vertical-align: middle; }
+   heading's font so it tracks the h1.
+
+   vertical-align: middle centers on the x-height midline, not the glyph
+   box, so it reads low next to bold/large heading text; flexing the parent
+   heading instead centers the icon on the text's actual line-box height. */
+.spark { height: 1.45em; width: auto; flex-shrink: 0; }
+h1:has(> .spark) { display: flex; align-items: center; }
 
 /* hero logo */
 .logo {
