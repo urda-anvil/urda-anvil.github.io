@@ -300,7 +300,7 @@ h1:has(> .spark) { display: flex; align-items: center; }
 .nav-card:hover { border-color: var(--ember); background: var(--panel-bar); }
 .nav-card:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
 .card-title { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
-.card-title .arrow { color: var(--ember); }
+.card-title .arrow { margin-left: 6px; color: var(--ember); }
 .card-desc { margin: 0; color: var(--muted); font-size: 13px; }
 
 /* ---- Generic content section ---- */
