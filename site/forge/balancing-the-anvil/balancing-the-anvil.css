@@ -3,17 +3,6 @@
    only what this page alone uses; a rule graduates to core only when a
    second page needs it. */
 
-/* Categorical rail palette for this page's AI and tool vendors. Validated
-   against the dark surface for CVD separation, the normal-vision floor, and
-   contrast across every pair. Ember exceeds the strict dark lightness band;
-   accepted as the site's brand accent. */
-:root {
-  --rail-anthropic: var(--ember);
-  --rail-openai: #3987e5;
-  --rail-google: #008300;
-  --rail-jetbrains: #d55181;
-}
-
 /* ---- table size nudges ---- */
 /* Slightly larger than the core defaults, tuned for these two tables only
    (scoped so the cost/matrix tables keep the base sizes). */
@@ -50,8 +39,8 @@
 
 /* ---- vendor group coloring ---- */
 /* Binds the generic .datatable group-divider styling (anvil-core.css) to
-   this page's vendor rail tokens. Both the tokens and vendor mappings are
-   page-specific. */
+   the shared vendor rail tokens (also core). The tokens are shared; which
+   class maps to which token is this page's own call. */
 .g-anthropic .gdot { background: var(--rail-anthropic); }
 .g-anthropic .glabel { color: var(--rail-anthropic); }
 .g-openai .gdot { background: var(--rail-openai); }

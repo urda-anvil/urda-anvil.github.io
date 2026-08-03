@@ -36,6 +36,16 @@
   --sl-gray: #6e7681;
   --sl-white: #e6edf3;
 
+  /* categorical rail palette for AI and tool vendors, shared by any page that
+     needs to key content by vendor (e.g. forge/balancing-the-anvil/,
+     bookmarks/). Validated against the dark surface for CVD separation, the
+     normal-vision floor, and contrast across every pair. Ember exceeds the
+     strict dark lightness band; accepted as the site's brand accent. */
+  --rail-anthropic: var(--ember);
+  --rail-openai: #3987e5;
+  --rail-google: #008300;
+  --rail-jetbrains: #d55181;
+
   --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, 'Liberation Mono', monospace;
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }

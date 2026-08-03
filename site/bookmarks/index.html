@@ -59,77 +59,89 @@
     // Titles drop the group prefix the source Firefox names carry; the section
     // header supplies that context. Tags are retained on each link as the
     // grouping metadata (a future filter can use them).
-    const BOOKMARKS = [
+    // Groups nest under a vendor so the renderer can drop a labeled divider
+    // between vendors, not just a rail color per topic group.
+    const VENDORS = [
       {
-        group: "Claude",
-        links: [
-          { title: "Claude", url: "https://claude.ai", tags: ["Claude"] },
-          { title: "Cookbook", url: "https://platform.claude.com/cookbook", tags: ["Claude"] },
-          { title: "Customize", url: "https://claude.ai/customize", tags: ["Claude"] },
-          { title: "Recent Chats", url: "https://claude.ai/recents", tags: ["Claude"] },
-          { title: "Status", url: "https://status.claude.com", tags: ["Claude", "Status Page"] },
-          { title: "Usage", url: "https://claude.ai/settings/usage", tags: ["Claude"] },
+        vendor: "Anthropic",
+        groups: [
+          {
+            group: "Claude",
+            links: [
+              { title: "Claude", url: "https://claude.ai", tags: ["Claude"] },
+              { title: "Cookbook", url: "https://platform.claude.com/cookbook", tags: ["Claude"] },
+              { title: "Customize", url: "https://claude.ai/customize", tags: ["Claude"] },
+              { title: "Recent Chats", url: "https://claude.ai/recents", tags: ["Claude"] },
+              { title: "Status", url: "https://status.claude.com", tags: ["Claude", "Status Page"] },
+              { title: "Usage", url: "https://claude.ai/settings/usage", tags: ["Claude"] },
+            ],
+          },
+          {
+            group: "Claude Code",
+            links: [
+              { title: "Claude Code", url: "https://claude.ai/code", tags: ["Claude Code"] },
+              { title: "Artifacts", url: "https://claude.ai/code/artifacts", tags: ["Claude Code"] },
+              { title: "Routines", url: "https://claude.ai/code/routines", tags: ["Claude Code"] },
+            ],
+          },
+          {
+            group: "Claude Code - Docs",
+            links: [
+              { title: "Artifacts", url: "https://code.claude.com/docs/en/artifacts", tags: ["Claude Code - Docs"] },
+              { title: "CHANGELOG", url: "https://code.claude.com/docs/en/changelog", tags: ["Claude Code - Docs"] },
+              { title: "Debug Your Config", url: "https://code.claude.com/docs/en/debug-your-config", tags: ["Claude Code - Docs"] },
+              { title: "Env Vars", url: "https://code.claude.com/docs/en/env-vars", tags: ["Claude Code - Docs"] },
+              { title: "Hooks", url: "https://code.claude.com/docs/en/hooks", tags: ["Claude Code - Docs"] },
+              { title: "MCP", url: "https://code.claude.com/docs/en/mcp", tags: ["Claude Code - Docs"] },
+              { title: "Memory", url: "https://code.claude.com/docs/en/memory", tags: ["Claude Code - Docs"] },
+              { title: "Permissions", url: "https://code.claude.com/docs/en/permissions", tags: ["Claude Code - Docs"] },
+              { title: "Plugin Marketplaces", url: "https://code.claude.com/docs/en/plugin-marketplaces", tags: ["Claude Code - Docs"] },
+              { title: "Routines", url: "https://code.claude.com/docs/en/routines", tags: ["Claude Code - Docs"] },
+              { title: "Settings", url: "https://code.claude.com/docs/en/settings", tags: ["Claude Code - Docs"] },
+              { title: "Skills", url: "https://code.claude.com/docs/en/skills", tags: ["Claude Code - Docs"] },
+              { title: "Status Line", url: "https://code.claude.com/docs/en/statusline", tags: ["Claude Code - Docs"] },
+              { title: "The .claude Directory", url: "https://code.claude.com/docs/en/claude-directory", tags: ["Claude Code - Docs"] },
+            ],
+          },
+          {
+            group: "Claude Platform Docs",
+            links: [
+              { title: "Effort", url: "https://platform.claude.com/docs/en/build-with-claude/effort", tags: ["Claude Platform Docs"] },
+              { title: "Models", url: "https://platform.claude.com/docs/en/about-claude/models/overview", tags: ["Claude Platform Docs"] },
+              { title: "Models - Comparison", url: "https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison", tags: ["Claude Platform Docs"] },
+            ],
+          },
         ],
       },
       {
-        group: "Claude Code",
-        links: [
-          { title: "Claude Code", url: "https://claude.ai/code", tags: ["Claude Code"] },
-          { title: "Artifacts", url: "https://claude.ai/code/artifacts", tags: ["Claude Code"] },
-          { title: "Routines", url: "https://claude.ai/code/routines", tags: ["Claude Code"] },
-        ],
-      },
-      {
-        group: "Claude Code - Docs",
-        links: [
-          { title: "Artifacts", url: "https://code.claude.com/docs/en/artifacts", tags: ["Claude Code - Docs"] },
-          { title: "CHANGELOG", url: "https://code.claude.com/docs/en/changelog", tags: ["Claude Code - Docs"] },
-          { title: "Debug Your Config", url: "https://code.claude.com/docs/en/debug-your-config", tags: ["Claude Code - Docs"] },
-          { title: "Env Vars", url: "https://code.claude.com/docs/en/env-vars", tags: ["Claude Code - Docs"] },
-          { title: "Hooks", url: "https://code.claude.com/docs/en/hooks", tags: ["Claude Code - Docs"] },
-          { title: "MCP", url: "https://code.claude.com/docs/en/mcp", tags: ["Claude Code - Docs"] },
-          { title: "Memory", url: "https://code.claude.com/docs/en/memory", tags: ["Claude Code - Docs"] },
-          { title: "Permissions", url: "https://code.claude.com/docs/en/permissions", tags: ["Claude Code - Docs"] },
-          { title: "Plugin Marketplaces", url: "https://code.claude.com/docs/en/plugin-marketplaces", tags: ["Claude Code - Docs"] },
-          { title: "Routines", url: "https://code.claude.com/docs/en/routines", tags: ["Claude Code - Docs"] },
-          { title: "Settings", url: "https://code.claude.com/docs/en/settings", tags: ["Claude Code - Docs"] },
-          { title: "Skills", url: "https://code.claude.com/docs/en/skills", tags: ["Claude Code - Docs"] },
-          { title: "Status Line", url: "https://code.claude.com/docs/en/statusline", tags: ["Claude Code - Docs"] },
-          { title: "The .claude Directory", url: "https://code.claude.com/docs/en/claude-directory", tags: ["Claude Code - Docs"] },
-        ],
-      },
-      {
-        group: "Claude Platform Docs",
-        links: [
-          { title: "Effort", url: "https://platform.claude.com/docs/en/build-with-claude/effort", tags: ["Claude Platform Docs"] },
-          { title: "Models", url: "https://platform.claude.com/docs/en/about-claude/models/overview", tags: ["Claude Platform Docs"] },
-          { title: "Models - Comparison", url: "https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison", tags: ["Claude Platform Docs"] },
-        ],
-      },
-      {
-        group: "Codex",
-        links: [
-          { title: "ChatGPT", url: "https://chatgpt.com", tags: ["Codex"] },
-          { title: "Usage", url: "https://chatgpt.com/codex/cloud/settings/analytics#usage", tags: ["Codex"] },
-        ],
-      },
-      {
-        group: "Codex Docs",
-        links: [
-          { title: "Configuration", url: "https://learn.chatgpt.com/docs/config-file/config-reference", tags: ["Codex Docs"] },
-          { title: "Configuration - Config Sample", url: "https://learn.chatgpt.com/docs/config-file/config-sample", tags: ["Codex Docs"] },
-          { title: "MCP", url: "https://learn.chatgpt.com/docs/extend/mcp", tags: ["Codex Docs"] },
-        ],
-      },
-      {
-        group: "OpenAI Platform Docs",
-        links: [
-          { title: "OpenAI Models", url: "https://developers.openai.com/api/docs/models", tags: ["OpenAI Platform Docs"] },
-          { title: "GPT-5.6 Sol Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-sol", tags: ["OpenAI Platform Docs"] },
-          { title: "GPT-5.6 Terra Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-terra", tags: ["OpenAI Platform Docs"] },
-          { title: "GPT-5.6 Luna Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-luna", tags: ["OpenAI Platform Docs"] },
-          { title: "GPT-5.4 mini Model", url: "https://developers.openai.com/api/docs/models/gpt-5.4-mini", tags: ["OpenAI Platform Docs"] },
-          { title: "gpt-oss-120b Model", url: "https://developers.openai.com/api/docs/models/gpt-oss-120b", tags: ["OpenAI Platform Docs"] },
+        vendor: "OpenAI",
+        groups: [
+          {
+            group: "Codex",
+            links: [
+              { title: "ChatGPT", url: "https://chatgpt.com", tags: ["Codex"] },
+              { title: "Usage", url: "https://chatgpt.com/codex/cloud/settings/analytics#usage", tags: ["Codex"] },
+            ],
+          },
+          {
+            group: "Codex Docs",
+            links: [
+              { title: "Configuration", url: "https://learn.chatgpt.com/docs/config-file/config-reference", tags: ["Codex Docs"] },
+              { title: "Configuration - Config Sample", url: "https://learn.chatgpt.com/docs/config-file/config-sample", tags: ["Codex Docs"] },
+              { title: "MCP", url: "https://learn.chatgpt.com/docs/extend/mcp", tags: ["Codex Docs"] },
+            ],
+          },
+          {
+            group: "OpenAI Platform Docs",
+            links: [
+              { title: "OpenAI Models", url: "https://developers.openai.com/api/docs/models", tags: ["OpenAI Platform Docs"] },
+              { title: "GPT-5.6 Sol Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-sol", tags: ["OpenAI Platform Docs"] },
+              { title: "GPT-5.6 Terra Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-terra", tags: ["OpenAI Platform Docs"] },
+              { title: "GPT-5.6 Luna Model", url: "https://developers.openai.com/api/docs/models/gpt-5.6-luna", tags: ["OpenAI Platform Docs"] },
+              { title: "GPT-5.4 mini Model", url: "https://developers.openai.com/api/docs/models/gpt-5.4-mini", tags: ["OpenAI Platform Docs"] },
+              { title: "gpt-oss-120b Model", url: "https://developers.openai.com/api/docs/models/gpt-oss-120b", tags: ["OpenAI Platform Docs"] },
+            ],
+          },
         ],
       },
     ];
@@ -154,59 +166,79 @@
       return ACCENT_PALETTE[hash % ACCENT_PALETTE.length];
     }
 
-    // Render one rail-accented section per group: colored left rail + uppercase
-    // header, then compact rows of name / dotted leader / shortened URL. Static.
+    // Vendor colors are brand identity, not decoration, so they're an
+    // explicit lookup rather than groupAccent()'s hash fallback. Same
+    // --rail-* tokens (anvil-core.css) forge/balancing-the-anvil/ uses, so
+    // "Anthropic" and "OpenAI" mean the same color on both pages.
+    const VENDOR_ACCENTS = {
+      "Anthropic": "var(--rail-anthropic)",
+      "OpenAI": "var(--rail-openai)",
+    };
+
+    // Render a labeled divider per vendor, then one rail-accented section per
+    // group: colored left rail + uppercase header, then compact rows of
+    // name / dotted leader / shortened URL. Static.
     const root = document.getElementById("bookmarks");
 
-    for (const section of BOOKMARKS) {
-      const group = document.createElement("section");
-      group.className = "bm-group";
-      group.style.setProperty("--rail", groupAccent(section.group));
-
-      const title = document.createElement("h2");
-      title.className = "bm-group-title";
+    VENDORS.forEach((vendorBlock, vi) => {
+      const vendorHeading = document.createElement("h2");
+      vendorHeading.className = "bm-vendor" + (vi > 0 ? " ruled" : "");
+      vendorHeading.style.setProperty("--rail", VENDOR_ACCENTS[vendorBlock.vendor] || "var(--ember)");
       // Stable fragment id so anvil-anchors.js can hang a permalink on it.
-      title.id = section.group.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      title.textContent = section.group;
-      group.appendChild(title);
+      vendorHeading.id = vendorBlock.vendor.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      vendorHeading.textContent = vendorBlock.vendor;
+      root.appendChild(vendorHeading);
 
-      const list = document.createElement("ul");
-      list.className = "bm-list";
+      for (const section of vendorBlock.groups) {
+        const group = document.createElement("section");
+        group.className = "bm-group";
+        group.style.setProperty("--rail", groupAccent(section.group));
 
-      for (const link of section.links) {
-        const li = document.createElement("li");
+        const title = document.createElement("h3");
+        title.className = "bm-group-title";
+        // Stable fragment id so anvil-anchors.js can hang a permalink on it.
+        title.id = section.group.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        title.textContent = section.group;
+        group.appendChild(title);
 
-        // The row itself is the anchor, so the name, the leader, and the
-        // visible URL are all one click target rather than the name alone.
-        const row = document.createElement("a");
-        row.className = "bm-row";
-        row.href = link.url;
-        row.target = "_blank";          // always open bookmarks in a new tab
-        row.rel = "noopener noreferrer";
+        const list = document.createElement("ul");
+        list.className = "bm-list";
 
-        const name = document.createElement("span");
-        name.className = "bm-name";
-        name.textContent = link.title;
-        row.appendChild(name);
+        for (const link of section.links) {
+          const li = document.createElement("li");
 
-        const leader = document.createElement("span");
-        leader.className = "bm-leader";
-        leader.setAttribute("aria-hidden", "true");
-        row.appendChild(leader);
+          // The row itself is the anchor, so the name, the leader, and the
+          // visible URL are all one click target rather than the name alone.
+          const row = document.createElement("a");
+          row.className = "bm-row";
+          row.href = link.url;
+          row.target = "_blank";          // always open bookmarks in a new tab
+          row.rel = "noopener noreferrer";
 
-        const url = document.createElement("span");
-        url.className = "bm-url";
-        url.textContent = link.url.replace(/^https?:\/\//, "");
-        url.title = link.url;           // the displayed URL is shortened and can ellipsis
-        row.appendChild(url);
+          const name = document.createElement("span");
+          name.className = "bm-name";
+          name.textContent = link.title;
+          row.appendChild(name);
 
-        li.appendChild(row);
-        list.appendChild(li);
+          const leader = document.createElement("span");
+          leader.className = "bm-leader";
+          leader.setAttribute("aria-hidden", "true");
+          row.appendChild(leader);
+
+          const url = document.createElement("span");
+          url.className = "bm-url";
+          url.textContent = link.url.replace(/^https?:\/\//, "");
+          url.title = link.url;           // the displayed URL is shortened and can ellipsis
+          row.appendChild(url);
+
+          li.appendChild(row);
+          list.appendChild(li);
+        }
+
+        group.appendChild(list);
+        root.appendChild(group);
       }
-
-      group.appendChild(list);
-      root.appendChild(group);
-    }
+    });
   </script>
 </body>
 </html>

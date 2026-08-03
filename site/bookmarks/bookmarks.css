@@ -3,6 +3,25 @@
    group by the renderer) and dense rows: name, dotted leader, short URL. */
 #bookmarks { display: flex; flex-direction: column; gap: 24px; }
 
+/* Vendor divider: sits above a run of same-vendor groups so a reader can
+   tell the two chunks apart at a glance, not just tell topics apart within
+   one. Colored via --rail (set inline per vendor by the renderer) from the
+   same shared vendor palette forge/balancing-the-anvil/ uses, so "Anthropic"
+   and "OpenAI" mean the same color everywhere on the site. */
+.bm-vendor {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--rail, var(--ember));
+}
+.bm-vendor.ruled {
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
 .bm-group {
   border-left: 3px solid var(--rail, var(--ember));
   padding-left: 16px;
