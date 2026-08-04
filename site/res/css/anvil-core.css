@@ -393,9 +393,18 @@ h1:has(> .spark) { display: flex; align-items: center; }
   transition: color .15s ease, background-color .15s ease, border-color .15s ease;
 }
 .tab:hover { color: var(--ink); }
+/* min-width 0 for the same reason .tabgroup carries it: a panel is a flex item,
+   so its min-width resolves to auto, and an auto minimum refuses to shrink below
+   the content's own minimum size. A panel holding anything with a min-width (a
+   wide .datatable inside its .datatable-wrap, a code block) would otherwise hold
+   that width at a narrow viewport and push the page into a horizontal scroll,
+   instead of letting the inner scroller scroll on its own. The scroll-container
+   exception that would zero this out applies only when the flex item IS the
+   scroller, and here the scroller is one level down. */
 .tabpanel {
   order: 1;            /* all panels sort below the row of labels */
   flex-basis: 100%;    /* each on its own line */
+  min-width: 0;
   display: none;
   margin-top: 8px;
 }

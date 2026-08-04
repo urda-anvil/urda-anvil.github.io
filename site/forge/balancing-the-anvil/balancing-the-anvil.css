@@ -120,10 +120,17 @@
    real columns instead of one stacked cell. Shape follows .effort rather
    than .compare: values in cells, centered, no per-cell plan/price stack, so
    .compare's 77px row floor deliberately does not reach it.
-   min-width: 190px rowlabel + 3 columns. The widest cell is "AI Ultimate"
+   The rowlabel matches .compare's 120px rather than core's shared 190px. The
+   two tables stack in the same section and both open on a Vendor column of
+   the same four names, so a 70px difference reads as a misaligned divider
+   between a pair. Content still clears it: the widest label, "JetBrains", is
+   9 characters of mono at 14px (~78px) plus 26px left and 14px right padding,
+   ~118px.
+   min-width: 120px rowlabel + 3 columns. The widest cell is "AI Ultimate"
    (11 characters, mono at .92em of 14px, ~8.0px/char) at ~88px plus 28px
-   padding, ~116px; 120px/column clears it, and 190 + 3 * 120 = 550px. */
-.datatable.addons { min-width: 560px; }
+   padding, ~116px; 120px/column clears it, and 120 + 3 * 120 = 480px. */
+.datatable.addons { min-width: 490px; }
+.datatable.addons thead th.rowlabel-col { width: 120px; }
 .datatable.addons thead th,
 .datatable.addons tbody td { text-align: center; }
 /* A vendor with two add-ons merges its label with rowspan, so that cell
