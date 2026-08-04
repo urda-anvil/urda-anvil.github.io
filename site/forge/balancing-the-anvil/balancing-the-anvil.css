@@ -54,12 +54,44 @@
    step chart and the comparison is structural rather than a grid to diff. Body
    figures lead with the monthly and show the yearly beneath; the totals row
    leads with the effective (blended) monthly and a dim exact yearly. */
-.datatable.compare { table-layout: fixed; min-width: 640px; }
+/* Seven tiers have to fit the 1032px .wrap content box (1080px max-width less
+   24px padding each side, see anvil-core.css .wrap). Two overrides buy the
+   room, both scoped to .compare so Coverage, Effort, and Add-ons keep core's
+   defaults:
+
+   1. The rowlabel drops from core's shared 190px to 120px. The widest label,
+      "JetBrains", is 9 characters of mono at 14px (~78px) plus 26px left and
+      14px right padding, ~118px, so 120px still clears it.
+   2. Cell padding drops from 14px to 10px a side, returning 8px per column.
+
+   Together: (1032 - 120) / 7 = 130px per tier, less 20px padding = 110px of
+   text. That clears the longest plan label, "ChatGPT Pro 20x" (15 characters
+   at ~6.9px, ~103px), so it stays on one line instead of wrapping. */
+.datatable.compare thead th.rowlabel-col { width: 120px; }
+.datatable.compare tbody td { padding-left: 10px; padding-right: 10px; }
+.datatable.compare { table-layout: fixed; min-width: 1030px; }
 .datatable.compare tbody td { text-align: center; white-space: nowrap; }
+/* Row height floor. Every cell stacks three lines (plan name, monthly,
+   yearly), which measures 77px, but a cell holding only "Free" is a single
+   line and would collapse to about half its neighbors, reading as a divider
+   rather than a peer. On a table cell, height acts as a minimum, so this
+   only lifts the short rows. It is also the tell if a plan label ever starts
+   wrapping again: a four-line cell measures 94px, so any row taller than
+   77px means the column arithmetic above needs revisiting. The totals row is
+   excluded, carrying two lines by design. */
+.datatable.compare tbody tr:not(.total) td { height: 77px; }
 /* plan/product name: the readable label heading each cell (and the bare "Free"
    cells); ink like the other tables' row labels, while the figures stay muted
-   so this table matches the Effort and Coverage tables rather than shouting */
-.datatable.compare td .plan { display: block; margin-bottom: 2px; color: var(--ink); }
+   so this table matches the Effort and Coverage tables rather than shouting.
+   font-size .86em (~11px, in line with .datatable thead th's own ~10.9px)
+   keeps most labels on one line inside a tier column's 98px text budget
+   (126px less 28px cell padding). white-space: normal then lets the two that
+   do not fit wrap rather than widen the table: "ChatGPT Pro 20x" (16
+   characters, ~110px) breaks to "ChatGPT Pro" / "20x", and "All Products
+   Pack" would too if it were not spanning every column. The monthly and
+   yearly lines below stay nowrap, since a currency figure must never break
+   mid-line. */
+.datatable.compare td .plan { display: block; margin-bottom: 2px; color: var(--ink); font-size: .86em; white-space: normal; }
 /* yearly sits under the monthly, same muted weight as the rest of the table */
 .datatable.compare td .yr { display: block; margin-top: 1px; }
 .datatable.compare td .per { color: var(--muted); }             /* the /yr and /mo suffixes, dimmed so the numbers read first */
@@ -69,3 +101,28 @@
 /* single totals row: effective (blended) monthly leads, exact yearly on the
    line beneath, both carried at the row's bold ink weight */
 .datatable.compare tr.total .peryr { display: block; margin-top: 2px; }
+
+/* ---- add-ons table ----
+   A separate table, not extra rows on the cost table. An add-on attaches to
+   any tier, so it has no value under Essential/Advanced/.../Mythic; carrying
+   it as a colspan row would sit it under column headers that do not describe
+   it, which reads wrong to a screen reader walking the table. Its own table
+   gets headers that do apply (Plan, Monthly, Yearly), and the figures become
+   real columns instead of one stacked cell. Shape follows .effort rather
+   than .compare: values in cells, centered, no per-cell plan/price stack, so
+   .compare's 77px row floor deliberately does not reach it.
+   min-width: 190px rowlabel + 3 columns. The widest cell is "AI Ultimate"
+   (11 characters, mono at .92em of 14px, ~8.0px/char) at ~88px plus 28px
+   padding, ~116px; 120px/column clears it, and 190 + 3 * 120 = 550px. */
+.datatable.addons { min-width: 560px; }
+.datatable.addons thead th,
+.datatable.addons tbody td { text-align: center; }
+/* A vendor with two add-ons merges its label with rowspan, so that cell
+   belongs to the FIRST of the two rows. Core's row hover (`tr:hover th`)
+   therefore cannot reach it from the second row, which left the label dark
+   while its own row lit up. This lights the spanned label whenever the row
+   directly beneath it is hovered, so the merged cell reads the same in both
+   states. A row whose label is not spanned matches nothing here: the rule
+   resolves against the PREVIOUS row's th, and an unspanned previous row has
+   already been handled by core's own hover. */
+.datatable.addons tbody tr:has(+ tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
