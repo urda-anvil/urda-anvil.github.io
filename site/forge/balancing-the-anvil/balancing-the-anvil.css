@@ -113,7 +113,7 @@
 
 /* ---- add-ons table ----
    A separate table, not extra rows on the cost table. An add-on attaches to
-   any tier, so it has no value under Essential/Advanced/.../Mythic; carrying
+   any tier, so it has no value under Starter/Apprentice/.../Mythic; carrying
    it as a colspan row would sit it under column headers that do not describe
    it, which reads wrong to a screen reader walking the table. Its own table
    gets headers that do apply (Plan, Monthly, Yearly), and the figures become
