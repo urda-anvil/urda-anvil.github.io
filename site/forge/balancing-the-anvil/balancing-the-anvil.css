@@ -49,11 +49,20 @@
 .g-google .glabel { color: var(--rail-google); }
 
 /* ---- cost comparison table ---- */
-/* One "ladder" table: tiers across the top, vendors down the side. Each vendor
+/* A "ladder" table: tiers across the top, vendors down the side. Each vendor
    row merges the tiers a plan covers into a single span, so the row reads as a
    step chart and the comparison is structural rather than a grid to diff. Body
    figures lead with the monthly and show the yearly beneath; the totals row
    leads with the effective (blended) monthly and a dim exact yearly. */
+/* .compare is instantiated twice, once per focused vendor, as the two panels of
+   a core .tabgroup. The ladders are alternatives, not stages: the same seven
+   tiers reached by upgrading Anthropic first or OpenAI first, so exactly one is
+   ever on screen. That is why the width arithmetic below is unchanged by the
+   second table. A .tabpanel is flex-basis: 100% and alone on its line, and the
+   hidden panel is display: none, so each table still gets the full .wrap
+   content box rather than half of it. Vendor row order is identical in both
+   (Anthropic, OpenAI, Google, JetBrains) so switching tabs moves the figures,
+   not the rows. */
 /* Seven tiers have to fit the 1032px .wrap content box (1080px max-width less
    24px padding each side, see anvil-core.css .wrap). Two overrides buy the
    room, both scoped to .compare so Coverage, Effort, and Add-ons keep core's
