@@ -133,12 +133,14 @@
 .datatable.addons thead th.rowlabel-col { width: 120px; }
 .datatable.addons thead th,
 .datatable.addons tbody td { text-align: center; }
-/* A vendor with two add-ons merges its label with rowspan, so that cell
-   belongs to the FIRST of the two rows. Core's row hover (`tr:hover th`)
-   therefore cannot reach it from the second row, which left the label dark
-   while its own row lit up. This lights the spanned label whenever the row
-   directly beneath it is hovered, so the merged cell reads the same in both
-   states. A row whose label is not spanned matches nothing here: the rule
-   resolves against the PREVIOUS row's th, and an unspanned previous row has
+/* A vendor with several add-ons merges its label with rowspan, so that cell
+   belongs to the FIRST of those rows. Core's row hover (`tr:hover th`)
+   therefore cannot reach it from any later row, which left the label dark
+   while its own row lit up. These light the spanned label whenever the first
+   or the second row beneath it is hovered, so the merged cell reads the same
+   in every state. That covers a span of three; a deeper span needs another
+   step. A row whose label is not spanned matches nothing here: the rule
+   resolves against an earlier row's th, and an unspanned earlier row has
    already been handled by core's own hover. */
-.datatable.addons tbody tr:has(+ tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+.datatable.addons tbody tr:has(+ tr:hover) th,
+.datatable.addons tbody tr:has(+ tr + tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
