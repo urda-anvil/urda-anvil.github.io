@@ -157,9 +157,6 @@ hr {
 
 /* ---- Hero ---- */
 .hero { text-align: center; margin-bottom: 44px; }
-/* text-align only centers inline content; the spark heading below is a flex
-   row now (see .spark), so it needs its own centering to match. */
-.hero h1:has(> .spark) { justify-content: center; }
 .tagline {
   margin: 0 auto;
   max-width: 580px;
@@ -307,7 +304,13 @@ h1:has(> .spark) { display: flex; align-items: center; }
 /* ---- Generic content section ---- */
 .section { margin: 0 0 48px; }
 .section h2 { font-size: 18px; margin: 0 0 14px; }
-.section p { color: var(--muted); margin: 16px 2px; font-size: 14px; line-height: 1.6; }
+/* :where() is load-bearing here, exactly as it is for .wrap p a above. Written
+   plainly, `.section p` scores (0,1,1) and outranks every (0,1,0) component
+   class placed on a paragraph inside a section: .card-title and .card-desc on
+   the home page, plus .tagline, .lede, .flow-aside, .colophon, .foot-project,
+   and .creed. Zeroed to (0,0,0) this stays the default for unclassed prose and
+   loses to any component rule, which is the intent. */
+:where(.section p) { color: var(--muted); margin: 16px 2px; font-size: 14px; line-height: 1.6; }
 .section p code { font-family: var(--mono); color: var(--ember); font-size: .92em; }
 
 /* ---- Key/value reference table ---- */
