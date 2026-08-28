@@ -75,6 +75,27 @@
     </section>
 
     <section class="section">
+      <h2 id="top-nav">Top nav</h2>
+      <p><code>.topnav</code> is the family bar: a <code>.brand</code> lockup on the left,
+        then <code>.navlinks</code>. The link for the current page takes
+        <code>.active</code>, and a real nav pairs that class with
+        <code>aria-current="page"</code>. The specimen below is a real
+        <code>nav.topnav</code>, so this page carries two.</p>
+      <nav class="topnav" aria-label="Demo nav">
+        <div class="topnav-inner">
+          <a class="brand" href="#">
+            <img src="../res/img/icon-192.png" alt="" width="28" height="28">
+            <span>Urda Anvil</span>
+          </a>
+          <div class="navlinks">
+            <a href="#">A destination</a>
+            <a href="#" class="active">The current page</a>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <section class="section">
       <h2 id="hero">Hero</h2>
       <p><code>.hero</code> centers a <code>.logo</code> mark, an <code>h1</code>, and a
         <code>.tagline</code> - see the real thing on the home page. The dashed frame is
@@ -193,7 +214,7 @@
         <p class="foot-project">
           <a href="#">github.com/urda/some-project</a> <span class="sep" aria-hidden="true">&diams;</span>
           <a href="#">Apache 2.0</a> <span class="sep" aria-hidden="true">&diams;</span>
-          <span class="version"><a href="#">v1.2.3</a> (<a href="#">abc1234</a>)</span>
+          <a href="#">v1.2.3</a> (<a href="#">abc1234</a>)
         </p>
         <p class="creed">Working with AI is like working an anvil. You have to
           hammer at it for a while before anything useful takes shape.
@@ -203,13 +224,18 @@
 
     <section class="section">
       <h2 id="reference-table">Reference table</h2>
-      <p>The <code>.kv</code> key/value table for reference material.</p>
+      <p>The <code>.kv</code> key/value table for reference material. A <code>code</code>
+        span never wraps, so a key column stays on one line. In the last column it
+        wraps instead, so a long value cannot force the table wide. The last row below carries a
+        long value that exercises that override.</p>
       <table class="kv">
         <thead><tr><th>Key</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td><code>--ember</code></td><td>The forge accent that carries the family identity.</td></tr>
           <tr><td><code>--radius</code></td><td>Shared corner radius for panels and controls.</td></tr>
           <tr><td><code>--chip</code></td><td>Per-chip accent; one custom property drives text, fill, and ring.</td></tr>
+          <tr><td><code>--mono</code></td><td>The shared mono stack:
+            <code>'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, 'Liberation Mono', monospace</code>.</td></tr>
         </tbody>
       </table>
       <p><code>.glyph</code> keeps an emoji/icon column fixed-width so it doesn't jitter next
