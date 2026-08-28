@@ -96,8 +96,8 @@ h1 {
    :where() is load-bearing, not decoration: it zeroes the selector's
    specificity to (0,0,0) so this acts as a default that ANY component rule
    overrides. Written plainly as `.wrap p a` it would score (0,1,2) and
-   outrank .btn, .foot-project a, and .tagline a, repainting the 404 button
-   and the footer's project links. */
+   outrank .btn, .colophon a, and .tagline a, repainting the 404 button
+   and a project site's colophon links. */
 :where(.wrap p a) { color: var(--ember); text-decoration: none; }
 :where(.wrap p a:hover) { text-decoration: underline; }
 
@@ -307,8 +307,8 @@ h1:has(> .spark) { display: flex; align-items: center; }
 /* :where() is load-bearing here, exactly as it is for .wrap p a above. Written
    plainly, `.section p` scores (0,1,1) and outranks every (0,1,0) component
    class placed on a paragraph inside a section: .card-title and .card-desc on
-   the home page, plus .tagline, .lede, .flow-aside, .colophon, .foot-project,
-   and .creed. Zeroed to (0,0,0) this stays the default for unclassed prose and
+   the home page, plus .tagline, .lede, .flow-aside, .colophon, and .creed.
+   Zeroed to (0,0,0) this stays the default for unclassed prose and
    loses to any component rule, which is the intent. */
 :where(.section p) { color: var(--muted); margin: 16px 2px; font-size: 14px; line-height: 1.6; }
 .section p code { font-family: var(--mono); color: var(--ember); font-size: .92em; }
@@ -528,12 +528,6 @@ h1:has(> .spark) { display: flex; align-items: center; }
 .foot a { color: var(--ember); text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
 .foot .sep { margin: 0 10px; opacity: .5; }
-
-/* an optional project colophon row (repo, license, version) between the family
-   links and the creed; project sites only, dimmer than the family row */
-.foot-project { margin: 12px 0 0; font-size: 12px; }
-.foot-project a { color: var(--muted); }
-.foot-project a:hover { color: var(--ember); }
 
 /* the Anvil creed, appended under the shared .foot */
 .creed { margin: 14px 0 0; font-style: italic; line-height: 1.6; }
