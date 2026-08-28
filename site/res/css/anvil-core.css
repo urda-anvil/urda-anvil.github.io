@@ -1,7 +1,8 @@
 /* Anvil core - the shared design system for anvil.urda.com. Holds
    every page's primitives: tokens, base, top nav, hero, terminal window,
    page furniture, buttons, callout, nav cards, content sections, reference
-   tables, tabbed panels, code blocks, chips, data tables, and the footer.
+   tables, tabbed panels, code blocks, chips, data tables, the colophon, and
+   the footer.
    A page that genuinely diverges ships a small "rider" sheet loaded after
    this one (see README). It adds only page-specific variants and narrowly
    scoped overrides; shared primitive definitions remain here.
@@ -493,6 +494,24 @@ h1:has(> .spark) { display: flex; align-items: center; }
   background: color-mix(in srgb, var(--chip, var(--muted)) 14%, transparent);
   border: 1px solid color-mix(in srgb, var(--chip, var(--muted)) 30%, transparent);
 }
+
+/* ---- Colophon ---- */
+/* an optional project credits line (repo, license, version) that sits ABOVE
+   the footer, not inside it, so the .foot markup stays identical on every
+   anvil site. It carries the divider and the top gap that .foot normally
+   owns, so the two read as one band. Project sites only. */
+.colophon {
+  margin: 48px 0 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+.colophon a { color: var(--ember); text-decoration: none; }
+.colophon a:hover { text-decoration: underline; }
+.colophon .sep { margin: 0 10px; opacity: .5; }
+.colophon + .foot { margin-top: 14px; padding-top: 0; border-top: 0; }
 
 /* ---- Footer ---- */
 .foot {

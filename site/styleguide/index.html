@@ -159,10 +159,33 @@
     <section class="section">
       <h2 id="footer">Footer</h2>
       <p><code>.foot</code> is the family footer: the three family links, then the
-        <code>.creed</code>. A project site inserts one <code>.foot-project</code> row
-        between them - a smaller, dimmer colophon for its repo, license, and version
-        (live on <a href="../forged-statusline/">Forged Status Line</a>). The specimen
-        below is a real <code>footer.foot</code>, so this page carries a second one.</p>
+        <code>.creed</code>. Every anvil site ships that markup unchanged. A project site
+        adds its repo and license in a <code>.colophon</code> row above the footer, as a
+        sibling, never inside it. The colophon carries the hairline and the top gap that
+        <code>.foot</code> owns on its own, so the two read as one band. Both specimens
+        below are real <code>footer.foot</code> elements, so this page carries three.</p>
+
+      <div class="subhead">.colophon + .foot <span class="note">(current)</span></div>
+      <p class="colophon">
+        <a href="#">github.com/urda/some-project</a> <span class="sep" aria-hidden="true">&diams;</span>
+        <a href="#">Apache 2.0</a> <span class="sep" aria-hidden="true">&diams;</span>
+        <a href="#">v1.2.3</a>
+      </p>
+      <footer class="foot">
+        <a href="#">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+        <a href="#">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+        <a href="#">anvil.urda.com</a>
+        <p class="creed">Working with AI is like working an anvil. You have to
+          hammer at it for a while before anything useful takes shape.
+          <span class="creed-attr">- Peter Urda</span></p>
+      </footer>
+
+      <div class="subhead">.foot-project <span class="note">(deprecated, use .colophon)</span></div>
+      <p><code>.foot-project</code> put the same row inside the footer, between the family
+        links and the creed. That made <code>.foot</code> markup differ between a project
+        site and apex. It is still live on <a href="../forged-statusline/">Forged Status
+        Line</a>, so core keeps the rule until that site adopts <code>.colophon</code>. Do
+        not use it on a new site.</p>
       <footer class="foot">
         <a href="#">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
         <a href="#">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
