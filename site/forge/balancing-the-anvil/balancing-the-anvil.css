@@ -144,3 +144,12 @@
    already been handled by core's own hover. */
 .datatable.addons tbody tr:has(+ tr:hover) th,
 .datatable.addons tbody tr:has(+ tr + tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+
+/* ---- model doc links ---- */
+/* The Model Coverage and Effort row labels link to each vendor's model doc
+   page. The link stays quiet: it inherits the label's color and weight, and
+   only an underline on hover or keyboard focus reveals it. Core sets no base
+   "a" rule, so without this the labels would render browser-default blue. */
+.datatable th.rowlabel a { color: inherit; font-weight: inherit; text-decoration: none; }
+.datatable th.rowlabel a:hover,
+.datatable th.rowlabel a:focus-visible { text-decoration: underline; }
