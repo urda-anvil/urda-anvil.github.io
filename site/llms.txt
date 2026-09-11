@@ -1,0 +1,18 @@
+# Urda Anvil
+
+Urda Anvil is a collection of tools, settings, prompts, and software that Urda
+uses to build software with LLMs. The anvil.urda.com site documents that
+workbench. It lists the models on the anvil, the default MCP servers and their
+tool permissions, and a set of bookmarks.
+
+Forged Status Line is a two-row status line for Claude Code. The top row shows
+the model and the modes. The bottom row shows gauges for context use and for
+the 5-hour and 7-day rate limits. The renderer is a bash script that uses jq,
+under the Apache 2.0 license.
+
+## Links
+
+- [Urda Anvil README](https://github.com/urda-anvil/urda-anvil.github.io/blob/master/README.md): How the anvil.urda.com site is built
+- [urda-anvil/urda-anvil.github.io](https://github.com/urda-anvil/urda-anvil.github.io): Source for anvil.urda.com
+- [urda/forged-statusline](https://github.com/urda/forged-statusline): Source for the Forged Status Line renderer
+- [Forged Status Line](https://anvil.urda.com/forged-statusline/): Demo and gallery
