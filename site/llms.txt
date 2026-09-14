@@ -12,6 +12,9 @@ under the Apache 2.0 license.
 
 ## Links
 
+- [Models](https://anvil.urda.com/forge/balancing-the-anvil/): Models on the anvil
+- [MCP servers](https://anvil.urda.com/forge/mcp/): Default servers and tool permissions
+- [Bookmarks](https://anvil.urda.com/bookmarks/): Tools and reference links
 - [Urda Anvil README](https://github.com/urda-anvil/urda-anvil.github.io/blob/master/README.md): How the anvil.urda.com site is built
 - [urda-anvil/urda-anvil.github.io](https://github.com/urda-anvil/urda-anvil.github.io): Source for anvil.urda.com
 - [urda/forged-statusline](https://github.com/urda/forged-statusline): Source for the Forged Status Line renderer
