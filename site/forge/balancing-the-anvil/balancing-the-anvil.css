@@ -145,6 +145,18 @@
 .datatable.addons tbody tr:has(+ tr:hover) th,
 .datatable.addons tbody tr:has(+ tr + tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
 
+/* ---- picked plan table ----
+   The "Urda's Anvil" table: one row per vendor, with a Source column that
+   names the tier or marks an add-on. Shape follows .addons (120px rowlabel,
+   centered cells) so the Cost-area tables line up as a set.
+   min-width: 120px rowlabel + 4 even columns. The widest cell is "All
+   Products Pack" (17 characters, mono at .92em of 14px, ~7.7px/char) at
+   ~131px plus 28px padding, ~159px; 770px gives each column ~162px. */
+.datatable.picked { min-width: 770px; }
+.datatable.picked thead th.rowlabel-col { width: 120px; }
+.datatable.picked thead th,
+.datatable.picked tbody td { text-align: center; }
+
 /* ---- model doc links ---- */
 /* The Model Coverage and Effort row labels link to each vendor's model doc
    page. The link stays quiet: it inherits the label's color and weight, and
