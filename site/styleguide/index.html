@@ -305,6 +305,25 @@ enabled_tools = [
     </section>
 
     <section class="section">
+      <h2 id="page-rail">Page rail</h2>
+      <p><code>.pagerail</code>: the "On this page" outline. Inside <code>.withpagerail</code> it is
+        a sticky 178px column beside the content, and below 1024px it stacks above it.
+        <code>a.totop</code> in the first <code>li</code> sits above a divider, <code>a.sub</code>
+        indents a child entry, <code>li.ruled</code> opens a new run, and <code>a.on</code> marks
+        the section in view. <code>anvil-pagerail.js</code> sets <code>.on</code> as the reader scrolls.</p>
+      <nav class="pagerail demo-pagerail" aria-label="Page rail example">
+        <p class="pagerail-title">On this page</p>
+        <ul>
+          <li><a class="totop" href="#page-rail">Top</a></li>
+          <li><a href="#design-tokens">Design tokens</a></li>
+          <li><a class="sub on" href="#chips" aria-current="true">Chips</a></li>
+          <li><a class="sub" href="#rule">Rule</a></li>
+          <li class="ruled"><a href="#data-table-reference">Data table: reference</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <section class="section">
       <h2 id="data-table-reference">Data table: reference</h2>
       <p>A plain <code>.datatable</code> inside its <code>.datatable-wrap</code> panel, no
         shape modifier: the base bordered, striped-on-hover grid.</p>

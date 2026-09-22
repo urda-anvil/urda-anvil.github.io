@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="bookmarks.css">
   <script src="../res/js/anvil-local.js" defer></script>
   <script src="../res/js/anvil-anchors.js" defer></script>
+  <script src="../res/js/anvil-pagerail.js" defer></script>
   <script src="../res/js/anvil-analytics.js" defer></script>
 </head>
 <body>
@@ -39,10 +40,13 @@
 
   <main class="wrap">
     <div class="page-head">
-      <h1><img class="spark" src="../res/img/spark.svg" alt=""> Bookmarks</h1>
+      <h1 id="top"><img class="spark" src="../res/img/spark.svg" alt=""> Bookmarks</h1>
     </div>
 
-    <div id="bookmarks"></div>
+    <div class="withpagerail">
+      <nav class="pagerail" id="page-rail" aria-label="On this page"></nav>
+      <div id="bookmarks"></div>
+    </div>
 
     <footer class="foot">
       <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
@@ -223,6 +227,12 @@
       "Google": "var(--rail-google)",
     };
 
+    // Fragment id for a vendor or group heading, shared by the headings and the
+    // page rail so the two can never disagree.
+    function slug(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
     // Render a labeled divider per vendor, then one rail-accented section per
     // group: colored left rail + uppercase header, then compact rows of
     // name / dotted leader / shortened URL. Static.
@@ -233,7 +243,7 @@
       vendorHeading.className = "bm-vendor";
       vendorHeading.style.setProperty("--rail", VENDOR_ACCENTS[vendorBlock.vendor] || "var(--ember)");
       // Stable fragment id so anvil-anchors.js can hang a permalink on it.
-      vendorHeading.id = vendorBlock.vendor.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      vendorHeading.id = slug(vendorBlock.vendor);
       vendorHeading.textContent = vendorBlock.vendor;
       root.appendChild(vendorHeading);
 
@@ -245,7 +255,7 @@
         const title = document.createElement("h3");
         title.className = "bm-group-title";
         // Stable fragment id so anvil-anchors.js can hang a permalink on it.
-        title.id = section.group.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        title.id = slug(section.group);
         title.textContent = section.group;
         group.appendChild(title);
 
@@ -287,6 +297,39 @@
         root.appendChild(group);
       }
     });
+
+    // On-this-page rail, built from VENDORS rather than scraped from the
+    // rendered headings: anvil-anchors.js appends a "#" permalink inside every
+    // heading that carries an id, which would otherwise land in the labels.
+    // Each group entry carries its group's rail color for the dot in
+    // bookmarks.css. anvil-pagerail.js lights the entry in view.
+    const rail = document.getElementById("page-rail");
+
+    const railTitle = document.createElement("p");
+    railTitle.className = "pagerail-title";
+    railTitle.textContent = "On this page";
+    rail.appendChild(railTitle);
+
+    const railList = document.createElement("ul");
+    function addRailEntry(id, label, className, accent) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#" + id;
+      a.textContent = label;
+      if (className) a.className = className;
+      if (accent) a.style.setProperty("--rail", accent);
+      li.appendChild(a);
+      railList.appendChild(li);
+    }
+
+    addRailEntry("top", "Bookmarks", "totop");
+    for (const vendorBlock of VENDORS) {
+      addRailEntry(slug(vendorBlock.vendor), vendorBlock.vendor);
+      for (const section of vendorBlock.groups) {
+        addRailEntry(slug(section.group), section.group, "sub", groupAccent(section.group));
+      }
+    }
+    rail.appendChild(railList);
   </script>
 </body>
 </html>

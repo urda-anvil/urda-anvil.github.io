@@ -60,11 +60,11 @@ there, it isn't part of the system.
 ## Primitives
 
 Top nav, hero + tagline, `.page-head`, `.btn`, `.hint` callout, nav cards,
-`.section`, the `.kv` reference table, `.codeblock`, `.chip`, `.datatable`
-and its status marks/legend, and the footer all live in `anvil-core.css`. A
-styleguide page renders every one of them once and is the live catalog and
-visual regression check: if a change to core still looks right there, the
-contract holds. It lives at `site/styleguide/` and serves, unlinked, at
+`.section`, the `.kv` reference table, `.codeblock`, `.chip`, the `.pagerail`
+"On this page" outline, `.datatable` and its status marks/legend, and the
+footer all live in `anvil-core.css`. A styleguide page renders every one of
+them once and is the live catalog and visual regression check: if a change to
+core still looks right there, the contract holds. It lives at `site/styleguide/` and serves, unlinked, at
 `/styleguide/`.
 
 One idiom worth calling out: `.chip` takes a single `--chip` accent custom

@@ -90,3 +90,20 @@
   .bm-leader { display: none; }
   .bm-url { flex: 1 1 100%; white-space: normal; word-break: break-all; }
 }
+
+/* ---- Page rail: group color dots ---- */
+/* Each group entry in the core .pagerail carries its group's --rail (set
+   inline by the renderer), shown as a dot in the entry's left padding so the
+   rail matches the colored section rails beside it. Absolute, so a long
+   group name wraps under its own text rather than under the dot. */
+.pagerail a.sub { position: relative; }
+.pagerail a.sub::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rail, var(--ember));
+}

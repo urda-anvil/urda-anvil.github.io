@@ -22,6 +22,7 @@
   <script src="../../res/js/prism.js" defer></script>
   <script src="../../res/js/anvil-local.js" defer></script>
   <script src="../../res/js/anvil-anchors.js" defer></script>
+  <script src="../../res/js/anvil-pagerail.js" defer></script>
   <script src="../../res/js/anvil-analytics.js" defer></script>
 </head>
 <body>
@@ -67,8 +68,8 @@
 
     <nav class="cards" id="server-cards" aria-label="Servers"></nav>
 
-    <div class="withrail">
-      <nav class="rail" id="page-rail" aria-label="On this page"></nav>
+    <div class="withpagerail">
+      <nav class="pagerail" id="page-rail" aria-label="On this page"></nav>
 
       <div class="railed">
     <div id="server-detail"></div>
@@ -660,12 +661,11 @@ default_tools_approval_mode = "approve"</code></pre>
     railEntries.push({ id: "configuration-codex", label: "Configuration · Codex", sub: false });
 
     const railTitle = document.createElement("p");
-    railTitle.className = "rail-title";
+    railTitle.className = "pagerail-title";
     railTitle.textContent = "On this page";
     rail.appendChild(railTitle);
 
     const railList = document.createElement("ul");
-    const railLinks = [];
     for (const entry of railEntries) {
       const li = document.createElement("li");
       const a = document.createElement("a");
@@ -676,50 +676,8 @@ default_tools_approval_mode = "approve"</code></pre>
       if (entry.ruled) li.className = "ruled";
       li.appendChild(a);
       railList.appendChild(li);
-      railLinks.push({ a, target: document.getElementById(entry.id) });
     }
     rail.appendChild(railList);
-
-    // Light the last heading to pass under the rail's own top line. Tracking
-    // position rather than intersection keeps a section taller than the
-    // viewport lit for as long as it is on screen.
-    const RAIL_TOP = 24;          // matches .rail top and the headings' scroll-margin-top
-    let currentLink = null;
-
-    function syncRail() {
-      const atBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      let active = railLinks[0];
-      if (atBottom) {
-        active = railLinks[railLinks.length - 1];
-      } else {
-        for (const link of railLinks) {
-          if (link.target && link.target.getBoundingClientRect().top <= RAIL_TOP + 8) {
-            active = link;
-          }
-        }
-      }
-      if (active === currentLink) return;
-      if (currentLink) {
-        currentLink.a.classList.remove("on");
-        currentLink.a.removeAttribute("aria-current");
-      }
-      active.a.classList.add("on");
-      active.a.setAttribute("aria-current", "true");
-      currentLink = active;
-    }
-
-    let railTicking = false;
-    window.addEventListener("scroll", () => {
-      if (railTicking) return;
-      railTicking = true;
-      requestAnimationFrame(() => {
-        syncRail();
-        railTicking = false;
-      });
-    }, { passive: true });
-    window.addEventListener("resize", syncRail, { passive: true });
-    syncRail();
   </script>
 </body>
 </html>

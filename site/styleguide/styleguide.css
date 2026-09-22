@@ -27,3 +27,8 @@
 
 /* ---- terminal demo content ---- */
 .term-sample { margin: 0; font-family: var(--mono); font-size: 13px; color: var(--ink); }
+
+/* ---- page rail demo width ---- */
+/* the specimen stands alone, not in a .withpagerail grid, so cap it to the
+   178px rail column it gets on a real page */
+.demo-pagerail { max-width: 178px; }
