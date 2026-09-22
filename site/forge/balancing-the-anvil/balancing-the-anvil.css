@@ -61,15 +61,16 @@
    second table. A .tabpanel is flex-basis: 100% and alone on its line, and the
    hidden panel is display: none, so each table still gets the full .wrap
    content box rather than half of it. Vendor row order is identical in both
-   (Anthropic, OpenAI, Google, JetBrains) so switching tabs moves the figures,
-   not the rows. */
+   (Anthropic, OpenAI) so switching tabs moves the figures, not the rows.
+   Google and JetBrains sit in the add-ons table instead: neither changes
+   from tier to tier, so a row for either carried no ladder signal. */
 /* Seven tiers have to fit the 1032px .wrap content box (1080px max-width less
    24px padding each side, see anvil-core.css .wrap). Two overrides buy the
    room, both scoped to .compare so Coverage, Effort, and Add-ons keep core's
    defaults:
 
    1. The rowlabel drops from core's shared 190px to 120px. The widest label,
-      "JetBrains", is 9 characters of mono at 14px (~78px) plus 26px left and
+      "Anthropic", is 9 characters of mono at 14px (~78px) plus 26px left and
       14px right padding, ~118px, so 120px still clears it.
    2. Cell padding drops from 14px to 10px a side, returning 8px per column.
 
@@ -96,8 +97,7 @@
    keeps most labels on one line inside a tier column's 98px text budget
    (126px less 28px cell padding). white-space: normal then lets the two that
    do not fit wrap rather than widen the table: "ChatGPT Pro 20x" (16
-   characters, ~110px) breaks to "ChatGPT Pro" / "20x", and "All Products
-   Pack" would too if it were not spanning every column. The monthly and
+   characters, ~110px) breaks to "ChatGPT Pro" / "20x". The monthly and
    yearly lines below stay nowrap, since a currency figure must never break
    mid-line. */
 .datatable.compare td .plan { display: block; margin-bottom: 2px; color: var(--ink); font-size: .86em; white-space: normal; }
@@ -121,29 +121,26 @@
    than .compare: values in cells, centered, no per-cell plan/price stack, so
    .compare's 77px row floor deliberately does not reach it.
    The rowlabel matches .compare's 120px rather than core's shared 190px. The
-   two tables stack in the same section and both open on a Vendor column of
-   the same four names, so a 70px difference reads as a misaligned divider
+   two tables stack in the same section and both open on a Vendor column, so
+   a 70px difference reads as a misaligned divider
    between a pair. Content still clears it: the widest label, "JetBrains", is
    9 characters of mono at 14px (~78px) plus 26px left and 14px right padding,
    ~118px.
-   min-width: 120px rowlabel + 3 columns. The widest cell is "AI Ultimate"
-   (11 characters, mono at .92em of 14px, ~8.0px/char) at ~88px plus 28px
-   padding, ~116px; 120px/column clears it, and 120 + 3 * 120 = 480px. */
-.datatable.addons { min-width: 490px; }
+   min-width: 120px rowlabel + 3 columns. The widest cell is "All Products
+   Pack, year 3+" (26 characters, mono at .92em of 14px, ~8.0px/char) at
+   ~208px plus 28px padding, ~236px; the Plan column gets 240px and the two
+   figure columns 120px each, so 120 + 240 + 2 * 120 = 600px. */
+.datatable.addons { min-width: 600px; }
 .datatable.addons thead th.rowlabel-col { width: 120px; }
 .datatable.addons thead th,
 .datatable.addons tbody td { text-align: center; }
 /* A vendor with several add-ons merges its label with rowspan, so that cell
    belongs to the FIRST of those rows. Core's row hover (`tr:hover th`)
    therefore cannot reach it from any later row, which left the label dark
-   while its own row lit up. These light the spanned label whenever the first
-   or the second row beneath it is hovered, so the merged cell reads the same
-   in every state. That covers a span of three; a deeper span needs another
-   step. A row whose label is not spanned matches nothing here: the rule
-   resolves against an earlier row's th, and an unspanned earlier row has
-   already been handled by core's own hover. */
-.datatable.addons tbody tr:has(+ tr:hover) th,
-.datatable.addons tbody tr:has(+ tr + tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+   while its own row lit up. Each vendor gets its own tbody, and this lights
+   the label whenever any row in that tbody is hovered, so the merged cell
+   reads the same in every state at any span depth. */
+.datatable.addons tbody:has(tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
 
 /* ---- picked plan table ----
    The "Urda's Anvil" table: one row per vendor, with a Source column that
