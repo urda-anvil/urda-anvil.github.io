@@ -7,7 +7,7 @@
 /* Slightly larger than the core defaults, tuned for these two tables only
    (scoped so the cost/matrix tables keep the base sizes). */
 .datatable thead th { text-align: center; }
-.datatable.grid .marklabel { font-size: .8em; }    /* riff-* captions under the matrix dots */
+.datatable.grid .marklabel { font-size: .8em; }    /* riff captions under the matrix dots */
 .datatable.effort tbody td { font-size: 15px; text-align: center; } /* effort values and change marks */
 
 /* min-width overrides core's defaults (600px grid / no default for effort)
@@ -17,7 +17,7 @@
    .78em of 14px = ~11px, 14 chars) at ~123px including its 28px padding;
    630px gives each column ~147px, clearing that with room to spare. */
 .datatable.effort { min-width: 630px; }
-/* 190px rowlabel + 4 even columns: the widest cell is the "riff-gemini-flash"
+/* 190px rowlabel + 4 even columns: the widest cell is the "riff gemini-flash"
    marklabel (mono, .8em of 14px = ~11px, 17 chars) at ~144px including its
    28px padding, and it must also clear the 3px --mk rail on the last
    column; 880px gives each column ~172px, clearing both with room to spare. */
