@@ -96,18 +96,19 @@ it by host, and pull the facts each kind can give.
 
 | Kind | How to recognize it | What it supplies |
 | --- | --- | --- |
-| Vendor doc page | Host matches a doc URL pattern in the vendor table | The slug, the model id, the Vendor Default effort for Anthropic and Google, any deprecation note for the predecessor |
+| Vendor doc page | Host matches a doc URL pattern in the vendor table | The slug, the model id, any deprecation note for the predecessor |
+| Gemini thinking page | The URL `https://ai.google.dev/gemini-api/docs/thinking` | The Vendor Default effort for Google, from the Default Thinking column |
 | Codex manifest | The local file `~/.codex/models_cache.json` | The Vendor Default effort for OpenAI, as `default_reasoning_level` on the entry for the slug |
 | Vendor blog or changelog | The vendor's own host, not a doc path | Whether the predecessor stays supported, and the release date |
 | Third-party news | Any other host, such as a news thread | The signal that a model shipped. Skip the fetch |
-| Pasted switcher or screenshot | Text or image in the prompt | The harness columns, and the Anvil Target effort the user runs |
+| Pasted switcher or screenshot | Text or image in the prompt | The harness columns, the Anvil Target effort the user runs, and the Vendor Default effort for Anthropic |
 
 Each field has one source. There is no precedence to resolve between kinds.
 
 | Field | Source | Fallback |
 | --- | --- | --- |
 | Slug and doc href | Vendor doc page | None. Ask for the doc URL |
-| Vendor Default | Vendor doc page for Anthropic and Google. Codex manifest for OpenAI | None. Ask when the source states no default |
+| Vendor Default | Claude picker for Anthropic. Codex manifest for OpenAI. Gemini thinking page for Google | None. Ask when the source states no default |
 | Anvil Target | Switcher or screenshot | The launcher line in bash_local, read only. Ask on an add with no switcher |
 | Harness columns | Switcher or screenshot | The predecessor row on a bump. Ask on an add |
 | Predecessor status | Vendor blog or changelog | Replace in place, the precedent on this site |
@@ -186,18 +187,25 @@ State both to the user on every add and on every bump that changes effort.
 2. For an add or a bump, verify the doc page. Run `curl -sIL` against the
    doc URL from the prompt. Require a 200 status and no cross-host redirect.
    When the page is missing, stop and report. For a retire, skip this step.
-3. For an add or a bump, read the Vendor Default. Anthropic and Google
-   state it on the doc page. Fetch it with WebFetch. Anthropic calls it the
-   default effort. Google calls it the default thinking level. OpenAI runs
+3. For an add or a bump, read the Vendor Default. The value is the default
+   of the harness, not the default of the API. Anthropic runs through
+   Claude Code. Take the default from the Claude picker in the prompt. The
+   Anthropic doc page states the API default, which can differ from the
+   Claude Code default. Do not use it. Google states the default on the
+   Gemini thinking page, in the Default Thinking column. Fetch it with
+   WebFetch. The Google model doc page states no default. OpenAI runs
    through Codex, and Codex ships its own default for each model. Read
    `default_reasoning_level` for the slug in `~/.codex/models_cache.json`.
    The OpenAI API doc page states the API default, which can differ from
-   the Codex default. Do not use it. When the source states no default, or
-   the manifest has no entry for the slug, ask. Do not infer one.
+   the Codex default. Do not use it. When the source states no default,
+   the prompt holds no picker, or the manifest has no entry for the slug,
+   ask. Do not infer one.
 4. Decide the open values. Ask the user with one AskUserQuestion call when
    any of these is open. Batch the questions.
    - Bump: replace the predecessor row in place, or add a row and keep it.
    - Bump or add: the Anvil Target, when no switcher is in the prompt.
+     For Anthropic, propose one level above the Vendor Default. The user
+     decides.
    - Add: the riff launcher name for the marklabel, and the harness columns.
    The interview ends the turn that carried the tool grants. The next edit
    may prompt for permission once. That is expected.
@@ -231,7 +239,7 @@ came from.
 | Field | Written value | Source |
 | --- | --- | --- |
 | Slug and href | | vendor doc URL |
-| Vendor Default | | vendor doc URL, or the Codex manifest path |
+| Vendor Default | | Claude picker, the Codex manifest path, or the Gemini thinking page |
 | Anvil Target | | switcher, screenshot, or launcher line |
 | Harness columns | | switcher, screenshot, or predecessor row |
 
