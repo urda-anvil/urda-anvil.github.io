@@ -301,8 +301,9 @@
     // On-this-page rail, built from VENDORS rather than scraped from the
     // rendered headings: anvil-anchors.js appends a "#" permalink inside every
     // heading that carries an id, which would otherwise land in the labels.
-    // Each group entry carries its group's rail color for the dot in
-    // bookmarks.css. anvil-pagerail.js lights the entry in view.
+    // Each group entry opts into the core .dotted mark with its group's rail
+    // color, so the rail matches the colored section rails beside it.
+    // anvil-pagerail.js lights the entry in view.
     const rail = document.getElementById("page-rail");
 
     const railTitle = document.createElement("p");
@@ -326,7 +327,7 @@
     for (const vendorBlock of VENDORS) {
       addRailEntry(slug(vendorBlock.vendor), vendorBlock.vendor);
       for (const section of vendorBlock.groups) {
-        addRailEntry(slug(section.group), section.group, "sub", groupAccent(section.group));
+        addRailEntry(slug(section.group), section.group, "sub dotted", groupAccent(section.group));
       }
     }
     rail.appendChild(railList);
