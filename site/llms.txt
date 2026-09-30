@@ -1,5 +1,7 @@
 # Urda Anvil
 
+> Tools, settings, rules, and software that Urda uses to build with LLMs.
+
 Urda Anvil is a collection of tools, settings, prompts, and software that Urda
 uses to build software with LLMs. The anvil.urda.com site documents that
 workbench. It lists the models on the anvil, the default MCP servers and their
@@ -10,14 +12,21 @@ the model and the modes. The bottom row shows gauges for context use and for
 the 5-hour and 7-day rate limits. The renderer is a bash script that uses jq,
 under the Apache 2.0 license.
 
-## Links
+## Pages
 
 - [Models](https://anvil.urda.com/forge/balancing-the-anvil/): Models on the anvil
 - [MCP servers](https://anvil.urda.com/forge/mcp/): Default servers and tool permissions
 - [Rules](https://anvil.urda.com/forge/rules/): Agent rules in plain Markdown, with a raw file for each
-- [STE rule](https://anvil.urda.com/forge/rules/raw/ste.md): Simplified Technical English as an always-on rule
 - [Bookmarks](https://anvil.urda.com/bookmarks/): Tools and reference links
-- [Urda Anvil README](https://github.com/urda-anvil/urda-anvil.github.io/blob/master/README.md): How the anvil.urda.com site is built
+- [Forged Status Line](https://anvil.urda.com/forged-statusline/): A status line for Claude Code, with a demo and gallery
+
+## Rules
+
+- [ste.md](https://anvil.urda.com/forge/rules/raw/ste.md): Simplified Technical English, always-on
+
+## Optional
+
+- [Styleguide](https://anvil.urda.com/styleguide/): Design system for the site
+- [Site README](https://github.com/urda-anvil/urda-anvil.github.io/blob/master/README.md): How the anvil.urda.com site is built
 - [urda-anvil/urda-anvil.github.io](https://github.com/urda-anvil/urda-anvil.github.io): Source for anvil.urda.com
-- [urda/forged-statusline](https://github.com/urda/forged-statusline): Source for the Forged Status Line renderer
-- [Forged Status Line](https://anvil.urda.com/forged-statusline/): Demo and gallery
+- [urda/forged-statusline](https://github.com/urda/forged-statusline): Source for the Forged Status Line, a status line for Claude Code
