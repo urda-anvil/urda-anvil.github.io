@@ -3,7 +3,7 @@
 Urda Anvil is a collection of tools, settings, prompts, and software that Urda
 uses to build software with LLMs. The anvil.urda.com site documents that
 workbench. It lists the models on the anvil, the default MCP servers and their
-tool permissions, and a set of bookmarks.
+tool permissions, the rules the anvil gives its agents, and a set of bookmarks.
 
 Forged Status Line is a two-row status line for Claude Code. The top row shows
 the model and the modes. The bottom row shows gauges for context use and for
@@ -14,6 +14,8 @@ under the Apache 2.0 license.
 
 - [Models](https://anvil.urda.com/forge/balancing-the-anvil/): Models on the anvil
 - [MCP servers](https://anvil.urda.com/forge/mcp/): Default servers and tool permissions
+- [Rules](https://anvil.urda.com/forge/rules/): Agent rules in plain Markdown, with a raw file for each
+- [STE rule](https://anvil.urda.com/forge/rules/raw/ste.md): Simplified Technical English as an always-on rule
 - [Bookmarks](https://anvil.urda.com/bookmarks/): Tools and reference links
 - [Urda Anvil README](https://github.com/urda-anvil/urda-anvil.github.io/blob/master/README.md): How the anvil.urda.com site is built
 - [urda-anvil/urda-anvil.github.io](https://github.com/urda-anvil/urda-anvil.github.io): Source for anvil.urda.com

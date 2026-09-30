@@ -13,6 +13,9 @@
     <loc>https://anvil.urda.com/forge/mcp/</loc>
   </url>
   <url>
+    <loc>https://anvil.urda.com/forge/rules/</loc>
+  </url>
+  <url>
     <loc>https://anvil.urda.com/styleguide/</loc>
   </url>
 </urlset>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; Rules</title>
+  <meta name="description" content="Rules from the anvil, in plain Markdown. Save one, or give its URL to your agent.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rules">
+  <meta property="og:description" content="Rules from the anvil, in plain Markdown. Save one, or give its URL to your agent.">
+  <meta property="og:url" content="https://anvil.urda.com/forge/rules/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/forge/rules/">
+  <link rel="icon" href="../../res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="../../res/img/apple-touch-icon.png">
+  <link rel="manifest" href="../../res/img/site.webmanifest">
+  <link rel="stylesheet" href="../../res/css/anvil-core.css">
+  <link rel="stylesheet" href="rules.css">
+  <script src="../../res/js/anvil-local.js" defer></script>
+  <script src="../../res/js/anvil-anchors.js" defer></script>
+  <script src="../../res/js/anvil-pagerail.js" defer></script>
+  <script src="../../res/js/anvil-analytics.js" defer></script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="../../">
+        <img src="../../res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="../../">Home</a>
+        <a href="../../forged-statusline/">Forged Status Line</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header>
+      <h1 id="top"><img class="spark" src="../../res/img/spark.svg" alt=""> Rules</h1>
+    </header>
+    <p class="lede">Rules from the anvil, in plain Markdown. Save a file,
+      or give its raw URL to your agent.</p>
+
+    <section class="section rules-intro">
+      <p>Rules are constant decisions, instructions, standards, and other
+        constraints that shape how agents behave. They are stored, shared, and
+        referenced as plain Markdown files so any agent can load them. Every
+        rule from the anvil has its own section here, with background or
+        important details included.</p>
+      <p>Each rule carries a tag for how it loads. An
+        <span class="chip load-chip always">always-on</span> rule stays in
+        your session context the entire time. An
+        <span class="chip load-chip ondemand">on-demand</span> rule sets its
+        conditions in frontmatter, and it works best in a harness that can
+        load it on demand.</p>
+    </section>
+
+    <!-- To add a rule: copy it into raw/, add one table row, one rail entry,
+         and one <section class="section rule">. -->
+    <section class="rules-catalog">
+      <div class="rules-index-scroll" role="region" aria-label="Rules index" tabindex="0">
+        <table class="kv rules-index">
+          <thead>
+            <tr>
+              <th scope="col">Rule</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Loads</th>
+              <th scope="col">Raw file</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="#ste">Simplified Technical English</a></td>
+              <td>The agent writes short, plain, exact prose.</td>
+              <td><span class="chip load-chip always">always-on</span></td>
+              <td><a href="raw/ste.md"><code>ste.md</code></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="withpagerail">
+      <nav class="pagerail" aria-label="On this page">
+        <p class="pagerail-title">On this page</p>
+        <ul>
+          <li><a class="totop" href="#top">Rules</a></li>
+          <li><a href="#ste">Simplified Technical English</a></li>
+        </ul>
+      </nav>
+
+      <div class="railed">
+        <section class="section rule">
+          <h2 id="ste">Simplified Technical English
+            <span class="chip load-chip always">always-on</span></h2>
+          <p>Makes the agent write short sentences in the active voice, with
+            one term for each concept. It covers replies, pull request text,
+            and documentation. It does not touch code, quoted text, or tool
+            output.</p>
+          <pre class="codeblock rule-url"><code>https://anvil.urda.com/forge/rules/raw/ste.md</code></pre>
+          <p>This rule is a subset of ASD-STE100 Simplified Technical English,
+            Issue 9, written for coding agents. It paraphrases the rules of the
+            standard and cites their numbers. It does not contain the text of
+            the standard or its dictionary, and it does not make output STE
+            compliant. The standard is free from ASD:
+            <a href="https://www.asd-ste100.org/request.html">request a copy</a>.</p>
+          <details data-src="raw/ste.md">
+            <summary>Show the rule</summary>
+            <pre class="codeblock"><code>Loading... If nothing shows, open <a href="raw/ste.md">ste.md</a>.</code></pre>
+          </details>
+        </section>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+
+  <script>
+    // Each rule's full text lives only in raw/, so the page fetches it the
+    // first time a reader opens "Show the rule" instead of keeping a copy.
+    for (const details of document.querySelectorAll("details[data-src]")) {
+      details.addEventListener("toggle", async () => {
+        if (!details.open || details.dataset.loaded) return;
+        const code = details.querySelector("code");
+        try {
+          const response = await fetch(details.dataset.src);
+          if (!response.ok) throw new Error(response.status);
+          // read the whole body before the fallback link is cleared, so a
+          // failed read leaves the link in place
+          const text = await response.text();
+          // Prism has no Markdown grammar, so tint the headings by hand:
+          // each "#" line becomes a span, and everything else stays text.
+          code.textContent = "";
+          for (const line of text.split("\n")) {
+            if (line.startsWith("#")) {
+              const heading = document.createElement("span");
+              heading.className = "md-heading";
+              heading.textContent = line;
+              code.append(heading, "\n");
+            } else {
+              code.append(line + "\n");
+            }
+          }
+          details.dataset.loaded = "true";
+        } catch {
+          // keep the fallback link that the markup already shows
+        }
+      });
+    }
+  </script>
+</body>
+</html>

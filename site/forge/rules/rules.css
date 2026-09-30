@@ -1,0 +1,62 @@
+/* Rules page. Each rule is one .rule section: a one-line summary with a
+   load chip, the raw URL, notes, and the full text in a collapsed
+   <details> that fetches the raw file when opened. */
+
+/* anvil-core styles links in body prose (.wrap p a) only, so a link in a
+   table cell falls through to the browser's default blue. Same default,
+   same zero specificity, for the index table. */
+:where(.kv td a) { color: var(--ember); text-decoration: none; }
+:where(.kv td a:hover) { text-decoration: underline; }
+
+.load-chip.always { --chip: var(--sl-green); }
+.load-chip.ondemand { --chip: var(--sl-blue); }
+
+/* The intro defines both load chips inline, so the page needs no separate
+   key. */
+.rules-intro { margin: 0 0 12px; }
+.rules-intro p:first-child { margin-top: 0; }
+.rules-catalog { margin: 0 0 36px; }
+.rules-index-scroll { overflow-x: auto; }
+.rules-index-scroll:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+.rules-index { margin: 0; min-width: 560px; }
+.rules-index th:first-child { width: 31%; }
+.rules-index th:nth-child(3) { width: 120px; }
+.rules-index th:last-child { width: 100px; }
+.rules-index td:first-child a { font-weight: 600; }
+.rules-index .load-chip { white-space: nowrap; }
+
+
+/* the load chip sits inline after the heading text; anvil-anchors.js
+   appends the "#" permalink after it */
+.rule h2 .chip { margin-left: 10px; vertical-align: middle; }
+/* the raw URL reads as code, in the same ember the site gives inline
+   code, so it stands apart from the prose around it */
+.rule .rule-url { margin: 12px 0 0; }
+.rule .rule-url code { color: var(--ember); }
+
+.rule details {
+  margin: 16px 0 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.rule summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+}
+.rule summary:hover { color: var(--ember); }
+.rule summary:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+.rule details[open] summary { border-bottom: 1px solid var(--border); }
+/* the fetched rule sits inside the details panel, so the code block drops
+   its own frame */
+.rule details .codeblock {
+  margin: 0;
+  border: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: none;
+}
+.rule details .codeblock code { white-space: pre-wrap; color: var(--muted); }
+.rule details .codeblock .md-heading { color: var(--ember); font-weight: 600; }
