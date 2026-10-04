@@ -31,10 +31,10 @@ Load only the optional scripts that a page needs.
 | `js/anvil-pagerail.js` | Authored or automatic outlines, with scroll tracking |
 | `js/anvil-content.js` | Lazy plain-text disclosure content |
 | `js/prism.js` | Vendored highlighting and copy controls |
-| `js/anvil-analytics.js` | Optional analytics with an explicit public token |
+| `js/anvil-analytics.js` | Optional analytics for anvil.urda.com |
 
 The core CSS does not fetch fonts, images, or other stylesheets.
-Pages select their own image assets, metadata, navigation destinations, and analytics token.
+Pages select their own image assets, metadata, and navigation destinations.
 The scripts use classic script tags, so they also work without a module server.
 Load them with `defer`, after any page renderer that creates their target elements.
 
@@ -183,16 +183,15 @@ Add a styleguide sample for each new grammar.
 
 ## Analytics
 
-Analytics is optional and has no default token.
-Each site must supply its own public Cloudflare beacon token:
+The public Cloudflare beacon token lives in `anvil-analytics.js` and nowhere else.
+A page that loads the script sends a beacon:
 
 ```html
-<script src="res/js/anvil-analytics.js" data-token="YOUR_PUBLIC_TOKEN" defer></script>
+<script src="res/js/anvil-analytics.js" defer></script>
 ```
 
 Omit the script when analytics is unwanted.
-The adapter skips `file://` pages and avoids duplicate beacon elements.
-The Anvil pages explicitly retain their existing token.
+The script skips `file://` pages and avoids duplicate beacon elements.
 
 ## Consumer migration
 
@@ -204,7 +203,6 @@ A copied revision gives consumers a controlled update point.
 
 This revision changes these contracts:
 
-- Analytics requires `data-token`. A consumer without it sends no beacon.
 - Generic links in `.wrap` receive the core link style, including table and list links.
 - Standard Prism blocks reserve toolbar space above the code.
 - Generic section headings use low-specificity defaults, so component headings retain their own styles.
