@@ -102,6 +102,8 @@ It supports visual inspection but does not prove compatibility by itself.
 
 Common component contracts:
 
+- `.sl-green`, `.sl-yellow`, `.sl-red`, `.sl-cyan`, `.sl-blue`, `.sl-gray`, and `.sl-white` set text colors from the corresponding status tokens.
+  Page riders can override these utilities for site-specific surfaces, such as light gallery cards.
 - `.chip` derives its text, border, and fill from `--chip`.
   `.caps` adds uppercase chip typography.
 - `.g-anthropic`, `.g-openai`, `.g-google`, and `.g-jetbrains` supply vendor accents.

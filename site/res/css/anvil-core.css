@@ -84,6 +84,15 @@
   :where(.wrap a) { color: var(--ember); text-decoration: none; }
   :where(.wrap a:hover) { text-decoration: underline; }
 
+  /* ---- Status palette text colors ---- */
+  .sl-green { color: var(--sl-green); }
+  .sl-yellow { color: var(--sl-yellow); }
+  .sl-red { color: var(--sl-red); }
+  .sl-cyan { color: var(--sl-cyan); }
+  .sl-blue { color: var(--sl-blue); }
+  .sl-gray { color: var(--sl-gray); }
+  .sl-white { color: var(--sl-white); }
+
   /* ---- Vendor accents ---- */
   .g-anthropic { --rail: var(--rail-anthropic); --mk: var(--rail-anthropic); }
   .g-openai { --rail: var(--rail-openai); --mk: var(--rail-openai); }
