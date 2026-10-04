@@ -152,7 +152,6 @@
 .datatable.pricing-sources thead th.rowlabel-col { width: 120px; }
 .datatable.pricing-sources thead th { text-align: left; }
 .datatable.pricing-sources a,
-.flow-aside .renewal-source,
 .flow-aside .plan-notes-link { color: inherit; text-underline-offset: 3px; }
 
 /* ---- picked plan table ----
