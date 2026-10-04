@@ -24,7 +24,7 @@
   <script src="../../res/js/anvil-anchors.js" defer></script>
   <script src="../../res/js/anvil-analytics.js" defer></script>
 </head>
-<body>
+<body data-prismjs-copy-error="Copy manually">
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
       <a class="brand" href="../../">
@@ -249,7 +249,7 @@
     </ul>
 
     <div class="subhead">An example <code>riff</code> setup in <code>bash</code> 4+</div>
-    <div class="codeblock"><code class="language-bash"># riff &lt;model&gt; [args...]: one launcher, one model per subcommand
+    <pre class="codeblock"><code class="language-bash"># riff &lt;model&gt; [args...]: one launcher, one model per subcommand
 riff() {
   # the shared engine every model calls: run the CLI (blocking), then
   # restore your working directory when the CLI exits, via a trap
@@ -295,7 +295,7 @@ riff() {
     return 2
   fi
 }
-complete -F riff riff</code></div>
+complete -F riff riff</code></pre>
 
     <h2 class="divider-heading" id="references">References</h2>
 

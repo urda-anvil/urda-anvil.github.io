@@ -459,6 +459,30 @@ h1:has(> .spark) { display: flex; align-items: center; }
   white-space: pre;
 }
 
+/* Prism keeps the toolbar outside the scrolling pre element. */
+.code-toolbar:has(> .codeblock) { position: relative; min-width: 0; margin: 16px 0; }
+.code-toolbar > .codeblock { margin: 0; padding-top: 48px; }
+.code-toolbar > .codeblock + .toolbar { position: absolute; top: 10px; right: 12px; }
+.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel-bar);
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.25;
+  cursor: pointer;
+}
+.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:hover { color: var(--ink); }
+.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-success"] { color: var(--sl-green); }
+.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-error"] { color: var(--sl-yellow); }
+@media (pointer: coarse) {
+  .code-toolbar > .codeblock { padding-top: 64px; }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button { min-height: 44px; }
+}
+
 /* Prism token theme, scoped to .codeblock. Keyed to Prism's token classes
    rather than any one language, so every grammar anvil-core vendors (see
    res/js/prism.js) is already styled with no changes here. */

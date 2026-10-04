@@ -81,14 +81,20 @@ token classes (`.token.property`, `.token.string`, `.token.keyword`, and so
 on) to the design tokens above. That mapping is keyed to token type, not to
 any one language, so every grammar the bundle carries is already styled.
 
-Tag highlighted code `<code class="language-xxx">` and load the script from
-the relative path appropriate to the page: `res/js/prism.js` from
-`site/index.html`, `../res/js/prism.js` from a page one directory below
-`site/`, and so on for each additional level of depth. With JS disabled, the
-block still renders as plain monospace, same as before Prism runs.
+Put highlighted code inside `<pre class="codeblock"><code class="language-xxx">...</code></pre>`.
+Load the script from the appropriate relative path. Use `res/js/prism.js`
+at the site root and `../res/js/prism.js` one directory below it.
+Add another `../` for each additional directory level.
+With JavaScript disabled, code blocks retain their plain monospace text.
 
-Currently supported: `json`, `bash` (aliases: `sh`, `shell`) - `site/forge/balancing-the-anvil/`
-uses the latter for its example. To add another language, append the
+Prism's Toolbar and Copy to Clipboard plugins add a Copy button to each
+highlighted block. Anvil core styles the button and its copy status.
+The plugins select the code for manual copying if both clipboard methods fail.
+Both plugins use the same version as the Prism components and remain unmodified.
+
+The bundle supports `json`, `bash` (aliases: `sh`, `shell`), and `toml`.
+`site/forge/balancing-the-anvil/` uses `bash` for its example.
+To add another language, append the
 same-version `prism-<lang>.min.js` component (from
 `unpkg.com/prismjs@<version>/components/`) to `site/res/js/prism.js` and add
 a `<code class="language-<lang>">` block to try it. No CSS changes are
