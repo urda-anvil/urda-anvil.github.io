@@ -75,7 +75,7 @@
    2. Cell padding drops from 14px to 10px a side, returning 8px per column.
 
    Together: (1032 - 120) / 7 = 130px per tier, less 20px padding = 110px of
-   text. That clears the longest plan label, "ChatGPT Pro 20x" (15 characters
+   text. That clears the longest plan label, "ChatGPT Pro 200" (15 characters
    at ~6.9px, ~103px), so it stays on one line instead of wrapping. */
 .datatable.compare thead th.rowlabel-col { width: 120px; }
 .datatable.compare tbody td { padding-left: 10px; padding-right: 10px; }
@@ -96,8 +96,8 @@
    font-size .86em (~11px, in line with .datatable thead th's own ~10.9px)
    keeps most labels on one line inside a tier column's 98px text budget
    (126px less 28px cell padding). white-space: normal then lets the two that
-   do not fit wrap rather than widen the table: "ChatGPT Pro 20x" (16
-   characters, ~110px) breaks to "ChatGPT Pro" / "20x". The monthly and
+   do not fit wrap rather than widen the table: "ChatGPT Pro 200" (16
+   characters, ~110px) breaks to "ChatGPT Pro" / "200". The monthly and
    yearly lines below stay nowrap, since a currency figure must never break
    mid-line. */
 .datatable.compare td .plan { display: block; margin-bottom: 2px; color: var(--ink); font-size: .86em; white-space: normal; }
