@@ -21,16 +21,6 @@
     return ACCENT_PALETTE[hash % ACCENT_PALETTE.length];
   }
 
-  // Vendor colors are brand identity, not decoration, so they're an
-  // explicit lookup rather than groupAccent()'s hash fallback. Same
-  // --rail-* tokens (anvil-core.css) forge/balancing-the-anvil/ uses, so
-  // "Anthropic" and "OpenAI" mean the same color on both pages.
-  const VENDOR_ACCENTS = {
-    "Anthropic": "var(--rail-anthropic)",
-    "OpenAI": "var(--rail-openai)",
-    "Google": "var(--rail-google)",
-  };
-
   // Fragment id for a vendor or group heading, shared by the headings and the
   // page rail so the two can never disagree.
   function slug(text) {
@@ -44,8 +34,10 @@
 
   VENDORS.forEach((vendorBlock) => {
     const vendorHeading = document.createElement("h2");
-    vendorHeading.className = "bm-vendor";
-    vendorHeading.style.setProperty("--rail", VENDOR_ACCENTS[vendorBlock.vendor] || "var(--ember)");
+    // Vendor colors are brand identity, so they come from the shared .g-*
+    // classes in anvil-core.css, the same ones forge/balancing-the-anvil/
+    // uses. A vendor without a class falls back to ember.
+    vendorHeading.className = "bm-vendor g-" + slug(vendorBlock.vendor);
     // Stable fragment id so anvil-anchors.js can hang a permalink on it.
     vendorHeading.id = slug(vendorBlock.vendor);
     vendorHeading.textContent = vendorBlock.vendor;

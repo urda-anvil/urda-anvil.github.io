@@ -268,6 +268,8 @@ enabled_tools = [
 ]</code></pre>
       <p>Compact blocks keep Copy beside the text and can use a specific button label.</p>
       <pre class="codeblock compact" data-toolbar-order="copy-to-clipboard" data-prismjs-copy="Copy URL" data-prismjs-copy-success="URL copied!"><code class="language-none">https://anvil.urda.com/forge/rules/raw/ste.md</code></pre>
+      <p>Add <code>.accent</code> to give the code the ember color.</p>
+      <pre class="codeblock compact accent" data-toolbar-order="copy-to-clipboard"><code class="language-none">https://anvil.urda.com/</code></pre>
     </section>
 
     <section class="section">
@@ -451,6 +453,43 @@ enabled_tools = [
     </section>
 
     <section class="section" data-core-demo>
+      <h2 id="data-table-vendor">Data table: vendor rows</h2>
+      <p>A vendor class on a row sets its accent: <code>.g-anthropic</code>, <code>.g-openai</code>,
+        <code>.g-google</code>, or <code>.g-jetbrains</code>. The rail, the group dot, and a
+        <code>.vendor-label</code> row label take that accent with no inline style. A row label
+        with <code>rowspan</code> stays highlighted while any row of its group has hover.</p>
+      <div class="datatable-wrap">
+        <table class="datatable numeric">
+          <caption class="visually-hidden">Demo vendor rows with class-based accents and a merged row label.</caption>
+          <thead><tr><th class="rowlabel-col" scope="col">Vendor</th><th scope="col">Plan</th><th scope="col">Monthly</th></tr></thead>
+          <tbody>
+            <tr class="group g-openai"><th colspan="3" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Group label</span></th></tr>
+            <tr class="g-openai"><th class="rowlabel vendor-label" scope="row"><span class="rail" aria-hidden="true"></span>OpenAI</th><td>Example plan</td><td>$20</td></tr>
+          </tbody>
+          <tbody>
+            <tr class="g-jetbrains"><th class="rowlabel vendor-label" scope="row" rowspan="2"><span class="rail" aria-hidden="true"></span>JetBrains</th><td>First plan</td><td>$10</td></tr>
+            <tr class="g-jetbrains"><td>Second plan</td><td>$30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" data-core-demo>
+      <h2 id="table-scroll">Table scroll</h2>
+      <p><code>.table-scroll</code> gives a wide table plain horizontal overflow without the
+        data table frame. Give the region a label and <code>tabindex="0"</code> so a keyboard can scroll it.</p>
+      <div class="table-scroll" role="region" aria-label="Table scroll example" tabindex="0">
+        <table class="kv" style="min-width: 560px">
+          <thead><tr><th scope="col">Class</th><th scope="col">Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>.table-scroll</code></td><td>Plain overflow for a <code>.kv</code> table.</td></tr>
+            <tr><td><code>.datatable-wrap</code></td><td>Overflow with the data table frame.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" data-core-demo>
       <h2 id="automatic-outline">Automatic outline</h2>
       <p>The rail derives its labels from the headings beside it.
         Heading chips and permalink symbols stay outside the labels.</p>
@@ -464,6 +503,10 @@ enabled_tools = [
           <p>A section with a child heading.</p>
           <h3 id="outline-child">Child</h3>
           <p>The rail indents this entry.</p>
+          <h2 id="outline-ruled" data-rail-label="Short label" data-rail-ruled>A long heading with a short rail label</h2>
+          <p><code>data-rail-label</code> sets the entry text, and <code>data-rail-ruled</code> adds a divider above it.</p>
+          <h3 id="outline-dotted" class="g-google" data-rail-dotted>Dotted child</h3>
+          <p><code>data-rail-dotted</code> adds a mark in the heading's <code>--rail</code> accent.</p>
         </div>
       </div>
     </section>

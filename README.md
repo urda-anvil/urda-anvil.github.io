@@ -82,7 +82,9 @@ Import third-party CSS into the vendor layer:
 ```
 
 Defaults for links and section prose use `:where()`.
-Their zero specificity lets component classes control their own appearance.
+Their zero specificity lets a component class override them.
+A default still wins over an inherited value and over a browser default.
+A component must declare each property that it needs, such as a link underline or a text color.
 Keep that constraint when you modify these defaults.
 
 ## Tokens and components
@@ -90,7 +92,7 @@ Keep that constraint when you modify these defaults.
 The `:root` rule is the canonical token list.
 It includes surfaces, text, the ember accent, status colors, vendor accents,
 font stacks, the corner radius, and `--pagerail-top` in pixels.
-Component accents such as `--chip`, `--mk`, and `--rail` have local fallbacks.
+Component accents such as `--chip`, `--mk`, and `--rail` have local fallbacks or draw nothing when unset.
 They are inputs to components, rather than global theme tokens.
 
 The [styleguide](site/styleguide/index.html) demonstrates the shared components.
@@ -136,7 +138,8 @@ For automatic entries, place the rail and `.railed` content inside `.withpagerai
 ```
 
 Automatic rails preserve the authored top entry and derive other entries from `h2[id]` and `h3[id]`.
-The top entry requires an existing `id="top"` target elsewhere on the page.
+Each rail link requires an existing target on the page, such as `id="top"` for the top entry.
+The script ignores a link that has no target.
 A child heading becomes an indented entry.
 Permalink symbols and chips do not enter the labels.
 A heading can supply `data-rail-label`, `data-rail-ruled`, or `data-rail-dotted`.
@@ -197,7 +200,7 @@ The script skips `file://` pages and avoids duplicate beacon elements.
 
 Copy core assets from the same reviewed commit.
 Record that commit in the consumer repository's existing vendor documentation.
-Do not mix a new stylesheet with an older optional script during a sync.
+Sync a script together with the stylesheet when the script uses new classes, such as `anvil-content.js` and `.disclosure`.
 A direct link to the deployed stylesheet remains possible, but it changes whenever this site deploys.
 A copied revision gives consumers a controlled update point.
 
@@ -208,6 +211,15 @@ This revision changes these contracts:
 - Generic section headings use low-specificity defaults, so component headings retain their own styles.
 - Vendor classes supply shared accents. Existing inline accent declarations still work.
 - The new disclosure module requires its script and the `.disclosure` class.
+- Core scripts initialize when they execute, if the document has finished its parse.
+  They no longer wait for `DOMContentLoaded`, so a later renderer gets no anchors, rail, or link rewrite.
+- `anvil-pagerail.js` initializes each `.pagerail` on the page and ignores a link that has no target.
+- The rail divider follows the entry that contains `.totop`, not the first entry.
+- A group `.gdot` and `.glabel` use `--mk`. A dot without a color is now muted, not invisible.
+- A merged row label with `rowspan` stays highlighted while any row of its group has hover.
+- An `h3` in a `.section` and a `.chip` in an `h2` receive default styles.
+- Core now defines `.disclosure`, `.meta-row`, `.card-meta`, `.code-label`, `.movemark`,
+  `.vendor-label`, `.table-scroll`, `.bm-*`, and `.g-*`. Rename a consumer class that collides.
 
 Consumers can retain authored rails, existing asset paths, and existing component markup.
 They can adopt the new components when their page riders duplicate those styles.
