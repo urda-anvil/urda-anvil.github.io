@@ -134,6 +134,9 @@
 .datatable.addons thead th.rowlabel-col { width: 120px; }
 .datatable.addons thead th,
 .datatable.addons tbody td { text-align: center; }
+/* Renewal prices form one plan with aligned year and price lines. */
+.datatable.addons .renewal-stack { display: grid; gap: 8px; }
+.datatable.addons .renewal-title { color: var(--ink); }
 /* A vendor with several add-ons merges its label with rowspan, so that cell
    belongs to the FIRST of those rows. Core's row hover (`tr:hover th`)
    therefore cannot reach it from any later row, which left the label dark
