@@ -149,11 +149,12 @@
    The "Urda's Anvil" table: one row per vendor, with a Source column that
    names the tier or marks an add-on. Shape follows .addons (120px rowlabel,
    centered cells) so the Cost-area tables line up as a set.
-   min-width: 120px rowlabel + 4 even columns. The widest cell is "All
-   Products Pack" (17 characters, mono at .92em of 14px, ~7.7px/char) at
-   ~131px plus 28px padding, ~159px; 770px gives each column ~162px. */
-.datatable.picked { min-width: 770px; }
+   The Plan column uses 260px to keep the plan and renewal year together.
+   At 890px, the vendor uses 120px and the remaining columns use 170px each. */
+.datatable.picked { min-width: 890px; }
 .datatable.picked thead th.rowlabel-col { width: 120px; }
+.datatable.picked thead th:nth-child(2) { width: 260px; }
+.datatable.picked tbody td:first-of-type { white-space: nowrap; }
 .datatable.picked thead th,
 .datatable.picked tbody td { text-align: center; }
 
