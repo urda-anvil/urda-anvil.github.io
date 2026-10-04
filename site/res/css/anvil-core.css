@@ -462,7 +462,14 @@ h1:has(> .spark) { display: flex; align-items: center; }
 /* Prism keeps the toolbar outside the scrolling pre element. */
 .code-toolbar:has(> .codeblock) { position: relative; min-width: 0; margin: 16px 0; }
 .code-toolbar > .codeblock { margin: 0; padding-top: 48px; }
-.code-toolbar > .codeblock + .toolbar { position: absolute; top: 10px; right: 12px; }
+.code-toolbar > .codeblock + .toolbar { position: absolute; top: 10px; right: 12px; display: flex; align-items: center; gap: 10px; }
+.code-toolbar > .codeblock + .toolbar .toolbar-item { display: flex; align-items: center; }
+.code-toolbar > .codeblock + .toolbar .toolbar-item > span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.25;
+}
 .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button {
   padding: 5px 10px;
   border: 1px solid var(--border);

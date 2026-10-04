@@ -87,10 +87,11 @@ at the site root and `../res/js/prism.js` one directory below it.
 Add another `../` for each additional directory level.
 With JavaScript disabled, code blocks retain their plain monospace text.
 
-Prism's Toolbar and Copy to Clipboard plugins add a Copy button to each
-highlighted block. Anvil core styles the button and its copy status.
+Prism's Toolbar, Show Language, and Copy to Clipboard plugins add a language
+label and Copy button to each highlighted block. Anvil core styles the labels,
+button, and copy status.
 The plugins select the code for manual copying if both clipboard methods fail.
-Both plugins use the same version as the Prism components and remain unmodified.
+All plugins use the same version as the Prism components and remain unmodified.
 
 The bundle supports `json`, `bash` (aliases: `sh`, `shell`), and `toml`.
 `site/forge/balancing-the-anvil/` uses `bash` for its example.
