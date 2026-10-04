@@ -191,10 +191,6 @@
       </div>
     </fieldset>
 
-    <p class="flow-aside wide"><span style="color:var(--rail-anthropic)">*Anthropic Claude Pro</span> bills at $20 per month or $200 per year. This anvil example assumes the annual rate, which saves $40.</p>
-
-    <p class="flow-aside wide"><span style="color:var(--rail-openai)">*OpenAI ChatGPT Pro 500</span> costs $500 per month and falls outside this Anvil design. See <a href="https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers" target="_blank" rel="noopener noreferrer">About ChatGPT Pro tiers</a> for current details.</p>
-
     <div class="subhead">Add-ons <span class="note">(optional at any tier, not counted in the totals above)</span></div>
 
     <p class="lede">You can reach for a tool without building around it. Two ladders, any number of add-ons. Gemini rides free on both of them, which is why Google sits here instead of climbing a third. JetBrains sits here too, since the IDEs are a choice and not every anvil runs them.</p>
@@ -215,16 +211,11 @@
             <td><div class="renewal-stack"><span aria-hidden="true">&nbsp;</span><span><span class="visually-hidden">Year 1: </span>$25</span><span><span class="visually-hidden">Year 2: </span>$20</span><span><span class="visually-hidden">Year 3+: </span>$15</span></div></td>
             <td><div class="renewal-stack"><span aria-hidden="true">&nbsp;</span><span><span class="visually-hidden">Year 1: </span>$299</span><span><span class="visually-hidden">Year 2: </span>$239</span><span><span class="visually-hidden">Year 3+: </span>$179</span></div></td>
           </tr>
-          <tr style="--mk:var(--rail-jetbrains)"><td>AI Ultimate</td><td>$25</td><td>$300</td></tr>
+          <tr style="--mk:var(--rail-jetbrains)"><td>AI Ultimate</td><td>$30</td><td>$300</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Plus</span> costs $4.99 per month or $49.99 per year, rounded here to $5 and $50.</p>
-    <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Pro</span> costs $19.99 per month or $199.99 per year, rounded here to $20 and $200.</p>
-    <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Ultra</span> costs $99.99 per month, rounded here to $100. It has no annual rate, so its yearly figure is twelve monthly payments.</p>
-    <p class="flow-aside wide" id="gemini-apps-access"><span style="color:var(--rail-google)">*Gemini Model Availability:</span> Free accounts have Flash-Lite, AI Plus adds Flash, and AI Pro or AI Ultra adds Pro. See <a href="https://support.google.com/gemini/answer/17004136" target="_blank" rel="noopener noreferrer">details</a>.</p>
-    <p class="flow-aside wide"><span style="color:var(--rail-jetbrains)">*JetBrains All Products Pack</span> is billed yearly, at $299 the first year, $239 the second, then $179 onwards. Its monthly figures are the yearly price divided by twelve, rounded to the nearest dollar.</p>
-    <p class="flow-aside wide"><span style="color:var(--rail-jetbrains)">*JetBrains AI Ultimate</span> is billed yearly at $300.</p>
+    <p class="flow-aside wide"><a class="plan-notes-link" href="#plan-notes">See plan notes.</a></p>
 
     <h2 class="divider-heading" id="urdas-anvil">Urda's Anvil</h2>
     <p class="lede">Urda runs the <b>Anvil Professional</b> tier of the <span style="color:var(--rail-anthropic)">Anthropic Focused</span> ladder, plus the <span style="color:var(--rail-google)">Google AI Pro</span> and <span style="color:var(--rail-jetbrains)">JetBrains All Products Pack</span> add-ons. The Source column shows which of the two each plan comes from.</p>
@@ -304,6 +295,41 @@ riff() {
   fi
 }
 complete -F riff riff</code></div>
+
+    <h2 class="divider-heading" id="references">References</h2>
+
+    <h3 class="subhead" id="plan-notes">Plan Notes</h3>
+    <div class="plan-notes">
+      <div>
+        <p class="flow-aside wide"><span style="color:var(--rail-anthropic)">*Anthropic Claude Pro</span> costs $20/month or $200/year. The tables use the annual rate, which saves $40.</p>
+      </div>
+      <div>
+        <p class="flow-aside wide"><span style="color:var(--rail-openai)">*OpenAI ChatGPT Pro 500</span> costs $500/month and falls outside these tiers.</p>
+      </div>
+      <div>
+        <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Plus</span> costs $4.99/month or $49.99/year, rounded to $5 and $50.</p>
+        <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Pro</span> costs $19.99/month or $199.99/year, rounded to $20 and $200.</p>
+        <p class="flow-aside wide"><span style="color:var(--rail-google)">*Google AI Ultra</span> costs $99.99/month, rounded to $100.</p>
+        <p class="flow-aside wide" id="gemini-apps-access"><span style="color:var(--rail-google)">*Gemini Model Availability:</span> Free includes Flash-Lite, AI Plus adds Flash, and AI Pro or Ultra adds Pro. See <a href="https://support.google.com/gemini/answer/17004136" target="_blank" rel="noopener noreferrer">details</a>.</p>
+      </div>
+      <div>
+        <p class="flow-aside wide"><span style="color:var(--rail-jetbrains)">*JetBrains All Products Pack</span> bills annually with <a class="renewal-source" href="https://sales.jetbrains.com/hc/en-gb/articles/206386064-Continuity-discount" target="_blank" rel="noopener noreferrer">renewal discounts</a>. The monthly column shows annual prices divided by 12, rounded to the nearest dollar.</p>
+      </div>
+    </div>
+
+    <h3 class="subhead" id="pricing-sources">Pricing Sources</h3>
+    <div class="datatable-wrap pricing-sources-wrap">
+      <table class="datatable pricing-sources">
+        <caption class="visually-hidden">Official plan prices and billing details.</caption>
+        <thead><tr><th class="rowlabel-col" scope="col">Vendor</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+          <tr style="--mk:var(--rail-anthropic)"><th class="rowlabel" scope="row" style="color:var(--rail-anthropic)"><span class="rail" style="background:var(--rail-anthropic)"></span>Anthropic</th><td><a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer">Pricing</a> &middot; <a href="https://support.claude.com/en/articles/8325606-what-is-the-pro-plan" target="_blank" rel="noopener noreferrer">Pro details</a> &middot; <a href="https://support.claude.com/en/articles/11049741-what-is-the-max-plan" target="_blank" rel="noopener noreferrer">Max details</a></td></tr>
+          <tr style="--mk:var(--rail-openai)"><th class="rowlabel" scope="row" style="color:var(--rail-openai)"><span class="rail" style="background:var(--rail-openai)"></span>OpenAI</th><td><a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener noreferrer">Pricing</a> &middot; <a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus" target="_blank" rel="noopener noreferrer">Plus details</a> &middot; <a href="https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers" target="_blank" rel="noopener noreferrer">Pro tiers</a></td></tr>
+          <tr style="--mk:var(--rail-google)"><th class="rowlabel" scope="row" style="color:var(--rail-google)"><span class="rail" style="background:var(--rail-google)"></span>Google</th><td><a href="https://one.google.com/about/google-ai-plans/" target="_blank" rel="noopener noreferrer">Google AI plans</a></td></tr>
+          <tr style="--mk:var(--rail-jetbrains)"><th class="rowlabel" scope="row" style="color:var(--rail-jetbrains)"><span class="rail" style="background:var(--rail-jetbrains)"></span>JetBrains</th><td><a href="https://www.jetbrains.com/store/?section=personal&amp;billing=yearly" target="_blank" rel="noopener noreferrer">All Products Pack</a> &middot; <a href="https://www.jetbrains.com/ai-ides/buy/?section=personal&amp;billing=yearly" target="_blank" rel="noopener noreferrer">AI Ultimate</a></td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <footer class="foot">
       <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>

@@ -145,6 +145,16 @@
    reads the same in every state at any span depth. */
 .datatable.addons tbody:has(tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
 
+/* ---- references ---- */
+.plan-notes { display: grid; gap: 12px; }
+.pricing-sources-wrap { width: fit-content; max-width: 100%; }
+.datatable.pricing-sources { width: auto; min-width: 0; table-layout: auto; }
+.datatable.pricing-sources thead th.rowlabel-col { width: 120px; }
+.datatable.pricing-sources thead th { text-align: left; }
+.datatable.pricing-sources a,
+.flow-aside .renewal-source,
+.flow-aside .plan-notes-link { color: inherit; text-underline-offset: 3px; }
+
 /* ---- picked plan table ----
    The "Urda's Anvil" table: one row per vendor, with a Source column that
    names the tier or marks an add-on. Shape follows .addons (120px rowlabel,
