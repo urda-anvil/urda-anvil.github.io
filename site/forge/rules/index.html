@@ -19,12 +19,13 @@
   <link rel="manifest" href="../../res/img/site.webmanifest">
   <link rel="stylesheet" href="../../res/css/anvil-core.css">
   <link rel="stylesheet" href="rules.css">
+  <script src="../../res/js/prism.js" defer></script>
   <script src="../../res/js/anvil-local.js" defer></script>
   <script src="../../res/js/anvil-anchors.js" defer></script>
   <script src="../../res/js/anvil-pagerail.js" defer></script>
   <script src="../../res/js/anvil-analytics.js" defer></script>
 </head>
-<body>
+<body data-prismjs-copy-error="Copy manually">
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
       <a class="brand" href="../../">
@@ -101,7 +102,7 @@
             one term for each concept. It covers replies, pull request text,
             and documentation. It does not touch code, quoted text, or tool
             output.</p>
-          <pre class="codeblock rule-url"><code>https://anvil.urda.com/forge/rules/raw/ste.md</code></pre>
+          <pre class="codeblock compact rule-url" data-toolbar-order="copy-to-clipboard" data-prismjs-copy="Copy URL" data-prismjs-copy-success="URL copied!"><code class="language-none">https://anvil.urda.com/forge/rules/raw/ste.md</code></pre>
           <p>This rule is a subset of ASD-STE100 Simplified Technical English,
             Issue 9, written for coding agents. It paraphrases the rules of the
             standard and cites their numbers. It does not contain the text of
@@ -110,7 +111,7 @@
             <a href="https://www.asd-ste100.org/request.html">request a copy</a>.</p>
           <details data-src="raw/ste.md">
             <summary>Show the rule</summary>
-            <pre class="codeblock"><code>Loading... If nothing shows, open <a href="raw/ste.md">ste.md</a>.</code></pre>
+            <pre class="codeblock" data-toolbar-order="copy-to-clipboard" data-prismjs-copy="Copy Rule" data-prismjs-copy-success="Rule copied!"><code>Loading... If nothing shows, open <a href="raw/ste.md">ste.md</a>.</code></pre>
           </details>
         </section>
       </div>
@@ -129,35 +130,47 @@
   <script>
     // Each rule's full text lives only in raw/, so the page fetches it the
     // first time a reader opens "Show the rule" instead of keeping a copy.
-    for (const details of document.querySelectorAll("details[data-src]")) {
-      details.addEventListener("toggle", async () => {
-        if (!details.open || details.dataset.loaded) return;
-        const code = details.querySelector("code");
-        try {
-          const response = await fetch(details.dataset.src);
-          if (!response.ok) throw new Error(response.status);
-          // read the whole body before the fallback link is cleared, so a
-          // failed read leaves the link in place
-          const text = await response.text();
-          // Prism has no Markdown grammar, so tint the headings by hand:
-          // each "#" line becomes a span, and everything else stays text.
-          code.textContent = "";
-          for (const line of text.split("\n")) {
-            if (line.startsWith("#")) {
-              const heading = document.createElement("span");
-              heading.className = "md-heading";
-              heading.textContent = line;
-              code.append(heading, "\n");
-            } else {
-              code.append(line + "\n");
+    document.addEventListener("DOMContentLoaded", () => {
+      for (const details of document.querySelectorAll("details[data-src]")) {
+        let loading = false;
+        async function loadRule() {
+          if (!details.open || details.dataset.loaded || loading) return;
+          loading = true;
+          const code = details.querySelector("code");
+          try {
+            const response = await fetch(details.dataset.src);
+            if (!response.ok) throw new Error(response.status);
+            // Read the whole body before clearing the fallback link.
+            const text = await response.text();
+            // Preserve the Markdown and its exact line breaks while tinting headings.
+            code.textContent = "";
+            const lines = text.split("\n");
+            for (const [index, line] of lines.entries()) {
+              if (line.startsWith("#")) {
+                const heading = document.createElement("span");
+                heading.className = "md-heading";
+                heading.textContent = line;
+                code.append(heading);
+              } else {
+                code.append(line);
+              }
+              if (index < lines.length - 1) code.append("\n");
             }
+            // Attach the shared toolbar without replacing the heading spans.
+            if (window.Prism && Prism.plugins.toolbar) {
+              Prism.plugins.toolbar.hook({ element: code, language: "none" });
+            }
+            details.dataset.loaded = "true";
+          } catch {
+            // Keep the fallback link when the rule cannot load.
+          } finally {
+            loading = false;
           }
-          details.dataset.loaded = "true";
-        } catch {
-          // keep the fallback link that the markup already shows
         }
-      });
-    }
+        details.addEventListener("toggle", loadRule);
+        if (details.open) loadRule();
+      }
+    });
   </script>
 </body>
 </html>

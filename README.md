@@ -90,8 +90,15 @@ With JavaScript disabled, code blocks retain their plain monospace text.
 Prism's Toolbar, Show Language, and Copy to Clipboard plugins add a language
 label and Copy button to each highlighted block. Anvil core styles the labels,
 button, and copy status.
+The toolbar overlays the upper-right corner of standard code blocks.
 The plugins select the code for manual copying if both clipboard methods fail.
 All plugins use the same version as the Prism components and remain unmodified.
+
+Plain text blocks can use `language-none`.
+Set `data-toolbar-order="copy-to-clipboard"` to show only Copy.
+Add `compact` to a short block to place Copy beside its text.
+Use `data-prismjs-copy` and `data-prismjs-copy-success` to customize the messages.
+The Rules page adds its full-rule toolbar after the Markdown loads.
 
 The bundle supports `json`, `bash` (aliases: `sh`, `shell`), and `toml`.
 `site/forge/balancing-the-anvil/` uses `bash` for its example.

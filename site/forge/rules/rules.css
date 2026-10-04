@@ -32,6 +32,8 @@
 /* the raw URL reads as code, in the same ember the site gives inline
    code, so it stands apart from the prose around it */
 .rule .rule-url { margin: 12px 0 0; }
+.rule .code-toolbar:has(> .rule-url) { margin: 12px 0 0; }
+.rule .code-toolbar > .rule-url { margin: 0; }
 .rule .rule-url code { color: var(--ember); }
 
 .rule details {
@@ -50,6 +52,7 @@
 .rule summary:hover { color: var(--ember); }
 .rule summary:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
 .rule details[open] summary { border-bottom: 1px solid var(--border); }
+.rule details .code-toolbar { margin: 0; }
 /* the fetched rule sits inside the details panel, so the code block drops
    its own frame */
 .rule details .codeblock {
