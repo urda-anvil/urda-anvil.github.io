@@ -1,18 +1,9 @@
-/* Anvil core - the shared design system for anvil.urda.com. Holds
-   every page's primitives: tokens, base, top nav, hero, terminal window,
-   page furniture, buttons, callout, nav cards, content sections, reference
-   tables, tabbed panels, code blocks, chips, the page rail, data tables,
-   the colophon, and the footer.
-   A page that genuinely diverges ships a small "rider" sheet loaded after
-   this one (see README). It adds only page-specific variants and narrowly
-   scoped overrides; shared primitive definitions remain here.
-
-   Import-safety: everything below the tokens lives in the `anvil` layer
-   (see the @layer order below `:root`), so it always loses to unlayered
-   CSS. A page's rider is deliberately left unlayered, so it keeps beating
-   core on any shared class. Any third-party CSS pulled in later should be
-   imported into the `vendor` layer (see README), so it always loses to
-   core instead of winning a specificity fight. */
+/* Anvil core: portable tokens and components.
+   Sections: foundations, navigation, hero, terminal, actions, cards, prose,
+   tables, tabs, code, disclosures, chips, bookmarks, page rail, and footer.
+   Tokens are unlayered. Components use @layer anvil. Page riders are
+   unlayered and override normal core declarations. Import vendor CSS into
+   @layer vendor. See README.md for assets, markup, and consumer migration. */
 
 /* ---- Design tokens ---- */
 /* Left unlayered on purpose: custom properties here beat same-named
@@ -26,6 +17,7 @@
   --muted: #8b949e;
   --ember: #ff8c2f;        /* forge accent */
   --border: #222b38;
+  --pagerail-top: 24px;
   --radius: 10px;          /* shared corner radius for panels and controls */
 
   /* status line palette, terminal-faithful on a dark background */
@@ -37,11 +29,8 @@
   --sl-gray: #6e7681;
   --sl-white: #e6edf3;
 
-  /* categorical rail palette for AI and tool vendors, shared by any page that
-     needs to key content by vendor (e.g. forge/balancing-the-anvil/,
-     bookmarks/). Validated against the dark surface for CVD separation, the
-     normal-vision floor, and contrast across every pair. Ember exceeds the
-     strict dark lightness band; accepted as the site's brand accent. */
+  /* Categorical accents for AI and tool vendors. Preserve these identities
+     across pages. A colored mark must also have a text label. */
   --rail-anthropic: var(--ember);
   --rail-openai: #3987e5;
   --rail-google: #008300;
@@ -60,881 +49,977 @@
 
 @layer anvil {
 
-* { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-html {
-  background-color: var(--bg);   /* solid base so a full-page capture never flashes white */
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(ellipse at top, #131a26, var(--bg) 60%) no-repeat;
-  color: var(--ink);
-  font-family: var(--sans);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+  html {
+    background-color: var(--bg);   /* solid base so a full-page capture never flashes white */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #131a26, var(--bg) 60%) no-repeat;
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* every page-level heading, in or out of a hero */
-h1 {
-  margin: 0 0 12px;
-  font-size: clamp(28px, 5vw, 40px);
-  letter-spacing: -0.02em;
-}
+  /* every page-level heading, in or out of a hero */
+  h1 {
+    margin: 0 0 12px;
+    font-size: clamp(28px, 5vw, 40px);
+    letter-spacing: -0.02em;
+  }
 
-.wrap {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 48px 24px 80px;
-}
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
 
-/* Links in body prose. Without this a link in ordinary copy falls through to
-   the browser's default blue, which is how each page ended up patching the
-   gap for itself.
-   :where() is load-bearing, not decoration: it zeroes the selector's
-   specificity to (0,0,0) so this acts as a default that ANY component rule
-   overrides. Written plainly as `.wrap p a` it would score (0,1,2) and
-   outrank .btn, .colophon a, and .tagline a, repainting the 404 button
-   and a project site's colophon links. */
-:where(.wrap p a) { color: var(--ember); text-decoration: none; }
-:where(.wrap p a:hover) { text-decoration: underline; }
+  /* Zero-specificity link defaults cover prose, lists, and tables.
+     Component classes retain their own colors and decoration. */
+  :where(.wrap a) { color: var(--ember); text-decoration: none; }
+  :where(.wrap a:hover) { text-decoration: underline; }
 
-/* ---- Rule ---- */
-hr {
-  border: 0;
-  border-top: 1px solid var(--border);
-  margin: 0 0 48px;
-}
+  /* ---- Vendor accents ---- */
+  .g-anthropic { --rail: var(--rail-anthropic); --mk: var(--rail-anthropic); }
+  .g-openai { --rail: var(--rail-openai); --mk: var(--rail-openai); }
+  .g-google { --rail: var(--rail-google); --mk: var(--rail-google); }
+  .g-jetbrains { --rail: var(--rail-jetbrains); --mk: var(--rail-jetbrains); }
+  .vendor-label { color: var(--rail, var(--ink)); }
 
-/* ---- Top nav ---- */
-.topnav {
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-}
-.topnav-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 14px 24px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px 16px;
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: -0.01em;
-}
-.navlinks { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
-.navlinks a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 14px;
-  padding: 7px 13px;
-  border-radius: 8px;
-  white-space: nowrap;   /* a multi-word label breaks between links, never mid-text */
-  transition: color .15s ease, background-color .15s ease;
-}
-.navlinks a:hover { color: var(--ink); background: var(--panel); }
-.navlinks a.active { color: var(--ember); }
-.navlinks a.active:hover { background: transparent; }
+  /* ---- Rule ---- */
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 0 0 48px;
+  }
 
-/* narrow phones: compact the row so a longer nav (e.g. four links) still
-   fits without crowding the brand */
-@media (max-width: 480px) {
-  .topnav-inner { padding: 12px 16px; }
-  .navlinks { gap: 2px; }
-  .navlinks a { font-size: 13px; padding: 6px 9px; }
-}
+  /* ---- Top nav ---- */
+  .topnav {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .topnav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .navlinks { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+  .navlinks a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 7px 13px;
+    border-radius: 8px;
+    white-space: nowrap;   /* a multi-word label breaks between links, never mid-text */
+    transition: color .15s ease, background-color .15s ease;
+  }
+  .navlinks a:hover { color: var(--ink); background: var(--panel); }
+  .navlinks a.active { color: var(--ember); }
+  .navlinks a.active:hover { background: transparent; }
 
-/* ---- Hero ---- */
-.hero { text-align: center; margin-bottom: 44px; }
-.tagline {
-  margin: 0 auto;
-  max-width: 580px;
-  color: var(--muted);
-  line-height: 1.65;
-  font-size: 16px;
-  text-wrap: balance;
-}
-.tagline a { color: var(--ember); text-decoration: none; }
-.tagline a:hover { text-decoration: underline; }
-.tagline code {
-  font-family: var(--mono);
-  color: var(--ember);
-  background: color-mix(in srgb, var(--ember) 9%, transparent);
-  padding: .05em .35em;
-  border-radius: 5px;
-  font-size: .9em;
-}
+  /* narrow phones: compact the row so a longer nav (e.g. four links) still
+     fits without crowding the brand */
+  @media (max-width: 480px) {
+    .topnav-inner { padding: 12px 16px; }
+    .navlinks { gap: 2px; }
+    .navlinks a { font-size: 13px; padding: 6px 9px; }
+  }
 
-/* Anvil's identity mark: the spark icon (res/img/spark*.svg) inline in page
-   headings. The SVG's rounded tile is filled --bg (#0b0e14), so it blends
-   into the page and only the colored spark rays show. Sized relative to the
-   heading's font so it tracks the h1.
+  /* ---- Hero ---- */
+  .hero { text-align: center; margin-bottom: 44px; }
+  .tagline {
+    margin: 0 auto;
+    max-width: 580px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 16px;
+    text-wrap: balance;
+  }
+  .tagline a { color: var(--ember); text-decoration: none; }
+  .tagline a:hover { text-decoration: underline; }
+  .tagline code,
+  .lede code {
+    font-family: var(--mono);
+    color: var(--ember);
+    background: color-mix(in srgb, var(--ember) 9%, transparent);
+    padding: .05em .35em;
+    border-radius: 5px;
+    font-size: .9em;
+  }
 
-   vertical-align: middle centers on the x-height midline, not the glyph
-   box, so it reads low next to bold/large heading text; flexing the parent
-   heading instead centers the icon on the text's actual line-box height. */
-.spark { height: 1.45em; width: auto; flex-shrink: 0; }
-h1:has(> .spark) { display: flex; align-items: center; }
+  /* Flex alignment centers a heading's spark on its line box. */
+  .spark { height: 1.45em; width: auto; flex-shrink: 0; }
+  h1:has(> .spark) { display: flex; align-items: center; }
 
-/* hero logo */
-.logo {
-  display: block;
-  margin: 0 auto 18px;
-  border-radius: 18px;
-}
+  /* hero logo */
+  .logo {
+    display: block;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+  }
 
-/* ---- Terminal window ---- */
-.demo { margin: 0 0 48px; }
-.terminal {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
-}
-.titlebar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 14px;
-  background: var(--panel-bar);
-  border-bottom: 1px solid var(--border);
-}
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.dot.red { background: #ff5f57; }
-.dot.amber { background: #febc2e; }
-.dot.green { background: #28c840; }
-.titlebar .title {
-  margin-left: 6px;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 12px;
-}
-.screen {
-  background: var(--screen);
-  padding: 24px 20px;
-  overflow-x: auto;
-  container-type: inline-size;   /* content sizes to this container, not the viewport */
-}
+  /* ---- Terminal window ---- */
+  .demo { margin: 0 0 48px; }
+  .terminal {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
+  }
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    background: var(--panel-bar);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.amber { background: #febc2e; }
+  .dot.green { background: #28c840; }
+  .titlebar .title {
+    margin-left: 6px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .screen {
+    background: var(--screen);
+    padding: 24px 20px;
+    overflow-x: auto;
+    container-type: inline-size;   /* content sizes to this container, not the viewport */
+  }
 
-/* ---- Page furniture: heading row with an optional action ---- */
-.page-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-.page-head h1 { margin: 0; }
+  /* ---- Page furniture: heading row with an optional action ---- */
+  .page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .page-head h1 { margin: 0; }
 
-/* ---- Buttons ---- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 11px 24px;
-  border: 1px solid var(--ember);
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--ember);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color .15s ease, color .15s ease;
-}
-.btn:hover { background: var(--ember); color: var(--bg); }
-.btn:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
-.btn-primary { background: var(--ember); color: var(--bg); }
-.btn-primary:hover { filter: brightness(1.08); }
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 11px 24px;
+    border: 1px solid var(--ember);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ember);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .btn:hover { background: var(--ember); color: var(--bg); }
+  .btn:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+  .btn-primary { background: var(--ember); color: var(--bg); }
+  .btn-primary:hover { filter: brightness(1.08); }
 
-/* ---- Callout ---- */
-.hint {
-  margin: 28px 0 36px;
-  padding: 12px 16px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--ember);
-  border-radius: var(--radius);
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-.hint code {
-  font-family: var(--mono);
-  background: color-mix(in srgb, var(--ember) 12%, transparent);
-  color: var(--ember);
-  padding: 1px 6px;
-  border-radius: 5px;
-  font-size: 12px;
-}
+  /* ---- Callout ---- */
+  .hint {
+    margin: 28px 0 36px;
+    padding: 12px 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--ember);
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .hint code {
+    font-family: var(--mono);
+    background: color-mix(in srgb, var(--ember) 12%, transparent);
+    color: var(--ember);
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
 
-/* ---- Nav cards ---- */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-}
-.nav-card {
-  display: block;
-  padding: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  text-decoration: none;
-  color: var(--ink);
-  transition: border-color .15s ease, background-color .15s ease;
-}
-.nav-card:hover { border-color: var(--ember); background: var(--panel-bar); }
-.nav-card:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
-.card-title { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
-.card-title .arrow { margin-left: 6px; color: var(--ember); }
-.card-desc { margin: 0; color: var(--muted); font-size: 13px; }
+  .hint .legend { display: inline-flex; gap: 6px; margin: 0 4px; vertical-align: middle; }
 
-/* ---- Generic content section ---- */
-.section { margin: 0 0 48px; }
-.section h2 { font-size: 18px; margin: 0 0 14px; }
-/* :where() is load-bearing here, exactly as it is for .wrap p a above. Written
-   plainly, `.section p` scores (0,1,1) and outranks every (0,1,0) component
-   class placed on a paragraph inside a section: .card-title and .card-desc on
-   the home page, plus .tagline, .lede, .flow-aside, .colophon, and .creed.
-   Zeroed to (0,0,0) this stays the default for unclassed prose and
-   loses to any component rule, which is the intent. */
-:where(.section p) { color: var(--muted); margin: 16px 2px; font-size: 14px; line-height: 1.6; }
-.section p code { font-family: var(--mono); color: var(--ember); font-size: .92em; }
+  /* ---- Nav cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+    gap: 14px;
+  }
+  .nav-card {
+    display: block;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  .nav-card:hover { border-color: var(--ember); background: var(--panel-bar); }
+  .nav-card:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+  .card-title { margin: 0 0 6px; color: var(--ink); font-size: 16px; font-weight: 600; }
+  .card-title .arrow { margin-left: 6px; color: var(--ember); }
+  .card-desc { margin: 0; color: var(--muted); font-size: 13px; }
 
-/* ---- Key/value reference table ---- */
-.kv {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin: 16px 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-.kv th, .kv td {
-  text-align: left;
-  vertical-align: top;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-}
-.kv thead th {
-  background: var(--panel-bar);
-  color: var(--ink);
-  font-weight: 600;
-  font-size: .92em;
-}
-.kv tbody tr { background: var(--panel); }
-.kv tbody tr:last-child td { border-bottom: 0; }
-.kv td { color: var(--muted); }
-.kv code {
-  font-family: var(--mono);
-  color: var(--ember);
-  font-size: .92em;
-  white-space: nowrap;
-}
-.kv td:last-child code { white-space: normal; }
-@media (max-width: 620px) {
-  .kv code { white-space: normal; overflow-wrap: anywhere; }
-}
+  .card-meta {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
 
-/* fixed-width glyph cell for an emoji/icon column in a .kv table */
-.glyph {
-  display: inline-block;
-  min-width: 1.6em;
-  text-align: center;
-  font-size: 1.15em;
-  line-height: 1;
-}
+  /* ---- Metadata row ---- */
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 16px;
+    margin: 0 2px 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-row code {
+    font-family: var(--mono);
+    color: var(--ember);
+    background: color-mix(in srgb, var(--ember) 12%, transparent);
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  .meta-row a { color: var(--ember); text-decoration: none; }
+  .meta-row a:hover { text-decoration: underline; }
 
-/* ---- Tabbed panel: pure-CSS tabs ---- */
-/* hidden radios + label tabs + :checked panels, native arrow-key nav, zero JS.
-   Each tab is a radio + its label + its panel in source order, so
-   adjacent-sibling selectors pair them with no per-index rules and no cap on
-   the tab count. Flex order floats the labels into a row and the open panel
-   onto its own line below. */
-.tabgroup {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 0;
-}
-/* the radios drive the tabs: hidden but kept in the tab order so native arrow
-   keys still cycle the group; clicks land on the labels */
-.tabradio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-.tab {
-  order: 0;
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--muted);
-  background: var(--panel-bar);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 5px 12px;
-  cursor: pointer;
-  transition: color .15s ease, background-color .15s ease, border-color .15s ease;
-}
-.tab:hover { color: var(--ink); }
-/* min-width 0 for the same reason .tabgroup carries it: a panel is a flex item,
-   so its min-width resolves to auto, and an auto minimum refuses to shrink below
-   the content's own minimum size. A panel holding anything with a min-width (a
-   wide .datatable inside its .datatable-wrap, a code block) would otherwise hold
-   that width at a narrow viewport and push the page into a horizontal scroll,
-   instead of letting the inner scroller scroll on its own. The scroll-container
-   exception that would zero this out applies only when the flex item IS the
-   scroller, and here the scroller is one level down. */
-.tabpanel {
-  order: 1;            /* all panels sort below the row of labels */
-  flex-basis: 100%;    /* each on its own line */
-  min-width: 0;
-  display: none;
-  margin-top: 8px;
-}
+  /* ---- Generic content section ---- */
+  .section { margin: 0 0 48px; }
+  :where(.section h2) { font-size: 18px; margin: 0 0 14px; }
+  /* Prose defaults must not override component classes such as .card-desc,
+     .lede, .code-label, or .creed inside a section. */
+  :where(.section p) { color: var(--muted); margin: 16px 2px; font-size: 14px; line-height: 1.6; }
+  .section p code { font-family: var(--mono); color: var(--ember); font-size: .92em; }
 
-/* The checked radio marks its label active and reveals its panel (the panel is
-   the label's next sibling); a focused radio rings its label. Pairing is by
-   adjacency, so there are no per-index rules and no cap on the number of tabs. */
-.tabradio:checked + .tab {
-  color: var(--bg);
-  background: var(--ember);
-  border-color: var(--ember);
-}
-.tabradio:checked + .tab + .tabpanel { display: block; }
-.tabradio:focus-visible + .tab { outline: 2px solid var(--ember); outline-offset: 2px; }
+  :where(.section h3) { margin: 26px 0 4px; font-size: 14px; color: var(--ink); }
 
-/* visually hidden but accessible: e.g. a <fieldset>/<legend> label for a
-   .tabgroup that doesn't need a visible heading */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
+  /* ---- Key/value reference table ---- */
+  .kv {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .kv th, .kv td {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .kv thead th {
+    background: var(--panel-bar);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: .92em;
+  }
+  .kv tbody tr { background: var(--panel); }
+  .kv tbody tr:last-child td { border-bottom: 0; }
+  .kv td { color: var(--muted); }
+  .kv code {
+    font-family: var(--mono);
+    color: var(--ember);
+    font-size: .92em;
+    white-space: nowrap;
+  }
+  .kv td:last-child code { white-space: normal; }
+  @media (max-width: 620px) {
+    .kv code { white-space: normal; overflow-wrap: anywhere; }
+  }
 
-/* ---- Fenced code block ---- */
-.codeblock {
-  margin: 16px 0;
-  padding: 16px 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow-x: auto;
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--ink);
-}
-.codeblock code {
-  font-family: inherit;
-  color: inherit;
-  background: none;
-  padding: 0;
-  white-space: pre;
-}
+  .kv td .chip + .chip { margin-left: 6px; }
 
-/* Prism keeps the toolbar outside the scrolling pre element. */
-.code-toolbar:has(> .codeblock) { position: relative; min-width: 0; margin: 16px 0; }
-.code-toolbar > .codeblock { margin: 0; }
-.code-toolbar > .codeblock + .toolbar {
-  position: absolute;
-  z-index: 1;
-  top: 10px;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 6px;
-  background: var(--panel);
-}
-.code-toolbar > .codeblock + .toolbar .toolbar-item { display: flex; align-items: center; }
-.code-toolbar > .codeblock + .toolbar .toolbar-item > span {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.25;
-}
-.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button {
-  padding: 5px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--panel-bar);
-  color: var(--muted);
-  font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.25;
-  cursor: pointer;
-}
-.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:hover { color: var(--ink); }
-.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
-.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-success"] { color: var(--sl-green); }
-.code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-error"] { color: var(--sl-yellow); }
-@media (pointer: coarse) {
-  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button { min-height: 44px; }
-}
+  /* fixed-width glyph cell for an emoji/icon column in a .kv table */
+  .glyph {
+    display: inline-block;
+    min-width: 1.6em;
+    text-align: center;
+    font-size: 1.15em;
+    line-height: 1;
+  }
 
-/* Short blocks keep their copy controls beside the text. */
-.code-toolbar:has(> .codeblock.compact) {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px 10px 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--panel);
-}
-.code-toolbar > .codeblock.compact {
-  flex: 1;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-.code-toolbar > .codeblock.compact + .toolbar { position: static; flex-shrink: 0; }
+  /* ---- Tabbed panel: pure-CSS tabs ---- */
+  /* hidden radios + label tabs + :checked panels, native arrow-key nav, zero JS.
+     Each tab is a radio + its label + its panel in source order, so
+     adjacent-sibling selectors pair them with no per-index rules and no cap on
+     the tab count. Flex order floats the labels into a row and the open panel
+     onto its own line below. */
+  .tabgroup {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  /* the radios drive the tabs: hidden but kept in the tab order so native arrow
+     keys still cycle the group; clicks land on the labels */
+  .tabradio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab {
+    order: 0;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--panel-bar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: color .15s ease, background-color .15s ease, border-color .15s ease;
+  }
+  .tab:hover { color: var(--ink); }
+  /* A panel must shrink below its content's intrinsic width. Wide tables
+     and code blocks then scroll inside the panel instead of widening the page. */
+  .tabpanel {
+    order: 1;            /* all panels sort below the row of labels */
+    flex-basis: 100%;    /* each on its own line */
+    min-width: 0;
+    display: none;
+    margin-top: 8px;
+  }
 
-/* Prism token theme, scoped to .codeblock. Keyed to Prism's token classes
-   rather than any one language, so every grammar anvil-core vendors (see
-   res/js/prism.js) is already styled with no changes here. */
-.codeblock .token.property,
-.codeblock .token.tag,
-.codeblock .token.attr-name,
-.codeblock .token.selector { color: var(--sl-blue); }
-.codeblock .token.string,
-.codeblock .token.attr-value,
-.codeblock .token.char,
-.codeblock .token.inserted { color: var(--sl-green); }
-.codeblock .token.number,
-.codeblock .token.constant { color: var(--sl-yellow); }
-.codeblock .token.boolean,
-.codeblock .token.keyword { color: var(--ember); }
-.codeblock .token.function,
-.codeblock .token.class-name { color: var(--sl-cyan); }
-.codeblock .token.comment,
-.codeblock .token.prolog,
-.codeblock .token.doctype { color: var(--muted); font-style: italic; }
-.codeblock .token.punctuation,
-.codeblock .token.operator { color: var(--ink); }
+  /* The checked radio marks its label active and reveals its panel (the panel is
+     the label's next sibling); a focused radio rings its label. Pairing is by
+     adjacency, so there are no per-index rules and no cap on the number of tabs. */
+  .tabradio:checked + .tab {
+    color: var(--bg);
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  .tabradio:checked + .tab + .tabpanel { display: block; }
+  .tabradio:focus-visible + .tab { outline: 2px solid var(--ember); outline-offset: 2px; }
 
-/* ---- Chip ---- */
-/* Accent comes in as --chip (set by a variant class, or inline by a
-   renderer); falls back to muted. color-mix derives the soft fill and the
-   faint ring from that single accent. */
-.chip {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 2px 9px;
-  border-radius: 999px;
-  white-space: nowrap;
-  color: var(--chip, var(--muted));
-  background: color-mix(in srgb, var(--chip, var(--muted)) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--chip, var(--muted)) 30%, transparent);
-}
+  /* visually hidden but accessible: e.g. a <fieldset>/<legend> label for a
+     .tabgroup that doesn't need a visible heading */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
-/* ---- Colophon ---- */
-/* an optional project credits line (repo, license, version) that sits ABOVE
-   the footer, not inside it, so the .foot markup stays identical on every
-   anvil site. It carries the divider and the top gap that .foot normally
-   owns, so the two read as one band. Project sites only. */
-.colophon {
-  margin: 48px 0 0;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
-}
-.colophon a { color: var(--ember); text-decoration: none; }
-.colophon a:hover { text-decoration: underline; }
-.colophon .sep { margin: 0 10px; opacity: .5; }
-.colophon + .foot { margin-top: 14px; padding-top: 0; border-top: 0; }
+  /* ---- Fenced code block ---- */
+  .code-label { margin: 22px 0 8px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .codeblock {
+    margin: 16px 0;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .codeblock code {
+    font-family: inherit;
+    color: inherit;
+    background: none;
+    padding: 0;
+    white-space: pre;
+  }
 
-/* ---- Footer ---- */
-.foot {
-  margin-top: 48px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
-  border-top: 1px solid var(--border);
-  padding-top: 28px;
-}
-.foot a { color: var(--ember); text-decoration: none; }
-.foot a:hover { text-decoration: underline; }
-.foot .sep { margin: 0 10px; opacity: .5; }
+  .codeblock.accent code { color: var(--ember); }
 
-/* the Anvil creed, appended under the shared .foot */
-.creed { margin: 14px 0 0; font-style: italic; line-height: 1.6; }
-.creed-attr { font-style: normal; font-size: .9em; }
+  /* Prism keeps the toolbar outside the scrolling pre element. */
+  .code-toolbar:has(> .codeblock) { position: relative; min-width: 0; margin: 16px 0; }
+  .code-toolbar > .codeblock { margin: 0; padding-top: 48px; }
+  .code-toolbar > .codeblock + .toolbar {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    background: var(--panel);
+  }
+  .code-toolbar > .codeblock + .toolbar .toolbar-item { display: flex; align-items: center; }
+  .code-toolbar > .codeblock + .toolbar .toolbar-item > span {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button {
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel-bar);
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.25;
+    cursor: pointer;
+  }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:hover { color: var(--ink); }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-success"] { color: var(--sl-green); }
+  .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button[data-copy-state="copy-error"] { color: var(--sl-yellow); }
+  @media (pointer: coarse) {
+    .code-toolbar > .codeblock:not(.compact) { padding-top: 64px; }
+    .code-toolbar > .codeblock + .toolbar .copy-to-clipboard-button { min-height: 44px; }
+  }
 
-/* ---- Document header and dividers ---- */
-/* Intro paragraph under a left-aligned h1, e.g. a document's opening line.
-   Same code treatment as .tagline but without its centering, for a page
-   that isn't a hero. */
-.lede { margin: 0 0 28px; color: var(--muted); font-size: 15px; line-height: 1.65; }
-.lede code {
-  font-family: var(--mono);
-  color: var(--ember);
-  background: color-mix(in srgb, var(--ember) 9%, transparent);
-  padding: .05em .35em;
-  border-radius: 5px;
-  font-size: .9em;
-}
+  /* Short blocks keep their copy controls beside the text. */
+  .code-toolbar:has(> .codeblock.compact) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .code-toolbar > .codeblock.compact {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  .code-toolbar > .codeblock.compact + .toolbar { position: static; flex-shrink: 0; }
 
-/* mono/uppercase heading with a rule above it, for breaking a long document
-   into major parts */
-.divider-heading {
-  font-family: var(--mono);
-  font-size: 1rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink);
-  font-weight: 700;
-  margin: 44px 0 16px;
-  padding-top: 26px;
-  border-top: 1px solid var(--border);
-}
+  /* Prism token theme, scoped to .codeblock. Keyed to Prism's token classes
+     rather than any one language, so every grammar anvil-core vendors (see
+     res/js/prism.js) is already styled with no changes here. */
+  .codeblock .token.property,
+  .codeblock .token.tag,
+  .codeblock .token.attr-name,
+  .codeblock .token.selector { color: var(--sl-blue); }
+  .codeblock .token.string,
+  .codeblock .token.attr-value,
+  .codeblock .token.char,
+  .codeblock .token.inserted { color: var(--sl-green); }
+  .codeblock .token.number,
+  .codeblock .token.constant { color: var(--sl-yellow); }
+  .codeblock .token.boolean,
+  .codeblock .token.keyword { color: var(--ember); }
+  .codeblock .token.function,
+  .codeblock .token.class-name { color: var(--sl-cyan); }
+  .codeblock .token.comment,
+  .codeblock .token.prolog,
+  .codeblock .token.doctype { color: var(--muted); font-style: italic; }
+  .codeblock .token.punctuation,
+  .codeblock .token.operator { color: var(--ink); }
 
-/* "#" permalink anvil-anchors.js appends to any h2/h3 that already has an
-   id, so a reader can grab a direct link to that section. Hidden until the
-   heading is hovered or the link itself gets keyboard focus. */
-.heading-anchor {
-  margin-left: .45em;
-  color: var(--muted);
-  text-decoration: none;
-  font-weight: 400;
-  opacity: 0;
-  transition: opacity .12s ease;
-}
-h2:hover > .heading-anchor,
-h3:hover > .heading-anchor,
-.heading-anchor:focus-visible {
-  opacity: 1;
-}
-.heading-anchor:hover {
-  color: var(--ember);
-}
+  /* ---- Disclosure panel ---- */
+  .disclosure {
+    margin: 16px 0 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .disclosure > summary {
+    cursor: pointer;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .disclosure > summary:hover { color: var(--ember); }
+  .disclosure > summary:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+  .disclosure[open] > summary { border-bottom: 1px solid var(--border); }
+  .disclosure .code-toolbar { margin: 0; }
+  /* Nested code uses the disclosure frame instead of a second border. */
+  .disclosure .codeblock {
+    margin: 0;
+    border: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: none;
+  }
+  .disclosure .codeblock code { white-space: pre-wrap; color: var(--muted); }
+  .disclosure .codeblock .md-heading { color: var(--ember); font-weight: 600; }
 
-/* smaller mono subheading with an optional inline note */
-.subhead { font-family: var(--mono); font-size: .8rem; font-weight: 600; color: var(--ink); margin: 28px 0 9px; }
-.subhead .note { font-family: var(--sans); font-size: .72rem; font-weight: 400; color: var(--muted); }
+  /* ---- Chip ---- */
+  h2 .chip { margin-left: 10px; vertical-align: middle; }
+  /* Accent comes in as --chip (set by a variant class, or inline by a
+     renderer); falls back to muted. color-mix derives the soft fill and the
+     faint ring from that single accent. */
+  .chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    color: var(--chip, var(--muted));
+    background: color-mix(in srgb, var(--chip, var(--muted)) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--chip, var(--muted)) 30%, transparent);
+  }
 
-/* bulleted list with an optional bold lead-in, for a takeaways box or a
-   plain-prose bill-of-rights list */
-.ulist { max-width: 44rem; margin: 4px 0; padding-left: 1.1rem; display: grid; gap: 6px; font-size: 13.5px; color: var(--muted); }
-.ulist li { padding-left: 2px; }
-.ulist b { color: var(--ink); font-weight: 600; }
+  .chip.caps { font-weight: 600; letter-spacing: .02em; text-transform: uppercase; }
 
-/* small muted footnote under a table or code block, e.g. an asterisked caveat */
-.flow-aside { max-width: 40rem; margin: 2px 0 0; font-size: 12.8px; line-height: 1.35; color: var(--muted); }
+  /* ---- Bookmark directory ---- */
+  /* Each group is a section with a colored left rail (--rail, set inline per
+     group by the renderer) and dense rows: name, dotted leader, short URL. */
+  .bookmark-groups { display: flex; flex-direction: column; gap: 24px; }
 
-/* ---- Page rail: "On this page" outline ----
-   Two columns inside the existing 1080px .wrap, so a railed page stays
-   aligned with the top nav instead of running wider than the rest of the
-   site. The page builds the nav.pagerail entries from its own data;
-   anvil-pagerail.js lights the entry for the section in view.
-   align-items: start is load-bearing: without it the rail's grid item
-   stretches to the full row height, and a sticky box that is already as tall
-   as its containing block has nowhere to travel, so it silently scrolls away.
-   Below 1024px the content column gets too narrow, so the rail unsticks and
-   stacks above the content instead.
-   Named pagerail, not rail: .datatable already owns .rail for its row-label
-   color bar. */
-.withpagerail {
-  display: grid;
-  grid-template-columns: 178px minmax(0, 1fr);
-  gap: 32px;
-  align-items: start;
-}
-.pagerail { position: sticky; top: 24px; }
-.pagerail-title {
-  margin: 0 0 10px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.pagerail ul { list-style: none; margin: 0; padding: 0; }
-.pagerail a {
-  display: block;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  padding: 4px 0 4px 12px;
-  border-left: 2px solid var(--border);
-  overflow-wrap: anywhere;
-}
-.pagerail a.sub { padding-left: 24px; font-size: 11.5px; }
-/* Optional mark on any entry, opted into with .dotted. --rail sets the color
-   and --rail-mark swaps the 6px dot for a dot-like character such as "\2726".
-   Both are set inline by the page, per entry, so a plain entry stays plain.
-   Absolute, so a long label wraps under its own text rather than under the
-   mark. A dotted top-level entry widens its padding to make room, the same
-   room a .sub entry already has. */
-.pagerail a.dotted { position: relative; padding-left: 24px; }
-.pagerail a.dotted::before {
-  content: var(--rail-mark, "");
-  position: absolute;
-  left: 11px;
-  top: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--rail, var(--ember));
-  color: var(--rail, var(--ember));
-  font-size: 9px;
-  line-height: 6px;
-  text-align: center;
-}
-/* a character mark draws itself, so the circle behind it goes away */
-.pagerail a.dotted[style*="--rail-mark"]::before { background: none; }
-/* the return-to-top link is an action, not a section, so it sits above the
-   outline rather than reading as its first entry; it is always the first li.
-   It carries no glyph: the divider under it already sets it apart, and at
-   12px every arrow glyph in the mono stack renders as the same thin "↑". */
-.pagerail li:first-child { margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
-/* li.ruled opens a new run of entries with the same divider, e.g. a page's
-   own configuration section after a list of catalog entries */
-.pagerail li.ruled { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--border); }
-.pagerail a:hover { color: var(--ink); }
-.pagerail a.on { color: var(--ember); border-left-color: var(--ember); }
-.pagerail a:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+  /* A divider groups related bookmark sections. --rail supplies its accent. */
+  .bm-vendor {
+    margin: 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--rail, var(--ember));
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--rail, var(--ember));
+  }
 
-@media (max-width: 1024px) {
-  .withpagerail { grid-template-columns: 1fr; gap: 0; }
-  .pagerail { position: static; margin-bottom: 36px; }
-}
+  .bm-group {
+    border-left: 3px solid var(--rail, var(--ember));
+    padding-left: 16px;
+  }
+  .bm-group-title {
+    margin: 0 0 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--rail, var(--ember));
+  }
 
-/* a clicked rail link should land its heading on the rail's own top line */
-.withpagerail h2[id], .withpagerail h3[id] { scroll-margin-top: 24px; }
+  .bm-list { list-style: none; margin: 0; padding: 0; }
+  /* The whole row is the anchor; the name and URL inside it light up together. */
+  .bm-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 5px 0;
+    color: inherit;
+    text-decoration: none;
+  }
+  .bm-row:focus-visible { outline: 2px solid var(--rail, var(--ember)); outline-offset: 2px; }
+  .bm-name {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .bm-row:hover .bm-name,
+  .bm-row:focus-visible .bm-name { color: var(--rail, var(--ember)); }
+  .bm-row:hover .bm-url,
+  .bm-row:focus-visible .bm-url { color: var(--ink); }
 
-@media (prefers-reduced-motion: no-preference) {
-  html:has(.pagerail) { scroll-behavior: smooth; }
-}
+  /* empty spacer; the dotted line lifted off the baseline to sit mid-text */
+  .bm-leader {
+    flex: 1 1 auto;
+    min-width: 16px;
+    border-bottom: 1px dotted var(--border);
+    position: relative;
+    top: -0.3em;
+  }
 
-/* ---- Data table ---- */
-/* Dense reference grid: a bordered/scrollable panel wrapping a table with a
-   sticky-ready header, optional group-divider rows, and a colored rail on
-   each row label (e.g. a vendor or category key). Two modifiers cover the
-   common shapes: .grid for a centered availability matrix, .numeric for a
-   right-aligned figures table. */
-.datatable-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--panel);
-}
-/* fixed layout so every table's leftover width is handed out deliberately
-   (an explicit column width, or an even split) rather than to whichever
-   column's content happens to be longest - see the .rowlabel-col and
-   .numeric rules below for how each shape divides it */
-.datatable { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 14px; }
-.datatable thead th {
-  background: var(--panel-bar);
-  font-family: var(--mono);
-  font-size: .78em;
-  font-weight: 600;
-  text-align: left;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  color: var(--ink);
-  white-space: nowrap;
-}
-.datatable tbody td,
-.datatable tbody th {
-  padding: 9px 14px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: middle;
-}
-.datatable tbody th { text-align: left; font-family: var(--mono); font-weight: 400; color: var(--ink); white-space: nowrap; }
-.datatable tbody td { color: var(--muted); }
-.datatable tbody:last-of-type tr:last-child td,
-.datatable tbody:last-of-type tr:last-child th { border-bottom: 0; }
-.datatable tbody tr:not(.group):hover td { background: color-mix(in srgb, var(--ember) 9%, transparent); }
-/* the row label stays opaque even on hover: it's a sticky-positioned cell
-   (see below) sitting over data columns that scroll underneath it, so a
-   transparent hover mix would let those columns show through */
-.datatable tbody tr:not(.group):hover th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+  .bm-url {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
 
-/* ---- sticky identity column ----
-   Every .datatable's first column - every non-group body row's th, plus
-   the header corner - stays pinned to the left edge of the .datatable-wrap
-   scroller, so a wide table can scroll its data columns horizontally
-   without losing which row is which. The pin below is generic: it matches
-   every tbody row header except group dividers (those have no identity
-   cell to pin - see the .glabel note further down, which sticks the label
-   text itself instead). .rowlabel layers a colored rail and extra left
-   padding on top of that pin for tables that want one; tables that don't
-   opt into .rowlabel still get the pin, just without the rail. Three
-   requirements fall out of pinning a column over content that scrolls
-   beneath it: an opaque background (var(--panel) / var(--panel-bar),
-   matching each cell's normal background) so scrolled-past data doesn't
-   show through, and a z-index ladder so the pieces that overlap at the
-   top-left corner stack in the right order - the corner header cell (3)
-   above the sticky data header row (2) above the sticky body row labels
-   (1). */
-.datatable tbody tr:not(.group) th { position: sticky; left: 0; z-index: 1; background: var(--panel); }
+  /* Narrow screens: drop the leader, stack the URL under the name so the long
+     docs URLs wrap instead of overflowing. */
+  @media (max-width: 560px) {
+    .bm-row { flex-wrap: wrap; gap: 1px 0; }
+    .bm-name { flex: 1 1 100%; white-space: normal; }
+    .bm-leader { display: none; }
+    .bm-url { flex: 1 1 100%; white-space: normal; word-break: break-all; }
+  }
 
-/* row label with a colored rail strip down its left edge, on top of the
-   generic pin above. The column width is set here (not per table-shape
-   modifier) so it's identical everywhere, including between two stacked
-   tables that list the same rows. */
-.datatable th.rowlabel { padding-left: 26px; }
-/* the vendor colour bar. It fills the label cell but is masked down to a 3px
-   strip on the LEFT and RIGHT edges, so the first column reads as bracketed on
-   both sides. The colour is each row's inline background on .rail, so this needs
-   no per-row markup. */
-.datatable th.rowlabel .rail { position: absolute; inset: 0; pointer-events: none;
-  -webkit-mask: linear-gradient(to right, #000 0 3px, transparent 3px calc(100% - 3px), #000 calc(100% - 3px));
-  mask: linear-gradient(to right, #000 0 3px, transparent 3px calc(100% - 3px), #000 calc(100% - 3px)); }
-/* far-right mirror of the rail: a 3px bar in the row's mark colour (--mk) on the
-   last cell, so a row that sets --mk is bracketed on BOTH outer edges of the
-   table. Rows without --mk (group dividers, totals) show nothing. */
-.datatable tbody td:last-child { position: relative; }
-.datatable tbody td:last-child::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 3px; background: var(--mk); pointer-events: none; }
-/* the top-left corner: sticky on both axes at once (pinned left here, and
-   pinned top via .datatable.grid thead th below for tables that scroll
-   vertically too), so it needs to out-rank every other sticky piece it
-   can end up sharing a pixel with - hence z-index 3 */
-.datatable thead th.rowlabel-col { position: sticky; left: 0; z-index: 3; width: 190px; text-align: left; padding-left: 26px; }
+  /* ---- Document header and dividers ---- */
+  /* Intro paragraph under a left-aligned h1, e.g. a document's opening line.
+     Same code treatment as .tagline but without its centering, for a page
+     that isn't a hero. */
+  .lede { margin: 0 0 28px; color: var(--muted); font-size: 15px; line-height: 1.65; }
 
-/* Opt-in width utilities for any table under fixed layout: apply directly to
-   the thead th that needs it, regardless of position or table-shape modifier,
-   so a future table's column arrangement can't silently inherit the wrong
-   width. .labelcol: a short identity column with no rail (e.g. a vendor
-   name). .widecol: a data column whose values run notably longer than its
-   siblings (e.g. a plan name). Everything else splits the remainder evenly. */
-.datatable thead th.labelcol { width: 130px; text-align: left; }
-.datatable thead th.widecol { width: 230px; }
+  /* mono/uppercase heading with a rule above it, for breaking a long document
+     into major parts */
+  .divider-heading {
+    font-family: var(--mono);
+    font-size: 1rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 700;
+    margin: 44px 0 16px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+  }
 
-/* group-divider row inside the body, e.g. one per vendor */
-.datatable tr.group th { padding: 16px 14px 6px; border-bottom: 1px solid var(--border); }
-/* the divider spans every column (colspan), so it has no rowlabel cell to
-   pin - instead the label itself sticks to the wrap's left edge at 14px,
-   matching the th's own left padding, so e.g. "Anthropic / Claude" stays
-   readable mid-scroll. width: max-content keeps the flex item from
-   stretching to fill the (now effectively unconstrained) sticky box, which
-   would otherwise misalign .gdot from the text baseline. */
-.datatable tr.group .glabel {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: .72em;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  position: sticky;
-  left: 14px;
-  width: max-content;
-}
-.datatable tr.group .gdot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  /* "#" permalink anvil-anchors.js appends to any h2/h3 that already has an
+     id, so a reader can grab a direct link to that section. Hidden until the
+     heading is hovered or the link itself gets keyboard focus. */
+  .heading-anchor {
+    margin-left: .45em;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 400;
+    opacity: 0;
+    transition: opacity .12s ease;
+  }
+  h2:hover > .heading-anchor,
+  h3:hover > .heading-anchor,
+  .heading-anchor:focus-visible {
+    opacity: 1;
+  }
+  .heading-anchor:hover {
+    color: var(--ember);
+  }
 
-/* .grid: sticky, centered header for a wide availability matrix. The data
-   columns (however many there are) split whatever's left over evenly. */
-.datatable.grid { min-width: 600px; }
-.datatable.grid thead th { position: sticky; top: 0; z-index: 2; text-align: center; }
-/* .rowlabel-col and this rule tie on specificity (two classes, two type
-   selectors each), so without a more specific override here the corner
-   cell's z-index and text-align would flip to whichever of the two rules
-   happens to come last in source order. Naming .rowlabel-col a second time
-   breaks the tie deliberately, so the corner keeps z-index 3 (see the
-   sticky identity column note) and its left alignment regardless of
-   future reordering. */
-.datatable.grid thead th.rowlabel-col { z-index: 3; text-align: left; }
-.datatable.grid td.c { text-align: center; vertical-align: middle; }
+  /* smaller mono subheading with an optional inline note */
+  .subhead { font-family: var(--mono); font-size: .8rem; font-weight: 600; color: var(--ink); margin: 28px 0 9px; }
+  .subhead .note { font-family: var(--sans); font-size: .72rem; font-weight: 400; color: var(--muted); }
 
-/* .numeric: right-aligned tabular figures, e.g. a cost breakdown. Apply
-   .labelcol / .widecol (above) to whichever columns need them. */
-.datatable.numeric { font-variant-numeric: tabular-nums; min-width: 480px; }
-.datatable.numeric thead th { text-align: right; }
-.datatable.numeric tbody td { text-align: right; font-family: var(--mono); font-size: .92em; }
+  /* bulleted list with an optional bold lead-in, for a takeaways box or a
+     plain-prose bill-of-rights list */
+  .ulist { max-width: 44rem; margin: 4px 0; padding-left: 1.1rem; display: grid; gap: 6px; font-size: 13.5px; color: var(--muted); }
+  .ulist li { padding-left: 2px; }
+  .ulist b { color: var(--ink); font-weight: 600; }
 
-/* summary row, e.g. a total under a numeric table */
-.datatable tbody tr.total td,
-.datatable tbody tr.total th { font-weight: 700; color: var(--ink); border-top: 2px solid var(--border); }
-/* the total row's th isn't a .rowlabel (no rail), but it's still a
-   non-.group body row header, so the generic pin above already covers it */
+  /* small muted footnote under a table or code block, e.g. an asterisked caveat */
+  .flow-aside.wide { max-width: none; }
+  .flow-aside { max-width: 40rem; margin: 2px 0 0; font-size: 12.8px; line-height: 1.35; color: var(--muted); }
 
-/* ---- Status mark ---- */
-/* A small primary (filled) / secondary (ring) / upcoming (star) indicator
-   for a table cell, colored via --mk on an ancestor; optionally paired with
-   a caption line beneath it via .markstack. */
-.markstack { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
-.datamark { display: inline-block; width: 13px; height: 13px; border-radius: 50%; vertical-align: middle; background: var(--mk, var(--ink)); }
-.datamark.outline { background: transparent; border: 2px solid var(--mk, var(--ink)); }
-.datamark.soon { width: auto; height: auto; border-radius: 0; background: none; color: var(--mk, var(--ink)); font-size: 16px; line-height: 1; }
-.datamark.soon::before { content: "\2726"; }
-.marklabel { display: block; min-height: .72em; font-family: var(--mono); font-size: .62em; color: var(--muted); line-height: 1; white-space: nowrap; }
-.c.primary .marklabel,
-.c.secondary .marklabel { color: var(--ink); }
-td.c.unavailable::before {
-  content: "";
-  display: inline-block;
-  width: 11px;
-  height: 2px;
-  background: var(--muted);
-  opacity: .4;
-  border-radius: 2px;
-  vertical-align: middle;
-}
+  /* ---- Page rail ----
+     The sticky column needs align-items: start so it can move inside the grid.
+     Below 1024px, the outline stacks above the content. anvil-pagerail.js can
+     build entries from headings and track the section in view. */
+  .withpagerail {
+    display: grid;
+    grid-template-columns: 178px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .pagerail { position: sticky; top: var(--pagerail-top); }
+  .pagerail-title {
+    margin: 0 0 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pagerail ul { list-style: none; margin: 0; padding: 0; }
+  .pagerail a {
+    display: block;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 0 4px 12px;
+    border-left: 2px solid var(--border);
+    overflow-wrap: anywhere;
+  }
+  .pagerail a.sub { padding-left: 24px; font-size: 11.5px; }
+  /* .dotted adds a mark. --rail sets its color; --rail-mark can supply a
+     character. The absolute mark keeps wrapped labels aligned with their text. */
+  .pagerail a.dotted { position: relative; padding-left: 24px; }
+  .pagerail a.dotted::before {
+    content: var(--rail-mark, "");
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rail, var(--ember));
+    color: var(--rail, var(--ember));
+    font-size: 9px;
+    line-height: 6px;
+    text-align: center;
+  }
+  /* a character mark draws itself, so the circle behind it goes away */
+  .pagerail a.dotted[style*="--rail-mark"]::before { background: none; }
+  /* Only an authored return-to-top entry receives the separator. */
+  .pagerail li:has(> .totop) { margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+  /* li.ruled opens a new run of entries with the same divider, e.g. a page's
+     own configuration section after a list of catalog entries */
+  .pagerail li.ruled { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--border); }
+  .pagerail a:hover { color: var(--ink); }
+  .pagerail a.on { color: var(--ember); border-left-color: var(--ember); }
+  .pagerail a:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
 
-/* ---- Data legend ---- */
-/* Compact key of pill swatches explaining a set of status marks. Named apart
-   from .hint .legend, which is an unrelated inline pair of sample pills. */
-.datalegend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 20px; font-size: .82em; }
-.datalegend .item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 13px 7px 10px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-}
-.datalegend .lbl { color: var(--muted); }
-.datalegend .lbl b { color: var(--ink); font-weight: 600; }
-.legend-swatch { flex: none; width: 15px; height: 15px; border-radius: 50%; position: relative; background: transparent; }
-.legend-swatch.primary { background: var(--ink); }
-.legend-swatch.secondary { background: transparent; border: 2px solid var(--ink); }
-.legend-swatch.soon { width: auto; height: auto; border-radius: 0; color: var(--ink); font-size: 16px; line-height: 1; }
-.legend-swatch.soon::before { content: "\2726"; }
-.legend-swatch.unavailable::after {
-  content: "";
-  position: absolute;
-  inset: 6px 1px;
-  height: 2px;
-  background: var(--muted);
-  opacity: .4;
-  border-radius: 2px;
-}
+  @media (max-width: 1024px) {
+    .withpagerail { grid-template-columns: 1fr; gap: 0; }
+    .pagerail { position: static; margin-bottom: 36px; }
+  }
+
+  /* a clicked rail link should land its heading on the rail's own top line */
+  .withpagerail h2[id], .withpagerail h3[id] { scroll-margin-top: var(--pagerail-top); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:has(.pagerail) { scroll-behavior: smooth; }
+  }
+
+  /* ---- Horizontal overflow ---- */
+  .table-scroll { overflow-x: auto; }
+  .table-scroll:focus-visible,
+  .datatable-wrap:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+
+  /* ---- Data table ---- */
+  /* Dense reference grid: a bordered/scrollable panel wrapping a table with a
+     sticky-ready header, optional group-divider rows, and a colored rail on
+     each row label (e.g. a vendor or category key). Two modifiers cover the
+     common shapes: .grid for a centered availability matrix, .numeric for a
+     right-aligned figures table. */
+  .datatable-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  /* fixed layout so every table's leftover width is handed out deliberately
+     (an explicit column width, or an even split) rather than to whichever
+     column's content happens to be longest - see the .rowlabel-col and
+     .numeric rules below for how each shape divides it */
+  .datatable { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 14px; }
+  .datatable thead th {
+    background: var(--panel-bar);
+    font-family: var(--mono);
+    font-size: .78em;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .datatable tbody td,
+  .datatable tbody th {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .datatable tbody th { text-align: left; font-family: var(--mono); font-weight: 400; color: var(--ink); white-space: nowrap; }
+  .datatable tbody td { color: var(--muted); }
+  .datatable tbody:last-of-type tr:last-child td,
+  .datatable tbody:last-of-type tr:last-child th { border-bottom: 0; }
+  .datatable tbody tr:not(.group):hover td { background: color-mix(in srgb, var(--ember) 9%, transparent); }
+  /* the row label stays opaque even on hover: it's a sticky-positioned cell
+     (see below) sitting over data columns that scroll underneath it, so a
+     transparent hover mix would let those columns show through */
+  .datatable tbody tr:not(.group):hover th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+
+  /* A merged row label stays highlighted across its group of rows. */
+  .datatable tbody:has(tr:not(.group):hover) th[rowspan] { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
+
+  /* Sticky row headers need opaque surfaces over the scrolling data cells.
+     Layer order: body labels (1), grid headers (2), top-left corner (3). */
+  .datatable tbody tr:not(.group) th { position: sticky; left: 0; z-index: 1; background: var(--panel); }
+
+  /* .rowlabel adds space for a color rail to the sticky row header. */
+  .datatable th.rowlabel { padding-left: 26px; }
+  .datatable th.rowlabel.vendor-label { color: var(--rail, var(--ink)); }
+  .datatable th.rowlabel a { color: inherit; font-weight: inherit; text-decoration: none; }
+  .datatable th.rowlabel a:hover,
+  .datatable th.rowlabel a:focus-visible { text-decoration: underline; }
+  /* --mk colors both edges of the row label. An inline background on .rail
+     remains supported for consumers with existing markup. */
+  .datatable th.rowlabel .rail { background: var(--mk, transparent); position: absolute; inset: 0; pointer-events: none;
+    -webkit-mask: linear-gradient(to right, #000 0 3px, transparent 3px calc(100% - 3px), #000 calc(100% - 3px));
+    mask: linear-gradient(to right, #000 0 3px, transparent 3px calc(100% - 3px), #000 calc(100% - 3px)); }
+  /* far-right mirror of the rail: a 3px bar in the row's mark colour (--mk) on the
+     last cell, so a row that sets --mk is bracketed on BOTH outer edges of the
+     table. Rows without --mk (group dividers, totals) show nothing. */
+  .datatable tbody td:last-child { position: relative; }
+  .datatable tbody td:last-child::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 3px; background: var(--mk); pointer-events: none; }
+  /* The corner stays above both sticky headers and row labels. */
+  .datatable thead th.rowlabel-col { position: sticky; left: 0; z-index: 3; width: 190px; text-align: left; padding-left: 26px; }
+
+  /* Optional fixed-layout column widths. Apply to the relevant header cell. */
+  .datatable thead th.labelcol { width: 130px; text-align: left; }
+  .datatable thead th.widecol { width: 230px; }
+
+  /* group-divider row inside the body, e.g. one per vendor */
+  .datatable tr.group th { padding: 16px 14px 6px; border-bottom: 1px solid var(--border); }
+  /* Group headings span columns. Pin the label itself inside the scroller. */
+  .datatable tr.group .glabel {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: .72em;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--mk, var(--muted));
+    position: sticky;
+    left: 14px;
+    width: max-content;
+  }
+  .datatable tr.group .gdot { background: var(--mk, var(--muted)); width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+  /* .grid: sticky, centered header for a wide availability matrix. The data
+     columns (however many there are) split whatever's left over evenly. */
+  .datatable.grid { min-width: 600px; }
+  .datatable.grid thead th { position: sticky; top: 0; z-index: 2; text-align: center; }
+  /* The corner selector must outrank the generic grid header. */
+  .datatable.grid thead th.rowlabel-col { z-index: 3; text-align: left; }
+  .datatable.grid td.c { text-align: center; vertical-align: middle; }
+
+  /* .numeric: right-aligned tabular figures, e.g. a cost breakdown. Apply
+     .labelcol / .widecol (above) to whichever columns need them. */
+  .datatable.numeric { font-variant-numeric: tabular-nums; min-width: 480px; }
+  .datatable.numeric thead th { text-align: right; }
+  .datatable.numeric tbody td { text-align: right; font-family: var(--mono); font-size: .92em; }
+
+  /* summary row, e.g. a total under a numeric table */
+  .datatable tbody tr.total td,
+  .datatable tbody tr.total th { font-weight: 700; color: var(--ink); border-top: 2px solid var(--border); }
+  /* the total row's th isn't a .rowlabel (no rail), but it's still a
+     non-.group body row header, so the generic pin above already covers it */
+
+  /* ---- Change mark ---- */
+  .movemark { font-weight: 700; font-size: 1.3em; line-height: 1; vertical-align: middle; }
+  .movemark.up { color: var(--sl-green); }
+  .movemark.down { color: var(--sl-red); }
+  .movemark.eq { color: var(--muted); }
+
+  /* ---- Status mark ---- */
+  /* A small primary (filled) / secondary (ring) / upcoming (star) indicator
+     for a table cell, colored via --mk on an ancestor; optionally paired with
+     a caption line beneath it via .markstack. */
+  .markstack { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
+  .datamark { display: inline-block; width: 13px; height: 13px; border-radius: 50%; vertical-align: middle; background: var(--mk, var(--ink)); }
+  .datamark.outline { background: transparent; border: 2px solid var(--mk, var(--ink)); }
+  .datamark.soon { width: auto; height: auto; border-radius: 0; background: none; color: var(--mk, var(--ink)); font-size: 16px; line-height: 1; }
+  .datamark.soon::before { content: "\2726"; }
+  .marklabel { display: block; min-height: .72em; font-family: var(--mono); font-size: .62em; color: var(--muted); line-height: 1; white-space: nowrap; }
+  .c.primary .marklabel,
+  .c.secondary .marklabel { color: var(--ink); }
+  td.c.unavailable::before {
+    content: "";
+    display: inline-block;
+    width: 11px;
+    height: 2px;
+    background: var(--muted);
+    opacity: .4;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+
+  /* ---- Data legend ---- */
+  /* Compact key of pill swatches explaining a set of status marks. Named apart
+     from .hint .legend, which is an unrelated inline pair of sample pills. */
+  .datalegend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 20px; font-size: .82em; }
+  .datalegend .item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 13px 7px 10px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .datalegend .lbl { color: var(--muted); }
+  .datalegend .lbl b { color: var(--ink); font-weight: 600; }
+  .legend-swatch { flex: none; width: 15px; height: 15px; border-radius: 50%; position: relative; background: transparent; }
+  .legend-swatch.primary { background: var(--ink); }
+  .legend-swatch.secondary { background: transparent; border: 2px solid var(--ink); }
+  .legend-swatch.soon { width: auto; height: auto; border-radius: 0; color: var(--ink); font-size: 16px; line-height: 1; }
+  .legend-swatch.soon::before { content: "\2726"; }
+  .legend-swatch.unavailable::after {
+    content: "";
+    position: absolute;
+    inset: 6px 1px;
+    height: 2px;
+    background: var(--muted);
+    opacity: .4;
+    border-radius: 2px;
+  }
+
+  /* ---- Colophon ---- */
+  /* an optional project credits line (repo, license, version) that sits ABOVE
+     the footer, not inside it, so the .foot markup stays identical on every
+     anvil site. It carries the divider and the top gap that .foot normally
+     owns, so the two read as one band. Project sites only. */
+  .colophon {
+    margin: 48px 0 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .colophon a { color: var(--ember); text-decoration: none; }
+  .colophon a:hover { text-decoration: underline; }
+  .colophon .sep { margin: 0 10px; opacity: .5; }
+  .colophon + .foot { margin-top: 14px; padding-top: 0; border-top: 0; }
+
+  /* ---- Footer ---- */
+  .foot {
+    margin-top: 48px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+  }
+  .foot a { color: var(--ember); text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
+  .foot .sep { margin: 0 10px; opacity: .5; }
+
+  /* the Anvil creed, appended under the shared .foot */
+  .creed { margin: 14px 0 0; font-style: italic; line-height: 1.6; }
+  .creed-attr { font-style: normal; font-size: .9em; }
 
 } /* end @layer anvil */

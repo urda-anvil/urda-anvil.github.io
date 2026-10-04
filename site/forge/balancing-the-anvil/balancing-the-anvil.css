@@ -23,31 +23,6 @@
    column; 880px gives each column ~172px, clearing both with room to spare. */
 .datatable.grid { min-width: 880px; }
 
-/* .wide: drop the footnote's 40rem reading cap so an aside used as a
-   full-width intro note (e.g. the Cost section's JetBrains caveat) lines up
-   with the lede above it instead of wrapping early at half the container. */
-.flow-aside.wide { max-width: none; }
-
-/* ---- reasoning-effort change mark ---- */
-/* The "Change" column: how the riff target compares to the vendor default.
-   = unchanged (muted), NE arrow raised (green), SE arrow lowered (red).
-   Plain Unicode heavy arrows, colored by role. */
-.movemark { font-weight: 700; font-size: 1.3em; line-height: 1; vertical-align: middle; }
-.movemark.up { color: var(--sl-green); }
-.movemark.down { color: var(--sl-red); }
-.movemark.eq { color: var(--muted); }
-
-/* ---- vendor group coloring ---- */
-/* Binds the generic .datatable group-divider styling (anvil-core.css) to
-   the shared vendor rail tokens (also core). The tokens are shared; which
-   class maps to which token is this page's own call. */
-.g-anthropic .gdot { background: var(--rail-anthropic); }
-.g-anthropic .glabel { color: var(--rail-anthropic); }
-.g-openai .gdot { background: var(--rail-openai); }
-.g-openai .glabel { color: var(--rail-openai); }
-.g-google .gdot { background: var(--rail-google); }
-.g-google .glabel { color: var(--rail-google); }
-
 /* ---- cost comparison table ---- */
 /* A "ladder" table: tiers across the top, vendors down the side. Each vendor
    row merges the tiers a plan covers into a single span, so the row reads as a
@@ -106,7 +81,7 @@
 .datatable.compare td .per { color: var(--muted); }             /* the /yr and /mo suffixes, dimmed so the numbers read first */
 /* step edge: a 3px vendor-colored left border (color set inline) on the cell
    where a plan upgrades, marking exactly where the ladder steps up */
-.datatable.compare td.step { border-left: 3px solid; }
+.datatable.compare td.step { border-left: 3px solid var(--mk, var(--border)); }
 /* single totals row: effective (blended) monthly leads, exact yearly on the
    line beneath, both carried at the row's bold ink weight */
 .datatable.compare tr.total .peryr { display: block; margin-top: 2px; }
@@ -136,14 +111,6 @@
 .datatable.addons tbody td { text-align: center; }
 /* Renewal prices form one plan with aligned year and price lines. */
 .datatable.addons .renewal-stack { display: grid; gap: 8px; }
-/* A vendor with several add-ons merges its label with rowspan, so that cell
-   belongs to the FIRST of those rows. Core's row hover (`tr:hover th`)
-   therefore cannot reach it from any later row, which left the label dark
-   while its own row lit up. Each vendor gets its own tbody, and this lights
-   the label whenever any row in that tbody is hovered, so the merged cell
-   reads the same in every state at any span depth. */
-.datatable.addons tbody:has(tr:hover) th { background: color-mix(in srgb, var(--ember) 9%, var(--panel)); }
-
 /* ---- references ---- */
 .plan-notes { display: grid; gap: 12px; }
 .pricing-sources-wrap { width: fit-content; max-width: 100%; }
@@ -151,7 +118,7 @@
 .datatable.pricing-sources thead th.rowlabel-col { width: 120px; }
 .datatable.pricing-sources thead th { text-align: left; }
 .datatable.pricing-sources a,
-.flow-aside .plan-notes-link { color: inherit; text-underline-offset: 3px; }
+.flow-aside .plan-notes-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---- picked plan table ----
    The "Urda's Anvil" table: one row per vendor, with a Source column that
@@ -165,12 +132,3 @@
 .datatable.picked tbody td:first-of-type { white-space: nowrap; }
 .datatable.picked thead th,
 .datatable.picked tbody td { text-align: center; }
-
-/* ---- model doc links ---- */
-/* The Model Coverage and Effort row labels link to each vendor's model doc
-   page. The link stays quiet: it inherits the label's color and weight, and
-   only an underline on hover or keyboard focus reveals it. Core sets no base
-   "a" rule, so without this the labels would render browser-default blue. */
-.datatable th.rowlabel a { color: inherit; font-weight: inherit; text-decoration: none; }
-.datatable th.rowlabel a:hover,
-.datatable th.rowlabel a:focus-visible { text-decoration: underline; }

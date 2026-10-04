@@ -19,11 +19,12 @@
   <link rel="manifest" href="../../res/img/site.webmanifest">
   <link rel="stylesheet" href="../../res/css/anvil-core.css">
   <link rel="stylesheet" href="mcp.css">
+  <script src="mcp.js" defer></script>
   <script src="../../res/js/prism.js" defer></script>
   <script src="../../res/js/anvil-local.js" defer></script>
   <script src="../../res/js/anvil-anchors.js" defer></script>
   <script src="../../res/js/anvil-pagerail.js" defer></script>
-  <script src="../../res/js/anvil-analytics.js" defer></script>
+  <script src="../../res/js/anvil-analytics.js" data-token="51b0135ed50e469ea4c6a24182db6efc" defer></script>
 </head>
 <body data-prismjs-copy-error="Copy manually">
   <nav class="topnav" aria-label="Primary">
@@ -50,15 +51,15 @@
     <p class="hint">
       Every tool below carries two tags: what it does
       <span class="legend">
-        <span class="chip type-chip read">read</span>
-        <span class="chip type-chip search">search</span>
-        <span class="chip type-chip write">write</span>
+        <span class="chip caps type-chip read">read</span>
+        <span class="chip caps type-chip search">search</span>
+        <span class="chip caps type-chip write">write</span>
       </span>
       and what Claude is allowed to do with it
       <span class="legend">
-        <span class="chip permission-chip allow">allow</span>
-        <span class="chip permission-chip ask">ask</span>
-        <span class="chip permission-chip deny">deny</span>
+        <span class="chip caps permission-chip allow">allow</span>
+        <span class="chip caps permission-chip ask">ask</span>
+        <span class="chip caps permission-chip deny">deny</span>
       </span>.
       Allow runs without asking, ask prompts for confirmation, and deny is
       blocked outright. The allow and deny rules are shown under
@@ -66,20 +67,23 @@
       prompts for anything a rule has not already allowed or denied.
     </p>
 
-    <nav class="cards" id="server-cards" aria-label="Servers"></nav>
+    <nav class="cards section" id="server-cards" aria-label="Servers"></nav>
 
     <div class="withpagerail">
-      <nav class="pagerail" id="page-rail" aria-label="On this page"></nav>
+      <nav class="pagerail" id="page-rail" aria-label="On this page" data-pagerail="auto">
+        <p class="pagerail-title">On this page</p>
+        <ul><li><a class="totop" href="#top">MCP</a></li></ul>
+      </nav>
 
       <div class="railed">
     <div id="server-detail"></div>
 
     <section class="section">
-      <h2 id="configuration">Configuration &middot; Claude</h2>
+      <h2 id="configuration" data-rail-ruled>Configuration &middot; Claude</h2>
       <p>Server registration lives in <code>~/.claude.json</code>; the permission
         allow-list lives in <code>~/.claude/settings.json</code>.</p>
 
-      <p class="config-label">Servers &middot; ~/.claude.json</p>
+      <p class="code-label">Servers &middot; ~/.claude.json</p>
 <pre class="codeblock"><code class="language-json">{
   "atlassian": {
     "type": "http",
@@ -103,7 +107,7 @@
   }
 }</code></pre>
 
-      <p class="config-label">Permissions &middot; allow / ask / deny</p>
+      <p class="code-label">Permissions &middot; allow / ask / deny</p>
 <pre class="codeblock"><code class="language-json">{
   "allow": [
     "mcp__atlassian__atlassianUserInfo",
@@ -193,7 +197,7 @@
         that the server does not mark read-only. That is Codex spelling what
         Claude spells <code>ask</code>.</p>
 
-      <p class="config-label">Servers &middot; ~/.codex/config.toml</p>
+      <p class="code-label">Servers &middot; ~/.codex/config.toml</p>
 <pre class="codeblock"><code class="language-toml">[mcp_servers]
 
 [mcp_servers.atlassian]
@@ -476,208 +480,6 @@ default_tools_approval_mode = "approve"</code></pre>
         ],
       },
     ];
-
-    // Small helpers: colored pills for a tool's type and its permission.
-    function typeChip(type) {
-      const pill = document.createElement("span");
-      pill.className = "chip type-chip " + type;
-      pill.textContent = type;
-      return pill;
-    }
-
-    function permissionPill(permission) {
-      const pill = document.createElement("span");
-      pill.className = "chip permission-chip " + permission;
-      pill.textContent = permission;
-      return pill;
-    }
-
-    // Total tool count for a server's nav-card teaser. For a server with
-    // product categories, count only allow/ask tools (what Claude can
-    // actually use, gated or not) -- denied tools are documented but not
-    // usable, so including them would overstate the teaser.
-    // The teaser has to agree with the rows the reader then sees, so it counts
-    // every documented tool and names the usable subset only where some are denied.
-    function toolCount(server) {
-      const all = server.categories
-        ? server.categories.flatMap((cat) => cat.tools)
-        : server.tools;
-      const usable = all.filter((t) => t.permission !== "deny").length;
-      const label = all.length + (all.length === 1 ? " tool" : " tools");
-      return usable === all.length ? label : label + ", " + usable + " usable";
-    }
-
-    // Build a `.kv` table (Tool / Type / Permission / Description) from a
-    // tools array. Each tool carries its own type and permission.
-    function buildToolTable(tools, caption) {
-      const table = document.createElement("table");
-      table.className = "kv";
-      table.innerHTML =
-        '<caption class="visually-hidden">' + caption + "</caption>" +
-        '<thead><tr><th scope="col">Tool</th><th scope="col">Type</th>' +
-        '<th scope="col">Permission</th><th scope="col">Description</th></tr></thead>';
-      const tbody = document.createElement("tbody");
-      for (const tool of tools) {
-        const tr = document.createElement("tr");
-
-        const nameCell = document.createElement("td");
-        const code = document.createElement("code");
-        code.textContent = tool.name;
-        nameCell.appendChild(code);
-        tr.appendChild(nameCell);
-
-        const typeCell = document.createElement("td");
-        for (const t of tool.type.split(", ")) {
-          typeCell.appendChild(typeChip(t));
-        }
-        tr.appendChild(typeCell);
-
-        const permCell = document.createElement("td");
-        permCell.appendChild(permissionPill(tool.permission));
-        tr.appendChild(permCell);
-
-        const descCell = document.createElement("td");
-        descCell.textContent = tool.desc;
-        tr.appendChild(descCell);
-
-        tbody.appendChild(tr);
-      }
-      table.appendChild(tbody);
-      return table;
-    }
-
-    // Overview: one nav card per server, anchor-linking to its section below.
-    const cards = document.getElementById("server-cards");
-    for (const server of SERVERS) {
-      const card = document.createElement("a");
-      card.className = "nav-card";
-      card.href = "#" + server.id;
-
-      const title = document.createElement("p");
-      title.className = "card-title";
-      title.innerHTML = server.name + '<span class="arrow">&rarr;</span>';
-      card.appendChild(title);
-
-      const desc = document.createElement("p");
-      desc.className = "card-desc";
-      desc.textContent = server.blurb;
-      card.appendChild(desc);
-
-      const meta = document.createElement("p");
-      meta.className = "card-meta";
-      meta.textContent = toolCount(server);
-      card.appendChild(meta);
-
-      cards.appendChild(card);
-    }
-
-    // Slugged fragment ids, same idiom the bookmarks page uses.
-    function slug(text) {
-      return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    }
-
-    // Detail: one section per server, each with its prefix, reference, and tool table.
-    // Ids sit on the headings rather than the sections so both the rail and
-    // anvil-anchors.js have something to point at.
-    const root = document.getElementById("server-detail");
-    for (const server of SERVERS) {
-      const sec = document.createElement("section");
-      sec.className = "section server";
-
-      const h2 = document.createElement("h2");
-      h2.id = server.id;
-      h2.textContent = server.name;
-      sec.appendChild(h2);
-
-      const meta = document.createElement("p");
-      meta.className = "server-meta";
-      const prefix = document.createElement("code");
-      prefix.textContent = server.prefix;
-      meta.appendChild(prefix);
-      const ref = document.createElement("a");
-      ref.href = server.ref.url;
-      ref.target = "_blank";
-      ref.rel = "noopener noreferrer";
-      ref.textContent = server.ref.label + " ↗";
-      meta.appendChild(ref);
-      sec.appendChild(meta);
-
-      if (server.desc) {
-        const p = document.createElement("p");
-        p.textContent = server.desc;
-        sec.appendChild(p);
-      }
-
-      if (server.categories) {
-        for (const cat of server.categories) {
-          const h3 = document.createElement("h3");
-          h3.id = server.id + "-" + slug(cat.heading);
-          h3.textContent = cat.heading;
-          sec.appendChild(h3);
-
-          if (cat.note) {
-            const note = document.createElement("p");
-            note.textContent = cat.note;
-            sec.appendChild(note);
-          }
-
-          sec.appendChild(
-            buildToolTable(
-              cat.tools,
-              server.name + " " + cat.heading + " tools, with the type and permission each carries.",
-            ),
-          );
-        }
-      } else {
-        sec.appendChild(
-          buildToolTable(
-            server.tools,
-            server.name + " tools, with the type and permission each carries.",
-          ),
-        );
-      }
-
-      root.appendChild(sec);
-    }
-
-    // On-this-page rail, built from SERVERS rather than scraped from the
-    // rendered headings: anvil-anchors.js appends a "#" permalink inside every
-    // heading that carries an id, which would otherwise land in the labels.
-    const rail = document.getElementById("page-rail");
-    const railEntries = [{ id: "top", label: "MCP", sub: false, top: true }];
-    for (const server of SERVERS) {
-      railEntries.push({ id: server.id, label: server.name, sub: false });
-      for (const cat of server.categories || []) {
-        railEntries.push({
-          id: server.id + "-" + slug(cat.heading),
-          label: cat.heading,
-          sub: true,
-        });
-      }
-    }
-    // labelled with its agent because the permission model below is Claude
-    // Code's; a second agent would need its own section, not a merge into this
-    railEntries.push({ id: "configuration", label: "Configuration · Claude", sub: false, ruled: true });
-    railEntries.push({ id: "configuration-codex", label: "Configuration · Codex", sub: false });
-
-    const railTitle = document.createElement("p");
-    railTitle.className = "pagerail-title";
-    railTitle.textContent = "On this page";
-    rail.appendChild(railTitle);
-
-    const railList = document.createElement("ul");
-    for (const entry of railEntries) {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = "#" + entry.id;
-      a.textContent = entry.label;
-      if (entry.sub) a.className = "sub";
-      if (entry.top) a.className = "totop";
-      if (entry.ruled) li.className = "ruled";
-      li.appendChild(a);
-      railList.appendChild(li);
-    }
-    rail.appendChild(railList);
   </script>
 </body>
 </html>

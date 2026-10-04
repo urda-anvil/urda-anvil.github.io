@@ -19,9 +19,11 @@
   <link rel="stylesheet" href="../res/css/anvil-core.css">
   <link rel="stylesheet" href="styleguide.css">
   <script src="../res/js/prism.js" defer></script>
+  <script src="../res/js/anvil-content.js" defer></script>
+  <script src="../res/js/anvil-pagerail.js" defer></script>
   <script src="../res/js/anvil-local.js" defer></script>
   <script src="../res/js/anvil-anchors.js" defer></script>
-  <script src="../res/js/anvil-analytics.js" defer></script>
+  <script src="../res/js/anvil-analytics.js" data-token="51b0135ed50e469ea4c6a24182db6efc" defer></script>
 </head>
 <body data-prismjs-copy-error="Copy manually">
   <nav class="topnav" aria-label="Primary">
@@ -45,11 +47,9 @@
     </div>
 
     <p class="hint">
-      Every shared primitive from <code>anvil-core.css</code>, rendered once. This page is
-      the visual regression check for the family core: if it looks right here, the
-      contract holds. It is already demonstrating three of them: the heading row above
-      is <code>.page-head</code> with a <code>.btn</code>, this callout is <code>.hint</code>,
-      and each block below sits in a <code>.section</code>.
+      This page demonstrates the shared components from <code>anvil-core.css</code>.
+      Use it to inspect appearance and interactions after a core change.
+      It supplements checks of the real pages and consumer markup.
     </p>
 
     <section class="section">
@@ -403,6 +403,68 @@ enabled_tools = [
             <tr class="total"><th scope="row">Total</th><td></td><td>$20.00</td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <section class="section" data-core-demo>
+      <h2 id="shared-metadata">Metadata and labels</h2>
+      <p class="meta-row"><code>example_prefix</code><a href="#shared-metadata">Reference</a></p>
+      <p class="code-label">Example configuration</p>
+      <p class="card-meta">Three items</p>
+      <p><span class="chip caps" style="--chip: var(--sl-green)">Ready</span></p>
+      <p class="flow-aside wide">This aside uses the full content width.</p>
+      <p class="vendor-label g-google">A vendor label inherits its group accent.</p>
+      <p><span class="movemark up" aria-hidden="true">&#10138;</span> Raised
+        <span class="movemark down" aria-hidden="true">&#10136;</span> Lowered
+        <span class="movemark eq" aria-hidden="true">=</span> Unchanged</p>
+      <p class="hint">Inline examples use a shared legend:
+        <span class="legend"><span class="chip">First</span><span class="chip">Second</span></span>
+      </p>
+    </section>
+
+    <section class="section" data-core-demo>
+      <h2 id="disclosures">Disclosures</h2>
+      <p>A <code>.disclosure</code> uses native details and summary elements.
+        The optional content script loads plain text when the reader opens the panel.</p>
+      <details class="disclosure" data-src="../forge/rules/raw/ste.md">
+        <summary>Show a Markdown document</summary>
+        <pre class="codeblock" data-toolbar-order="copy-to-clipboard"><code>Open <a href="../forge/rules/raw/ste.md">the source file</a> if the document does not load.</code></pre>
+      </details>
+    </section>
+
+    <section class="section" data-core-demo>
+      <h2 id="bookmark-directory">Bookmark directory</h2>
+      <p>The directory components accept ordinary links and shared accent tokens.</p>
+      <div class="bookmark-groups g-anthropic">
+        <h3 class="bm-vendor">Example group</h3>
+        <section class="bm-group">
+          <h4 class="bm-group-title">Resources</h4>
+          <ul class="bm-list">
+            <li><a class="bm-row" href="../bookmarks/">
+              <span class="bm-name">Bookmarks</span>
+              <span class="bm-leader" aria-hidden="true"></span>
+              <span class="bm-url">anvil.urda.com/bookmarks/</span>
+            </a></li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <section class="section" data-core-demo>
+      <h2 id="automatic-outline">Automatic outline</h2>
+      <p>The rail derives its labels from the headings beside it.
+        Heading chips and permalink symbols stay outside the labels.</p>
+      <div class="withpagerail">
+        <nav class="pagerail" aria-label="Automatic outline example" data-pagerail="auto">
+          <p class="pagerail-title">On this page</p>
+          <ul><li><a class="totop" href="#automatic-outline">Example</a></li></ul>
+        </nav>
+        <div class="railed">
+          <h2 id="outline-parent">Parent <span class="chip">Example</span></h2>
+          <p>A section with a child heading.</p>
+          <h3 id="outline-child">Child</h3>
+          <p>The rail indents this entry.</p>
+        </div>
       </div>
     </section>
 

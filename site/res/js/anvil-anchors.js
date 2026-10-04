@@ -6,13 +6,22 @@
  * static markup, so #fragment links keep working even if this script fails
  * to load; this just adds the visible, clickable affordance.
  */
-document.addEventListener('DOMContentLoaded', () => {
-  for (const heading of document.querySelectorAll('main h2[id], main h3[id]')) {
-    const link = document.createElement('a');
-    link.className = 'heading-anchor';
-    link.href = '#' + heading.id;
-    link.textContent = '#';
-    link.setAttribute('aria-label', 'Link to this section');
-    heading.append(link);
+(() => {
+  function init() {
+    for (const heading of document.querySelectorAll('main h2[id], main h3[id]')) {
+      if (!heading.id || heading.querySelector('.heading-anchor')) continue;
+      const link = document.createElement('a');
+      link.className = 'heading-anchor';
+      link.href = '#' + encodeURIComponent(heading.id);
+      link.textContent = '#';
+      link.setAttribute('aria-label', 'Link to this section');
+      heading.append(link);
+    }
   }
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();

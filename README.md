@@ -1,137 +1,235 @@
-# anvil.urda.com - Website
+# anvil.urda.com
 
 [![Deploy Anvil Website](https://github.com/urda-anvil/urda-anvil.github.io/actions/workflows/deploy.yaml/badge.svg?branch=master)](https://github.com/urda-anvil/urda-anvil.github.io/actions/workflows/deploy.yaml)
 
-## What this repo is
-
-Urda Anvil is the collection of tools, settings, prompts, and software that
-blend into one workbench for building better software with LLMs.
-
-This repo is the source for the live [anvil.urda.com](https://anvil.urda.com) site. The
-CSS is organized as a portable core design system plus optional page riders.
-Core contains the shared tokens and generic components and can be consumed by
-other repos; page-specific rules remain beside the page that owns them.
+Urda Anvil collects tools, settings, prompts, and software for work with LLMs.
+This repository serves the site and owns the portable Anvil core assets.
 
 ## Local development
 
-Static HTML, no build step. Open `site/index.html` directly in a browser
-(everything uses relative paths, so it also works straight off `file://`, with
-no server needed). GitHub Pages serves `site/` verbatim on every push to
-`master`.
+Run `make serve` and open `http://localhost:8000/`.
+Set another port with `make serve SERVE_PORT=8001`.
+The site uses static HTML without a build step.
+GitHub Pages publishes `site/` on a push to `master`.
 
-Two caveats on `file://`: a directory-style link (like `forge/balancing-the-anvil/`)
-shows a file listing instead of auto-opening its `index.html`, and
-`404.html` uses root-absolute paths, so it only renders correctly when
-actually served.
+Most pages also work through `file://`.
+`anvil-local.js` rewrites relative directory links to their `index.html` files.
+It preserves query strings and fragments.
+The 404 page requires HTTP because its assets use root-relative paths.
+Raw document disclosures require HTTP fetch support and retain direct file links as a fallback.
 
-## The CSS model
+## Core assets
 
-Every page loads `site/res/css/anvil-core.css`, the one shared design
-system. Tokens and every primitive used across the site's pages live here.
+Consumers can copy these assets without edits to their implementations.
+Load only the optional scripts that a page needs.
 
-A page that genuinely diverges ships a small "rider" stylesheet next to its
-own `index.html` (e.g. `site/forge/balancing-the-anvil/balancing-the-anvil.css`),
-loaded after core. It adds only page-specific variants and narrowly scoped
-overrides without duplicating core primitives. A rule graduates from rider to
-core only when a second page needs it.
+| Asset under `site/res/` | Contract |
+| --- | --- |
+| `css/anvil-core.css` | Shared tokens, layout, typography, and components |
+| `js/anvil-anchors.js` | Permalinks for `main h2[id]` and `main h3[id]` |
+| `js/anvil-local.js` | Relative directory links under `file://` |
+| `js/anvil-pagerail.js` | Authored or automatic outlines, with scroll tracking |
+| `js/anvil-content.js` | Lazy plain-text disclosure content |
+| `js/prism.js` | Vendored highlighting and copy controls |
+| `js/anvil-analytics.js` | Optional analytics with an explicit public token |
 
-`anvil-core.css` wraps everything below its tokens in a named CSS layer
-(`@layer anvil`), and a page's rider is deliberately left unlayered. Per the
-cascade layers spec, unlayered CSS always beats layered CSS, so a rider
-keeps winning on any shared class regardless of load order or specificity -
-the same "page sheet wins" behavior as before, just guaranteed rather than
-incidental. See "Importing third-party CSS" below for why the layer exists.
-
-## Design tokens
-
-The shared vocabulary, defined once in `:root` in `anvil-core.css`:
-
-- Surfaces: `--bg`, `--panel`, `--panel-bar`, `--screen`, `--border`
-- Text: `--ink`, `--muted`
-- Forge accent: `--ember`
-- Shape: `--radius`
-- Status line palette: `--sl-green`, `--sl-yellow`, `--sl-red`, `--sl-cyan`,
-  `--sl-blue`, `--sl-gray`, `--sl-white`
-- Type: `--mono`, `--sans`
-
-`:root` in `anvil-core.css` is the canonical list; if a token isn't declared
-there, it isn't part of the system.
-
-## Primitives
-
-Top nav, hero + tagline, `.page-head`, `.btn`, `.hint` callout, nav cards,
-`.section`, the `.kv` reference table, `.codeblock`, `.chip`, the `.pagerail`
-"On this page" outline, `.datatable` and its status marks/legend, and the
-footer all live in `anvil-core.css`. A styleguide page renders every one of
-them once and is the live catalog and visual regression check: if a change to
-core still looks right there, the contract holds. It lives at `site/styleguide/` and serves, unlinked, at
-`/styleguide/`.
-
-One idiom worth calling out: `.chip` takes a single `--chip` accent custom
-property and derives its text color, fill, and ring from it via `color-mix`.
-Set `--chip` (as a class or inline style) rather than styling a chip variant
-directly.
-
-## Code highlighting
-
-`.codeblock` content is highlighted by `site/res/js/prism.js`, a vendored,
-locally-hosted build of [Prism](https://prismjs.com) (MIT license). It ships
-no bundled theme; the colors come from `anvil-core.css`, which maps Prism's
-token classes (`.token.property`, `.token.string`, `.token.keyword`, and so
-on) to the design tokens above. That mapping is keyed to token type, not to
-any one language, so every grammar the bundle carries is already styled.
-
-Put highlighted code inside `<pre class="codeblock"><code class="language-xxx">...</code></pre>`.
-Load the script from the appropriate relative path. Use `res/js/prism.js`
-at the site root and `../res/js/prism.js` one directory below it.
-Add another `../` for each additional directory level.
-With JavaScript disabled, code blocks retain their plain monospace text.
-
-Prism's Toolbar, Show Language, and Copy to Clipboard plugins add a language
-label and Copy button to each highlighted block. Anvil core styles the labels,
-button, and copy status.
-The toolbar overlays the upper-right corner of standard code blocks.
-The plugins select the code for manual copying if both clipboard methods fail.
-All plugins use the same version as the Prism components and remain unmodified.
-
-Plain text blocks can use `language-none`.
-Set `data-toolbar-order="copy-to-clipboard"` to show only Copy.
-Add `compact` to a short block to place Copy beside its text.
-Use `data-prismjs-copy` and `data-prismjs-copy-success` to customize the messages.
-The Rules page adds its full-rule toolbar after the Markdown loads.
-
-The bundle supports `json`, `bash` (aliases: `sh`, `shell`), and `toml`.
-`site/forge/balancing-the-anvil/` uses `bash` for its example.
-To add another language, append the
-same-version `prism-<lang>.min.js` component (from
-`unpkg.com/prismjs@<version>/components/`) to `site/res/js/prism.js` and add
-a `<code class="language-<lang>">` block to try it. No CSS changes are
-needed since the theme is language-agnostic.
-
-## Importing third-party CSS
-
-If a page ever needs an external stylesheet or a vendored library, import it
-into the `vendor` layer so it can never win a specificity fight against core:
+The core CSS does not fetch fonts, images, or other stylesheets.
+Pages select their own image assets, metadata, navigation destinations, and analytics token.
+The scripts use classic script tags, so they also work without a module server.
+Load them with `defer`, after any page renderer that creates their target elements.
 
 ```html
-<style>@import url("vendor-lib.css") layer(vendor);</style>
+<link rel="stylesheet" href="res/css/anvil-core.css">
+<script src="res/js/prism.js" defer></script>
+<script src="res/js/anvil-local.js" defer></script>
+<script src="res/js/anvil-anchors.js" defer></script>
+<script src="res/js/anvil-pagerail.js" defer></script>
 ```
 
-`anvil-core.css` declares `@layer vendor, anvil;` up front and puts its own
-rules in `anvil`, a layer declared after `vendor` - so `anvil` always wins
-over anything loaded into `vendor`, and a page rider (unlayered) wins over
-both. No specificity tuning or `!important` needed either way.
+Use paths relative to the page depth.
+These scripts initialize the current document once.
+They do not observe later application mutations.
+Run a page renderer before them when it creates headings or outline content.
 
-## If another org subsite wants to match
+## Ownership and cascade
 
-Everything here is one repo for one site; there's no copy-and-sync ritual to
-maintain. If another `urda-anvil` org project ever wants its own pages to
-look like this one, the simplest path is to link the deployed stylesheet
-directly:
+Reusable presentation belongs in `anvil-core.css`.
+Page stylesheets contain domain-specific accents, content widths, and exceptional spacing.
+The bookmarks page needs no separate stylesheet.
+The MCP rider only maps tool types and permissions to chip colors.
+The Rules rider defines its catalog columns, load semantics, and page spacing.
+The balancing page retains its pricing and model table layouts.
+The styleguide rider contains demonstration furniture.
+
+Catalog data stays in the Bookmarks and MCP HTML files.
+Their adjacent scripts render the domain data.
+Core builds their outlines from the resulting headings.
+The pages no longer maintain separate outline data or builders.
+
+Navigation and footer markup remain static and consistent across pages.
+This preserves navigation without JavaScript and avoids a runtime template dependency.
+Page titles, metadata, content, and relative paths remain page-owned.
+
+Tokens live in the unlayered `:root` rule.
+Components live in `@layer anvil`, after the reserved `vendor` layer.
+A page rider remains unlayered and overrides normal core declarations.
+This precedence does not describe declarations that use `!important`.
+
+Import third-party CSS into the vendor layer:
+
+```css
+@import url("vendor-lib.css") layer(vendor);
+```
+
+Defaults for links and section prose use `:where()`.
+Their zero specificity lets component classes control their own appearance.
+Keep that constraint when you modify these defaults.
+
+## Tokens and components
+
+The `:root` rule is the canonical token list.
+It includes surfaces, text, the ember accent, status colors, vendor accents,
+font stacks, the corner radius, and `--pagerail-top` in pixels.
+Component accents such as `--chip`, `--mk`, and `--rail` have local fallbacks.
+They are inputs to components, rather than global theme tokens.
+
+The [styleguide](site/styleguide/index.html) demonstrates the shared components.
+It includes navigation, cards, tables, tabs, code, disclosures, bookmark groups,
+metadata, chips, outlines, and footer elements.
+It supports visual inspection but does not prove compatibility by itself.
+
+Common component contracts:
+
+- `.chip` derives its text, border, and fill from `--chip`.
+  `.caps` adds uppercase chip typography.
+- `.g-anthropic`, `.g-openai`, `.g-google`, and `.g-jetbrains` supply vendor accents.
+  `.vendor-label` uses the inherited accent for text.
+- Table rows inherit `--mk` for their marks and borders.
+  A `.rowlabel` contains a decorative `.rail` span.
+  Existing inline rail backgrounds remain supported.
+- `.meta-row`, `.card-meta`, and `.code-label` provide shared metadata styles.
+- `.table-scroll` supplies plain horizontal overflow.
+  `.datatable-wrap` adds the data table frame.
+  Give a scroll region an accessible label and `tabindex="0"` when needed.
+- `.bookmark-groups` contains `.bm-vendor` headings and `.bm-group` sections.
+  Each `.bm-row` link contains `.bm-name`, `.bm-leader`, and `.bm-url` spans.
+
+## Page outlines
+
+An authored `.pagerail` can contain ordinary fragment links.
+`anvil-pagerail.js` tracks valid targets and maintains one current entry per rail.
+It supports multiple rails and fragment navigation.
+
+For automatic entries, place the rail and `.railed` content inside `.withpagerail`:
 
 ```html
-<link rel="stylesheet" href="https://anvil.urda.com/res/css/anvil-core.css">
+<div class="withpagerail">
+  <nav class="pagerail" aria-label="On this page" data-pagerail="auto">
+    <p class="pagerail-title">On this page</p>
+    <ul><li><a class="totop" href="#top">Overview</a></li></ul>
+  </nav>
+  <div class="railed">
+    <h2 id="details">Details</h2>
+    <h3 id="example">Example</h3>
+  </div>
+</div>
 ```
 
-That always reflects whatever is live on `anvil.urda.com`, with nothing to
-re-copy or fall out of sync.
+Automatic rails preserve the authored top entry and derive other entries from `h2[id]` and `h3[id]`.
+The top entry requires an existing `id="top"` target elsewhere on the page.
+A child heading becomes an indented entry.
+Permalink symbols and chips do not enter the labels.
+A heading can supply `data-rail-label`, `data-rail-ruled`, or `data-rail-dotted`.
+Dotted entries use the heading's inherited `--rail` accent.
+Without JavaScript, the headings and authored links remain usable.
+
+## Code and disclosures
+
+The vendored Prism 1.29.0 bundle includes JSON, Bash, and TOML grammars.
+It includes Toolbar, Show Language, and Copy to Clipboard plugins.
+The bundle header records its upstream sources and license attribution.
+Core supplies the token theme and toolbar styles.
+
+```html
+<pre class="codeblock"><code class="language-json">{"enabled": true}</code></pre>
+```
+
+Use `language-none` for plain text.
+Add `.compact` to place the toolbar beside a short code block.
+Standard blocks reserve space above their text for the toolbar.
+Set `data-toolbar-order="copy-to-clipboard"` when no language label is needed.
+Prism's `data-prismjs-copy` attributes customize the copy messages.
+Use `data-prismjs-copy-error="Copy manually"` on the body for a neutral fallback label.
+The plugin selects the code if both clipboard methods fail.
+Without JavaScript, code remains readable.
+
+Load `anvil-content.js` for a disclosure that fetches its source on first open:
+
+```html
+<details class="disclosure" data-src="raw/example.md">
+  <summary>Show the document</summary>
+  <pre class="codeblock" data-toolbar-order="copy-to-clipboard"><code>Open <a href="raw/example.md">the source file</a> if the document does not load.</code></pre>
+</details>
+```
+
+The loader preserves the source text and line breaks.
+It treats text as text, rather than HTML, and tints lines that start with `#`.
+It attaches the optional Prism toolbar after a successful fetch.
+A failed fetch retains the fallback link.
+Closing and reopening the disclosure retries the fetch.
+
+Keep Prism grammars and plugins at the same version when you update the bundle.
+Add a styleguide sample for each new grammar.
+
+## Analytics
+
+Analytics is optional and has no default token.
+Each site must supply its own public Cloudflare beacon token:
+
+```html
+<script src="res/js/anvil-analytics.js" data-token="YOUR_PUBLIC_TOKEN" defer></script>
+```
+
+Omit the script when analytics is unwanted.
+The adapter skips `file://` pages and avoids duplicate beacon elements.
+The Anvil pages explicitly retain their existing token.
+
+## Consumer migration
+
+Copy core assets from the same reviewed commit.
+Record that commit in the consumer repository's existing vendor documentation.
+Do not mix a new stylesheet with an older optional script during a sync.
+A direct link to the deployed stylesheet remains possible, but it changes whenever this site deploys.
+A copied revision gives consumers a controlled update point.
+
+This revision changes these contracts:
+
+- Analytics requires `data-token`. A consumer without it sends no beacon.
+- Generic links in `.wrap` receive the core link style, including table and list links.
+- Standard Prism blocks reserve toolbar space above the code.
+- Generic section headings use low-specificity defaults, so component headings retain their own styles.
+- Vendor classes supply shared accents. Existing inline accent declarations still work.
+- The new disclosure module requires its script and the `.disclosure` class.
+
+Consumers can retain authored rails, existing asset paths, and existing component markup.
+They can adopt the new components when their page riders duplicate those styles.
+Do not copy the site-specific catalog renderers or page riders as core assets.
+
+## Audit findings
+
+The existing Google accent, `#008300`, has 3.67:1 contrast against the panel color, `#11161f`.
+Small text uses this accent in vendor labels and group headings.
+The palette remains unchanged, but these uses need a text-contrast review.
+
+Bookmarks and the MCP catalog still require JavaScript to render their data.
+Their navigation and footer remain static.
+Supporting those catalogs without JavaScript would require authored HTML or a generation step.
+
+## Verification
+
+This repository currently defines no formatter, linter, or automated test target.
+The deployment workflow uploads the site and does not validate it.
+Before a consumer sync, check JavaScript syntax, CSS parsing, assets, fragments,
+content preservation, and the optional scripts' behavior.
+Inspect the styleguide and real pages at desktop and narrow widths when browser review is available.
+DOM tests cannot verify layout, color perception, keyboard behavior in a real browser, or clipboard permissions.
