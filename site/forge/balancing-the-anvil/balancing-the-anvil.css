@@ -19,8 +19,8 @@
 .datatable.effort { min-width: 630px; }
 /* 190px rowlabel + 4 even columns: the widest cell is the "riff gemini-flash"
    marklabel (mono, .8em of 14px = ~11px, 17 chars) at ~144px including its
-   28px padding, and it must also clear the 3px --mk rail on the last
-   column; 880px gives each column ~172px, clearing both with room to spare. */
+   28px padding; 880px gives each column ~172px, clearing it with room to
+   spare, and the 3px --mk rail on the last (Junie) column has no caption. */
 .datatable.grid { min-width: 880px; }
 
 /* ---- cost comparison table ---- */
