@@ -97,6 +97,10 @@
     "type": "http",
     "url": "https://mcp.context7.com/mcp"
   },
+  "exa": {
+    "type": "http",
+    "url": "https://mcp.exa.ai/mcp?login&amp;tools=web_search_exa,web_fetch_exa,web_search_advanced_exa"
+  },
   "grep": {
     "type": "http",
     "url": "https://mcp.grep.app"
@@ -137,6 +141,9 @@
     "mcp__aws-knowledge-mcp-server__aws___search_documentation",
     "mcp__context7__query-docs",
     "mcp__context7__resolve-library-id",
+    "mcp__exa__web_fetch_exa",
+    "mcp__exa__web_search_advanced_exa",
+    "mcp__exa__web_search_exa",
     "mcp__grep__searchGitHub",
     "mcp__schema-store__getSchema",
     "mcp__schema-store__listSchemas",
@@ -172,7 +179,8 @@
     "mcp__atlassian__getJsmOpsTeamInfo",
     "mcp__atlassian__getTeamworkGraphContext",
     "mcp__atlassian__getTeamworkGraphObject",
-    "mcp__atlassian__updateJsmOpsAlert"
+    "mcp__atlassian__updateJsmOpsAlert",
+    "mcp__exa__agent_run"
   ]
 }</code></pre>
     </section>
@@ -181,10 +189,10 @@
       <h2 id="configuration-codex">Configuration &middot; Codex</h2>
       <p>Codex keeps registration and permissions in one file,
         <code>~/.codex/config.toml</code>, instead of splitting them across two.
-        Same five servers, same URLs, same decisions. Claude's
+        Same six servers, same URLs, same decisions. Claude's
         <code>deny</code> list is Codex's <code>disabled_tools</code>, entry for
         entry. Claude's <code>allow</code> list is Codex's
-        <code>enabled_tools</code> on four of the five servers. The atlassian
+        <code>enabled_tools</code> on five of the six servers. The atlassian
         server enables the write tools as well, and its approval mode gates
         them. The permission tag on each tool above holds under either
         agent.</p>
@@ -286,6 +294,20 @@ url = "https://mcp.context7.com/mcp"
 enabled_tools = [
   "query-docs",
   "resolve-library-id",
+]
+default_tools_approval_mode = "approve"
+
+[mcp_servers.exa]
+enabled = true
+required = false
+url = "https://mcp.exa.ai/mcp?login&amp;tools=web_search_exa,web_fetch_exa,web_search_advanced_exa"
+enabled_tools = [
+  "web_fetch_exa",
+  "web_search_advanced_exa",
+  "web_search_exa",
+]
+disabled_tools = [
+  "agent_run",
 ]
 default_tools_approval_mode = "approve"
 
@@ -454,6 +476,20 @@ default_tools_approval_mode = "approve"</code></pre>
         tools: [
           { name: "query-docs", type: "search", permission: "allow", desc: "Retrieve documentation for a library using a Context7-compatible library ID." },
           { name: "resolve-library-id", type: "search", permission: "allow", desc: "Resolve a general library name into a Context7-compatible library ID." },
+        ],
+      },
+      {
+        id: "exa",
+        name: "exa",
+        blurb: "Exa. Search API for AI Agents.",
+        desc: "The URL carries two parameters. The login flag signs in to Exa through OAuth, so usage bills to the Exa account. The tools list replaces the default tool set, so agent_run never loads. The deny rule also blocks it.",
+        prefix: "mcp__exa__",
+        ref: { label: "MCP docs", url: "https://exa.ai/docs/reference/exa-mcp" },
+        tools: [
+          { name: "agent_run", type: "search", permission: "deny", desc: "Run multi-step research, list-building, enrichment, and structured output." },
+          { name: "web_fetch_exa", type: "read", permission: "allow", desc: "Read a webpage's full content as clean markdown." },
+          { name: "web_search_advanced_exa", type: "search", permission: "allow", desc: "Advanced web search with full control over filters, domains, dates, and content options." },
+          { name: "web_search_exa", type: "search", permission: "allow", desc: "Search the web for any topic and get clean, ready-to-use content." },
         ],
       },
       {
