@@ -2,7 +2,7 @@
 
 [![Deploy Anvil Website](https://github.com/urda-anvil/urda-anvil.github.io/actions/workflows/deploy.yaml/badge.svg?branch=master)](https://github.com/urda-anvil/urda-anvil.github.io/actions/workflows/deploy.yaml)
 
-Urda Anvil collects tools, settings, prompts, and software for work with LLMs.
+Urda Anvil collects tools, settings, rules, and software for work with LLMs.
 This repository serves the site and owns the portable Anvil core assets.
 
 ## Local development
@@ -31,6 +31,7 @@ Load only the optional scripts that a page needs.
 | `js/anvil-pagerail.js` | Authored or automatic outlines, with scroll tracking |
 | `js/anvil-content.js` | Lazy plain-text disclosure content |
 | `js/prism.js` | Vendored highlighting and copy controls |
+| `js/anvil-copy.js` | Copy button for `pre.codeblock` on pages without Prism |
 | `js/anvil-analytics.js` | Optional analytics for anvil.urda.com |
 
 The core CSS does not fetch fonts, images, or other stylesheets.
@@ -226,6 +227,14 @@ This revision changes these contracts:
 Consumers can retain authored rails, existing asset paths, and existing component markup.
 They can adopt the new components when their page riders duplicate those styles.
 Do not copy the site-specific catalog renderers or page riders as core assets.
+
+## Copy
+
+These rules keep a page readable for someone who has not seen the anvil before.
+
+- The first sentence of a page says what the page lists. Voice comes after.
+- The anvil metaphor lives in titles and the footer quote, not in a lede or a meta description.
+- A note never restates a value the reader can already see beside it.
 
 ## Audit findings
 

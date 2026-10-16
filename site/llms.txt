@@ -2,7 +2,7 @@
 
 > Tools, settings, rules, and software that Urda uses to build with LLMs.
 
-Urda Anvil is a collection of tools, settings, prompts, and software that Urda
+Urda Anvil is a collection of tools, settings, rules, and software that Urda
 uses to build software with LLMs. The anvil.urda.com site documents that
 workbench. It lists the models on the anvil, the default MCP servers and their
 tool permissions, the rules the anvil gives its agents, and a set of bookmarks.
