@@ -7,14 +7,14 @@
     return element;
   }
 
-  // Count every documented tool and identify the usable subset.
+  // Count every documented tool and identify the enabled subset.
   function toolCount(server) {
     const all = server.categories
       ? server.categories.flatMap((cat) => cat.tools)
       : server.tools;
-    const usable = all.filter((t) => t.permission !== "deny").length;
+    const enabled = all.filter((t) => t.permission !== "deny").length;
     const label = all.length + (all.length === 1 ? " tool" : " tools");
-    return usable === all.length ? label : label + ", " + usable + " usable";
+    return enabled === all.length ? label : label + ", " + enabled + " enabled";
   }
 
   // Build a `.kv` table (Tool / Type / Permission / Description) from a
