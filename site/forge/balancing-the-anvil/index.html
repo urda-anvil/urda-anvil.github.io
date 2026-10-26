@@ -139,7 +139,7 @@
             <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
             <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
             <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff junie</span></span></td></tr>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff lite</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -312,7 +312,7 @@ riff() {
   _riff_cmd_astra()  { _riff_shell codex  --model gpt-6-astra --config "model_reasoning_effort='low'"    "${@}"; }
   _riff_cmd_sol()    { _riff_shell codex  --model gpt-6.1-sol --config "model_reasoning_effort='low'"    "${@}"; }
   _riff_cmd_luna()   { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
-  _riff_cmd_junie()  { _riff_shell junie  --model junie-lite "${@}"; }
+  _riff_cmd_lite()   { _riff_shell junie  --model junie-lite "${@}"; }
 
   # Tab completion: bash sets COMP_LINE only when it calls riff as a completer
   if [[ -n "${COMP_LINE:-}" ]]; then
