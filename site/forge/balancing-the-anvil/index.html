@@ -311,6 +311,7 @@ riff() {
   _riff_cmd_sonnet() { _riff_shell claude --model sonnet --effort high  "${@}"; }
   _riff_cmd_astra()  { _riff_shell codex  --model gpt-6-astra --config "model_reasoning_effort='low'"    "${@}"; }
   _riff_cmd_sol()    { _riff_shell codex  --model gpt-6.1-sol --config "model_reasoning_effort='low'"    "${@}"; }
+  _riff_cmd_terra()  { _riff_shell codex  --model gpt-6.1-terra --config "model_reasoning_effort='low'"  "${@}"; }
   _riff_cmd_luna()   { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
   _riff_cmd_lite()   { _riff_shell junie  --model junie-lite "${@}"; }
 
