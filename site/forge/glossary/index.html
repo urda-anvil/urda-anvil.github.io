@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; AI Glossary</title>
+  <meta name="description" content="Common AI terms in plain English, for new users and old hands alike.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Glossary">
+  <meta property="og:description" content="Common AI terms in plain English, for new users and old hands alike.">
+  <meta property="og:url" content="https://anvil.urda.com/forge/glossary/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/forge/glossary/">
+  <link rel="icon" href="../../res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="../../res/img/apple-touch-icon.png">
+  <link rel="manifest" href="../../res/img/site.webmanifest">
+  <link rel="stylesheet" href="../../res/css/anvil-core.css">
+  <link rel="stylesheet" href="glossary.css">
+  <script src="../../res/js/anvil-local.js" defer></script>
+  <script src="../../res/js/anvil-anchors.js" defer></script>
+  <script src="../../res/js/anvil-pagerail.js" defer></script>
+  <script src="../../res/js/anvil-analytics.js" defer></script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="../../">
+        <img src="../../res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="../../">Home</a>
+        <a href="../../forged-statusline/">Forged Status Line</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header>
+      <h1 id="top"><img class="spark" src="../../res/img/spark.svg" alt=""> AI Glossary</h1>
+    </header>
+    <p class="lede">Common AI terms in plain English, for new users and old hands alike.</p>
+
+    <div class="withpagerail">
+      <nav class="pagerail" aria-label="On this page">
+        <p class="pagerail-title">On this page</p>
+        <ul>
+          <li><a class="totop" href="#top">AI Glossary</a></li>
+          <li><a href="#agent">Agent</a></li>
+          <li><a href="#ai">AI</a></li>
+          <li><a href="#api">API</a></li>
+          <li><a href="#cli">CLI</a></li>
+          <li><a href="#context">Context</a></li>
+          <li><a href="#effort">Effort</a></li>
+          <li><a href="#hallucination">Hallucination</a></li>
+          <li><a href="#harness">Harness</a></li>
+          <li><a href="#llm">LLM</a></li>
+          <li><a href="#mcp">MCP</a></li>
+          <li><a href="#model">Model</a></li>
+          <li><a href="#plugin">Plugin</a></li>
+          <li><a href="#prompt">Prompt</a></li>
+          <li><a href="#rule">Rule</a></li>
+          <li><a href="#sandbox">Sandbox</a></li>
+          <li><a href="#skill">Skill</a></li>
+          <li><a href="#subagent">Subagent</a></li>
+          <li><a href="#terminal">Terminal</a></li>
+          <li><a href="#token">Token</a></li>
+          <li><a href="#tool">Tool</a></li>
+          <li><a href="#tui">TUI</a></li>
+        </ul>
+      </nav>
+      <div class="railed">
+        <section class="section term-card">
+          <h2 id="agent">Agent</h2>
+          <p>An AI system that can choose steps and use tools to work toward a goal.</p>
+          <p><strong class="sl-cyan">Example:</strong> You ask an agent to fix a bug. It reads the code, changes a file, and runs a test.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#harness">Harness</a>, <a href="#subagent">Subagent</a>, <a href="#tool">Tool</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="ai">AI (artificial intelligence)</h2>
+          <p>A broad name for computer systems that perform tasks such as recognizing speech, generating text, or identifying objects in images.</p>
+          <p><strong class="sl-cyan">Example:</strong> You ask a chat app to plan a trip, and it writes a day-by-day schedule.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#llm">LLM</a>, <a href="#model">Model</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="api">API (application programming interface)</h2>
+          <p>A way for one program to request data or actions from another program. AI services offer APIs too, so your own code can send prompts and receive answers.</p>
+          <p><strong class="sl-cyan">Example:</strong> The weather app on your phone uses a weather service's API to request today's forecast, then shows it to you.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#token">Token</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="cli">CLI (command-line interface)</h2>
+          <p>A program that you use by typing commands in a terminal instead of clicking in a window. Many AI agents come as a CLI that works on the files in the current folder.</p>
+          <p><strong class="sl-cyan">Example:</strong> You type a command to list the files in a folder.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#terminal">Terminal</a>, <a href="#tui">TUI</a>, <a href="../balancing-the-anvil/">Balancing the Anvil</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="context">Context</h2>
+          <p>The information available to the model for a response. This can include instructions, conversation messages, and tool results.</p>
+          <p>The <strong>context window</strong> limits how many tokens a model can use at once. An app may shorten or omit older material to fit.</p>
+          <p><strong class="sl-cyan">Example:</strong> You give the model your room dimensions so it can suggest furniture that fits.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#token">Token</a>, <a href="#subagent">Subagent</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="effort">Effort</h2>
+          <p>How much thinking and work a model puts into a response. Higher effort gives it more room to work through a problem, but it can take longer and use more tokens.</p>
+          <p><strong class="sl-cyan">Example:</strong> You choose high effort to investigate why your printer keeps disconnecting, and low effort to shorten a printer setup checklist.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#model">Model</a>, <a href="#token">Token</a>, <a href="../balancing-the-anvil/#effort-per-model">Effort per Model</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="hallucination">Hallucination</h2>
+          <p>An answer that sounds confident but is wrong or invented.</p>
+          <p><strong class="sl-cyan">Example:</strong> You ask for a source, and the model gives a title and link for a paper that does not exist.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#model">Model</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="harness">Harness</h2>
+          <p>The software that lets a model work as an agent. It sends information to the model, runs the tools the model requests, and returns their results. It also manages permissions and approval prompts.</p>
+          <p><strong class="sl-cyan">Example:</strong> The model requests a file edit. The harness asks for your approval and applies the edit if you approve.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#agent">Agent</a>, <a href="#sandbox">Sandbox</a>, <a href="#tool">Tool</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="llm">LLM (large language model)</h2>
+          <p>A model trained on large amounts of text to process and generate language. Some models also work with images, audio, or video.</p>
+          <p><strong class="sl-cyan">Example:</strong> You give an LLM meeting notes and ask it to extract the decisions and assigned tasks.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#model">Model</a>, <a href="#token">Token</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="mcp">MCP (Model Context Protocol)</h2>
+          <p>An open standard that lets AI apps connect to external tools, data, and reusable prompts. The AI app connects to an MCP server, which provides access to those features. Because MCP is a shared standard, one MCP server can work with many apps that support MCP. An MCP server can run on your own computer or on another machine, on your local network or on the internet. Anyone can publish an MCP server, so connect only servers you trust.</p>
+          <p><strong class="sl-cyan">Example:</strong> You connect your AI app to your issue tracker's MCP server. The app can then read a ticket and post a comment for you.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#plugin">Plugin</a>, <a href="#tool">Tool</a>, <a href="../mcp/">Anvil MCP catalog</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="model">Model</h2>
+          <p>The trained system that processes input and produces output. An app can offer several models.</p>
+          <p><strong class="sl-cyan">Example:</strong> You choose a different model in the same app to try another response.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#effort">Effort</a>, <a href="#llm">LLM</a>, <a href="../balancing-the-anvil/">Balancing the Anvil</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="plugin">Plugin</h2>
+          <p>An installable package that adds abilities to an AI app. It bundles parts such as skills, subagents, and MCP servers, so you can install them in one step. Some apps call these extensions. A plugin runs with your permissions, so install only plugins you trust.</p>
+          <p><strong class="sl-cyan">Example:</strong> You install a design plugin. In one step, it adds a skill for checking layouts and an MCP server that reads your design files.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#mcp">MCP</a>, <a href="#skill">Skill</a>, <a href="#subagent">Subagent</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="prompt">Prompt</h2>
+          <p>The input you give a model to guide its response. A prompt can contain a question, instructions, or material to work with.</p>
+          <p><strong class="sl-cyan">Example:</strong> <q>Summarize this email in three sentences.</q></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#context">Context</a>, <a href="#rule">Rule</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="rule">Rule</h2>
+          <p>An instruction meant to guide behavior across tasks. A written rule does not guarantee compliance.</p>
+          <p>A rule describes expected behavior. A permission setting controls access to an action.</p>
+          <p><strong class="sl-cyan">Example:</strong> <q>Use short sentences in documentation.</q> This guides each writing task without repeating the request.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#prompt">Prompt</a>, <a href="#skill">Skill</a>, <a href="../rules/">Anvil Rules</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="sandbox">Sandbox</h2>
+          <p>A walled-off space where a program can run without reaching the rest of your computer. It works like a child's sandbox: you can make a mess inside, and the mess stays in the box. Web browsers and phone apps use sandboxes too. For an agent, a sandbox can limit the files, commands, and network access it gets. Files that the sandbox allows, such as your project folder, can still change.</p>
+          <p>Developers also use the word for a safe test copy of a service, such as a payment account with fake money.</p>
+          <p><strong class="sl-cyan">Example:</strong> An agent runs a bad command inside a sandbox. It can still damage files in your project folder, but the rest of your computer stays safe.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#agent">Agent</a>, <a href="#harness">Harness</a>, <a href="../balancing-the-anvil/#the-riff-bill-of-rights">The riff bill of rights</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="skill">Skill</h2>
+          <p>A reusable package of instructions for a particular task. It can also include scripts, examples, and reference files.</p>
+          <p>The Agent Skills format uses a <code>SKILL.md</code> file. A product may also use the word skill for another feature.</p>
+          <p><strong class="sl-cyan">Example:</strong> A report skill gives the agent a template and instructions for preparing a weekly report.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#plugin">Plugin</a>, <a href="#rule">Rule</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="subagent">Subagent</h2>
+          <p>An agent that another agent starts to handle one part of a task. It works in its own separate context, so its searches and file reads do not fill up the main conversation. When it finishes, it sends back a short summary. Several subagents can run at once, and their work still adds to your usage.</p>
+          <p><strong class="sl-cyan">Example:</strong> An agent asks a subagent to search a large codebase. The subagent reads 40 files and returns a five-line list of the ones that matter.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#agent">Agent</a>, <a href="#context">Context</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="terminal">Terminal</h2>
+          <p>An app where you type text commands and read the text that comes back. A CLI or a TUI runs inside a terminal. macOS includes an app called Terminal, and Windows includes Windows Terminal. You can also install a different terminal app, such as iTerm2 for macOS.</p>
+          <p><strong class="sl-cyan">Example:</strong> You open a terminal and type a command to move into your Documents folder.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#cli">CLI</a>, <a href="#tui">TUI</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="token">Token</h2>
+          <p>A unit a model uses to process information. For text, a token can represent a word, part of a word, or punctuation. Pay-per-use AI APIs often charge by the number of tokens processed and generated.</p>
+          <p><strong class="sl-cyan">Example:</strong> When you paste a recipe into a chat, the ingredient names, quantities, and punctuation all contribute to its token count.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#api">API</a>, <a href="#context">Context</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="tool">Tool</h2>
+          <p>In AI, a tool lets a model request an action, such as searching the web, reading a file, or running code. The surrounding software performs the action and returns the result. Tools can come built into the app or through connections such as plugins and MCP servers.</p>
+          <p><strong class="sl-cyan">Example:</strong> You ask when you are free tomorrow. The model requests a calendar search and uses the results to suggest a time.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#harness">Harness</a>, <a href="#mcp">MCP</a>, <a href="#plugin">Plugin</a></p>
+        </section>
+
+        <section class="section term-card">
+          <h2 id="tui">TUI (text user interface)</h2>
+          <p>A full-screen app that runs inside a terminal. It has panels, menus, and prompts that you work with from the keyboard. Many agent CLIs open a TUI when they start.</p>
+          <p><strong class="sl-cyan">Example:</strong> You start an agent in a terminal. It fills the window with a chat panel, a status line, and approval prompts.</p>
+          <p><strong class="sl-green">See also:</strong> <a href="#cli">CLI</a>, <a href="#terminal">Terminal</a>, <a href="../../forged-statusline/">Forged Status Line</a></p>
+        </section>
+
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+</body>
+</html>

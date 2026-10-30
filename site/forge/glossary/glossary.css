@@ -1,0 +1,9 @@
+/* One card per glossary term. Colors and radius come from core. */
+.term-card {
+  margin: 0 0 14px;
+  padding: 18px 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.term-card > :last-child { margin-bottom: 0; }
