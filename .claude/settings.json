@@ -1,0 +1,22 @@
+{
+  "enabledMcpjsonServers": [
+    "claude-code-docs",
+    "openai-developer-docs"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__claude-code-docs__query_docs_filesystem_claude_code_docs",
+      "mcp__claude-code-docs__search_claude_code_docs",
+      "mcp__openai-developer-docs__fetch_openai_doc",
+      "mcp__openai-developer-docs__list_openai_docs",
+      "mcp__openai-developer-docs__search_openai_docs"
+    ],
+    "deny": [
+      "mcp__openai-developer-docs__get_openapi_spec",
+      "mcp__openai-developer-docs__list_api_endpoints"
+    ],
+    "ask": [
+      "mcp__claude-code-docs__submit_feedback"
+    ]
+  }
+}
