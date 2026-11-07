@@ -190,7 +190,7 @@
 
     <h2 class="divider-heading" id="cost">Cost</h2>
 
-    <p class="lede">A tier is a combined monthly spend across one Claude plan and one ChatGPT plan. Two ladders climb the same seven tiers, one focused on Anthropic and the other on OpenAI. They are alternatives, not stages. Pick the ladder focused on the model you reach for most, since the money buys depth in one vendor rather than savings.</p>
+    <p class="lede">A tier is a combined monthly spend across one Claude plan and one ChatGPT plan. Two ladders climb the same seven tiers, one focused on Anthropic and the other on OpenAI. They are alternatives, not stages. A higher tier buys more usage of the same tools. What a free tier includes changes often, so check the vendor's plan page before you count on it. Pick the ladder focused on the model you reach for most, since the money buys depth in one vendor rather than savings. If you have no preference yet, either ladder's Apprentice tier is a fine place to start.</p>
 
     <fieldset class="tabgroup">
       <legend class="visually-hidden">Which vendor the ladder focuses on</legend>
@@ -284,7 +284,11 @@
       <li>Extra arguments pass straight through to the CLI.</li>
     </ul>
 
-    <div class="subhead">An example <code>riff</code> setup in <code>bash</code> 4+</div>
+    <div class="subhead">The smallest <code>riff</code>, two models</div>
+    <pre class="codeblock"><code class="language-bash"># riff opus, riff sonnet: one vendor, one effort, nothing else
+riff() { claude --model "${1}" --effort high "${@:2}"; }</code></pre>
+
+    <div class="subhead">A more advanced <code>riff</code> setup in <code>bash</code> 4+</div>
     <pre class="codeblock"><code class="language-bash"># riff &lt;model&gt; [args...]: one launcher, one model per subcommand
 riff() {
   # the shared engine every model calls: run the CLI (blocking), then
