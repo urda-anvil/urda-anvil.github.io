@@ -12,10 +12,7 @@ Set another port with `make serve SERVE_PORT=8001`.
 The site uses static HTML without a build step.
 GitHub Pages publishes `site/` on a push to `master`.
 
-Most pages also work through `file://`.
-`anvil-local.js` rewrites relative directory links to their `index.html` files.
-It preserves query strings and fragments.
-The 404 page requires HTTP because its assets use root-relative paths.
+Pages use root-relative paths, so they require HTTP and do not open through `file://`.
 Raw document disclosures require HTTP fetch support and retain direct file links as a fallback.
 
 ## Core assets
@@ -27,7 +24,6 @@ Load only the optional scripts that a page needs.
 | --- | --- |
 | `css/anvil-core.css` | Shared tokens, layout, typography, and components |
 | `js/anvil-anchors.js` | Permalinks for `main h2[id]` and `main h3[id]` |
-| `js/anvil-local.js` | Relative directory links under `file://` |
 | `js/anvil-pagerail.js` | Authored or automatic outlines, with scroll tracking |
 | `js/anvil-content.js` | Lazy plain-text disclosure content |
 | `js/prism.js` | Vendored highlighting and copy controls |
@@ -40,14 +36,13 @@ The scripts use classic script tags, so they also work without a module server.
 Load them with `defer`, after any page renderer that creates their target elements.
 
 ```html
-<link rel="stylesheet" href="res/css/anvil-core.css">
-<script src="res/js/prism.js" defer></script>
-<script src="res/js/anvil-local.js" defer></script>
-<script src="res/js/anvil-anchors.js" defer></script>
-<script src="res/js/anvil-pagerail.js" defer></script>
+<link rel="stylesheet" href="/res/css/anvil-core.css">
+<script src="/res/js/prism.js" defer></script>
+<script src="/res/js/anvil-anchors.js" defer></script>
+<script src="/res/js/anvil-pagerail.js" defer></script>
 ```
 
-Use paths relative to the page depth.
+Use root-relative paths from the site root.
 These scripts initialize the current document once.
 They do not observe later application mutations.
 Run a page renderer before them when it creates headings or outline content.

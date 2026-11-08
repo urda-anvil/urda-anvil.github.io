@@ -9,7 +9,7 @@
 SHELL := /bin/bash
 
 # Local preview server. Serving over http gives the directory-index behavior GitHub Pages
-# has in production, so the clean /slug/ links resolve without the file:// shim.
+# has in production, so the root-relative /slug/ links resolve the same way they do live.
 SERVE_PORT := 8000
 
 ########################################################################################################################

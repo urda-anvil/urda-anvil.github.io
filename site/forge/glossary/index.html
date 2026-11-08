@@ -14,33 +14,32 @@
   <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#0b0e14">
   <link rel="canonical" href="https://anvil.urda.com/forge/glossary/">
-  <link rel="icon" href="../../res/img/favicon.ico">
-  <link rel="apple-touch-icon" href="../../res/img/apple-touch-icon.png">
-  <link rel="manifest" href="../../res/img/site.webmanifest">
-  <link rel="stylesheet" href="../../res/css/anvil-core.css">
-  <link rel="stylesheet" href="glossary.css">
-  <script src="../../res/js/anvil-local.js" defer></script>
-  <script src="../../res/js/anvil-anchors.js" defer></script>
-  <script src="../../res/js/anvil-pagerail.js" defer></script>
-  <script src="../../res/js/anvil-analytics.js" defer></script>
+  <link rel="icon" href="/res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="/res/img/apple-touch-icon.png">
+  <link rel="manifest" href="/res/img/site.webmanifest">
+  <link rel="stylesheet" href="/res/css/anvil-core.css">
+  <link rel="stylesheet" href="/forge/glossary/glossary.css">
+  <script src="/res/js/anvil-anchors.js" defer></script>
+  <script src="/res/js/anvil-pagerail.js" defer></script>
+  <script src="/res/js/anvil-analytics.js" defer></script>
 </head>
 <body>
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
-      <a class="brand" href="../../">
-        <img src="../../res/img/icon-192.png" alt="" width="28" height="28">
+      <a class="brand" href="/">
+        <img src="/res/img/icon-192.png" alt="" width="28" height="28">
         <span>Urda Anvil</span>
       </a>
       <div class="navlinks">
-        <a href="../../">Home</a>
-        <a href="../../forged-statusline/">Forged Status Line</a>
+        <a href="/">Home</a>
+        <a href="/forged-statusline/">Forged Status Line</a>
       </div>
     </div>
   </nav>
 
   <main class="wrap">
     <header>
-      <h1 id="top"><img class="spark" src="../../res/img/spark.svg" alt=""> AI Glossary</h1>
+      <h1 id="top"><img class="spark" src="/res/img/spark.svg" alt=""> AI Glossary</h1>
     </header>
     <p class="lede">Common AI terms in plain English, for new users and old hands alike.</p>
 
@@ -98,7 +97,7 @@
           <h2 id="cli">CLI (command-line interface)</h2>
           <p>A program that you use by typing commands in a terminal instead of clicking in a window. Many AI agents come as a CLI that works on the files in the current folder.</p>
           <p><strong class="sl-cyan">Example:</strong> You type a command to list the files in a folder.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#terminal">Terminal</a>, <a href="#tui">TUI</a>, <a href="../balancing-the-anvil/">Balancing the Anvil</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#terminal">Terminal</a>, <a href="#tui">TUI</a>, <a href="/forge/balancing-the-anvil/">Balancing the Anvil</a></p>
         </section>
 
         <section class="section term-card">
@@ -113,7 +112,7 @@
           <h2 id="effort">Effort</h2>
           <p>How much thinking and work a model puts into a response. Higher effort gives it more room to work through a problem, but it can take longer and use more tokens.</p>
           <p><strong class="sl-cyan">Example:</strong> You choose high effort to investigate why your printer keeps disconnecting, and low effort to shorten a printer setup checklist.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#model">Model</a>, <a href="#token">Token</a>, <a href="../balancing-the-anvil/#effort-per-model">Effort per Model</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#model">Model</a>, <a href="#token">Token</a>, <a href="/forge/balancing-the-anvil/#effort-per-model">Effort per Model</a></p>
         </section>
 
         <section class="section term-card">
@@ -141,14 +140,14 @@
           <h2 id="mcp">MCP (Model Context Protocol)</h2>
           <p>An open standard that lets AI apps connect to external tools, data, and reusable prompts. The AI app connects to an MCP server, which provides access to those features. Because MCP is a shared standard, one MCP server can work with many apps that support MCP. An MCP server can run on your own computer or on another machine, on your local network or on the internet. Anyone can publish an MCP server, so connect only servers you trust.</p>
           <p><strong class="sl-cyan">Example:</strong> You connect your AI app to your issue tracker's MCP server. The app can then read a ticket and post a comment for you.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#plugin">Plugin</a>, <a href="#tool">Tool</a>, <a href="../mcp/">Anvil MCP catalog</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#plugin">Plugin</a>, <a href="#tool">Tool</a>, <a href="/forge/mcp/">Anvil MCP catalog</a></p>
         </section>
 
         <section class="section term-card">
           <h2 id="model">Model</h2>
           <p>The trained system that processes input and produces output. An app can offer several models.</p>
           <p><strong class="sl-cyan">Example:</strong> You choose a different model in the same app to try another response.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#effort">Effort</a>, <a href="#llm">LLM</a>, <a href="../balancing-the-anvil/">Balancing the Anvil</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#effort">Effort</a>, <a href="#llm">LLM</a>, <a href="/forge/balancing-the-anvil/">Balancing the Anvil</a></p>
         </section>
 
         <section class="section term-card">
@@ -170,7 +169,7 @@
           <p>An instruction meant to guide behavior across tasks. A written rule does not guarantee compliance.</p>
           <p>A rule describes expected behavior. A permission setting controls access to an action.</p>
           <p><strong class="sl-cyan">Example:</strong> <q>Use short sentences in documentation.</q> This guides each writing task without repeating the request.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#prompt">Prompt</a>, <a href="#skill">Skill</a>, <a href="../rules/">Anvil Rules</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#prompt">Prompt</a>, <a href="#skill">Skill</a>, <a href="/forge/rules/">Anvil Rules</a></p>
         </section>
 
         <section class="section term-card">
@@ -178,7 +177,7 @@
           <p>A walled-off space where a program can run without reaching the rest of your computer. It works like a child's sandbox: you can make a mess inside, and the mess stays in the box. Web browsers and phone apps use sandboxes too. For an agent, a sandbox can limit the files, commands, and network access it gets. Files that the sandbox allows, such as your project folder, can still change.</p>
           <p>Developers also use the word for a safe test copy of a service, such as a payment account with fake money.</p>
           <p><strong class="sl-cyan">Example:</strong> An agent runs a bad command inside a sandbox. It can still damage files in your project folder, but the rest of your computer stays safe.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#agent">Agent</a>, <a href="#harness">Harness</a>, <a href="../balancing-the-anvil/#the-riff-bill-of-rights">The riff bill of rights</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#agent">Agent</a>, <a href="#harness">Harness</a>, <a href="/forge/balancing-the-anvil/#the-riff-bill-of-rights">The riff bill of rights</a></p>
         </section>
 
         <section class="section term-card">
@@ -221,7 +220,7 @@
           <h2 id="tui">TUI (text user interface)</h2>
           <p>A full-screen app that runs inside a terminal. It has panels, menus, and prompts that you work with from the keyboard. Many agent CLIs open a TUI when they start.</p>
           <p><strong class="sl-cyan">Example:</strong> You start an agent in a terminal. It fills the window with a chat panel, a status line, and approval prompts.</p>
-          <p><strong class="sl-green">See also:</strong> <a href="#cli">CLI</a>, <a href="#terminal">Terminal</a>, <a href="../../forged-statusline/">Forged Status Line</a></p>
+          <p><strong class="sl-green">See also:</strong> <a href="#cli">CLI</a>, <a href="#terminal">Terminal</a>, <a href="/forged-statusline/">Forged Status Line</a></p>
         </section>
 
       </div>
