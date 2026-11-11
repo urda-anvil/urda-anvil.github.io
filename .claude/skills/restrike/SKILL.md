@@ -97,7 +97,7 @@ it by host, and pull the facts each kind can give.
 | Kind | How to recognize it | What it supplies |
 | --- | --- | --- |
 | Vendor doc page | Host matches a doc URL pattern in the vendor table | The slug, the model id, any deprecation note for the predecessor |
-| Gemini thinking page | The URL `https://ai.google.dev/gemini-api/docs/thinking` | The Vendor Default effort for Google, from the Default Thinking column |
+| Gemini thinking page | The URL `https://aistudio.google.com/docs/thinking` | The Vendor Default effort for Google, from the Default Thinking column |
 | Codex manifest | The local file `~/.codex/models_cache.json` | The Vendor Default effort for OpenAI, as `default_reasoning_level` on the entry for the slug |
 | Vendor blog or changelog | The vendor's own host, not a doc path | Whether the predecessor stays supported, and the release date |
 | Third-party news | Any other host, such as a news thread | The signal that a model shipped. Skip the fetch |
@@ -136,7 +136,7 @@ guess a new one.
 | --- | --- | --- | --- | --- | --- | --- |
 | Anthropic | `https://platform.claude.com/docs/en/models/<slug>/overview` | `--rail-anthropic` | `g-anthropic` | `Anthropic / Claude` | `Claude Models` | Claude |
 | OpenAI | `https://developers.openai.com/api/docs/models/<slug>` | `--rail-openai` | `g-openai` | `OpenAI / GPT` | `OpenAI Platform Docs` | Codex |
-| Google | `https://ai.google.dev/gemini-api/docs/models/<slug>` | `--rail-google` | `g-google` | `Google / Gemini` | `Gemini API Docs` | Antigravity |
+| Google | `https://aistudio.google.com/docs/models/<slug>` | `--rail-google` | `g-google` | `Google / Gemini` | `Gemini API Docs` | Antigravity |
 
 The pattern classifies a URL. It does not generate one. The slug comes from
 the doc URL in the prompt. Junie is the secondary column for every vendor
