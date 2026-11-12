@@ -17,8 +17,8 @@
    .78em of 14px = ~11px, 14 chars) at ~123px including its 28px padding;
    630px gives each column ~147px, clearing that with room to spare. */
 .datatable.effort { min-width: 630px; }
-/* 190px rowlabel + 4 even columns: the widest cell is the "riff gemini-flash"
-   marklabel (mono, .8em of 14px = ~11px, 17 chars) at ~144px including its
+/* 190px rowlabel + 4 even columns: the widest cell is the "riff hydrogen"
+   marklabel (mono, .8em of 14px = ~11px, 13 chars) at ~117px including its
    28px padding; 880px gives each column ~172px, clearing it with room to
    spare, and the 3px --mk rail on the last (Junie) column has no caption. */
 .datatable.grid { min-width: 880px; }
