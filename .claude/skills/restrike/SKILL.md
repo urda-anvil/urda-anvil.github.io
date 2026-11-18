@@ -72,17 +72,21 @@ The prompt is context, not a command. It may hold prose, one or more URLs,
 a pasted switcher, a screenshot, a doc excerpt, or a mix. Read all of it as
 evidence, then derive three facts.
 
-1. **The model.** The name as the vendor writes it, such as `Gemini 3.8
-   Flash` or `GPT-5.7 Astra`. Take it from a doc page when one is present,
+1. **The model.** The name as the vendor writes it, such as `Gemini 4
+   Neon` or `GPT-6.2 Astra`. Take it from a doc page when one is present,
    else from the prose.
 2. **The vendor.** Match the model to the vendor table. When the name
    matches no vendor, ask.
-3. **The action.** One of bump, add, or retire.
+3. **The action.** One of bump, add, retire, or swap.
    - Bump: the evidence names the new model as the successor of a row that
      already exists on the forge page. A shared family word alone, such as
      `Flash`, is not enough. A new variant such as `Flash Lite` is an add.
    - Add: no existing row is the predecessor.
    - Retire: the prompt says to remove, drop, or retire a model.
+   - Swap: an add and a retire in one run. The vendor names no successor,
+     and the user decides that the new model takes the place of a row.
+     Never choose a swap without that decision. Start as an add, report
+     the evidence, and let the user call it.
    When the evidence supports more than one reading, ask. Do not guess.
 
 When the prompt names no model at all, ask which model shipped. Never invent
@@ -99,6 +103,8 @@ it by host, and pull the facts each kind can give.
 | Vendor doc page | Host matches a doc URL pattern in the vendor table | The slug, the model id, any deprecation note for the predecessor |
 | Gemini thinking page | The URL `https://aistudio.google.com/docs/thinking` | The Vendor Default effort for Google, from the Default Thinking column |
 | Codex manifest | The local file `~/.codex/models_cache.json` | The Vendor Default effort for OpenAI, as `default_reasoning_level` on the entry for the slug |
+| Google AI plans page | The URL `https://one.google.com/about/google-ai-plans/` | The plan gate of a Gemini model, for the Google row order |
+| Antigravity models page | The URL `https://antigravity.google/docs/models` | Whether Antigravity serves the model, and on which plan |
 | Vendor blog or changelog | The vendor's own host, not a doc path | Whether the predecessor stays supported, and the release date |
 | Third-party news | Any other host, such as a news thread | The signal that a model shipped. Skip the fetch |
 | Pasted switcher or screenshot | Text or image in the prompt | The harness columns, the Anvil Target effort the user runs, and the Vendor Default effort for Anthropic |
@@ -110,6 +116,7 @@ Each field has one source. There is no precedence to resolve between kinds.
 | Slug and doc href | Vendor doc page | None. Ask for the doc URL |
 | Vendor Default | Claude picker for Anthropic. Codex manifest for OpenAI. Gemini thinking page for Google | None. Ask when the source states no default |
 | Anvil Target | Switcher or screenshot | The launcher line in bash_local, read only. Ask on an add with no switcher |
+| Row position | The "Row order" section. Google AI plans page for a Google plan gate | Ask when the rule does not place the row |
 | Harness columns | Switcher or screenshot | The predecessor row on a bump. Ask on an add |
 | Predecessor status | Vendor blog or changelog | Replace in place, the precedent on this site |
 
@@ -139,8 +146,39 @@ guess a new one.
 | Google | `https://aistudio.google.com/docs/models/<slug>` | `--rail-google` | `g-google` | `Google / Gemini` | `Gemini API Docs` | Antigravity |
 
 The pattern classifies a URL. It does not generate one. The slug comes from
-the doc URL in the prompt. Junie is the secondary column for every vendor
-unless the row says otherwise.
+the doc URL in the prompt.
+
+Junie is the only secondary column. The Junie cell comes from the user: a
+Junie picker screenshot, a pasted picker, or a plain statement. It is
+secondary when the user shows or says that Junie lists the model. It is
+unavailable when the user shows or says that Junie does not list the model,
+or when the prompt gives no Junie evidence. On an add, never copy the Junie
+cell from the sibling row.
+
+## Row order
+
+Each vendor group has a fixed order. The user set it. Use the same order in
+the forge harness table, the forge effort table, and the bookmarks group.
+
+| Vendor | Rule | Order today |
+| --- | --- | --- |
+| Anthropic | No stated rule. Keep the order on the page | Fable, Mythos, Opus, Sonnet, Haiku |
+| OpenAI | By family, from the most capable to the cheapest | Astra, Sol, Terra, Luna |
+| Google | By plan gate, with the most restricted plan first | Carbon, Neon, Hydrogen |
+
+Rules:
+
+1. Put a new row at its slot in the order. Do not put it at the end of the
+   group by default.
+2. A new version of a family takes the slot of that family.
+3. For Google, read the plan gate from the Google AI plans page,
+   `https://one.google.com/about/google-ai-plans/`. Ultra only goes above
+   Pro, and Pro goes above Plus.
+4. Never copy the order of a vendor docs page, a models index, or a picker.
+5. When the rule does not place the row, ask. Two rows with one plan gate,
+   and a new family, are examples.
+6. When a run changes the order, update the "Order today" column in the
+   same change.
 
 ## Where a model lives in this repo
 
@@ -150,7 +188,7 @@ applies. These three files are the only files this skill edits.
 1. **Forge harness table** in `site/forge/balancing-the-anvil/index.html`.
    One row per model. The row label is a link to the doc page. The primary
    cell carries a `marklabel` with the riff launcher name, such as
-   `riff-gemini-flash`.
+   `riff neon`. The form is `riff`, a space, and the launcher name.
 2. **Forge effort table** in the same file. One row per model with three
    cells: Vendor Default, Anvil Target, and Change. The Change cell is one of
    three marks, each with visually hidden text:
@@ -220,9 +258,14 @@ State both to the user on every add and on every bump that changes effort.
      cells, and the effort cells.
    - Retire: remove both forge rows and the bookmark entry. Then check the
      riff example block and the CSS note for the retired name.
+   - Swap: write the new model into the slot of the retired row. Set every
+     field as on an add, and take none from the retired row. Then do the
+     checks of a retire.
 6. Sweep the site for the old name and the old slug with Grep. A bump and a
    retire must leave zero hits under `site/`. An add sweeps for the new name
-   and expects exactly the rows it wrote.
+   and expects exactly the rows it wrote. When a hit is in plan, ladder, or
+   cost content, do not edit it. Report the line, propose the smallest edit
+   that removes the old name, and wait for the user's go.
 7. Sweep the follow-up paths below with Grep, read only. Report each file
    with one status: current, stale, or missing.
 8. Run `git diff` and confirm the change is only the lines you meant. Stage
@@ -245,10 +288,11 @@ came from.
 
 ## Commit convention
 
-Match the repo's git log. The three verbs do not overlap.
+Match the repo's git log.
 
 - Bump and add: `Track <Model Name>`.
 - Retire: `Retire <Model Name>`.
+- Swap: `Track <New Model Name>, retire <Old Model Name>`.
 
 ## Follow-ups outside this repo
 
@@ -273,6 +317,7 @@ file no longer exists, remove it and say so.
 - Never derive, search for, or invent a doc URL or a slug. Ask instead.
 - Never edit a file outside the three named in this skill. Report and stop.
 - Never run `git commit` or `git push`. The user commits.
-- Never change plan, ladder, or cost content on the forge page.
+- Never change plan, ladder, or cost content on the forge page without the
+  user's go. A typed `/restrike` is not that go. Step 6 says when to ask.
 - Never edit on top of an unrelated change in a target file.
 - Annotation prose on the site states the fact. No metaphors, no punchlines.
