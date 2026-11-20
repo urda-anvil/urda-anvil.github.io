@@ -167,7 +167,8 @@
   .tagline a { color: var(--ember); text-decoration: none; }
   .tagline a:hover { text-decoration: underline; }
   .tagline code,
-  .lede code {
+  .lede code,
+  .ulist code {
     font-family: var(--mono);
     color: var(--ember);
     background: color-mix(in srgb, var(--ember) 9%, transparent);
@@ -743,6 +744,7 @@
   .ulist { max-width: 44rem; margin: 4px 0; padding-left: 1.1rem; display: grid; gap: 6px; font-size: 13.5px; color: var(--muted); }
   .ulist li { padding-left: 2px; }
   .ulist b { color: var(--ink); font-weight: 600; }
+  .ulist.wide { max-width: none; }
 
   /* small muted footnote under a table or code block, e.g. an asterisked caveat */
   .flow-aside.wide { max-width: none; }

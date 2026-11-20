@@ -15,7 +15,8 @@ under the Apache 2.0 license.
 ## Pages
 
 - [AI Glossary](https://anvil.urda.com/forge/glossary/): Common AI terms in plain English, with examples
-- [Models](https://anvil.urda.com/forge/balancing-the-anvil/): Models on the anvil
+- [Models](https://anvil.urda.com/forge/models/): Every model the anvil tracks, and how to riff with each
+- [Balancing the Anvil](https://anvil.urda.com/forge/balancing-the-anvil/): Reach the models you care about at a price you can afford, from free to all-in
 - [MCP servers](https://anvil.urda.com/forge/mcp/): Default servers and tool permissions
 - [Rules](https://anvil.urda.com/forge/rules/): Agent rules in plain Markdown, with a raw file for each
 - [Bookmarks](https://anvil.urda.com/bookmarks/): Tools and reference links

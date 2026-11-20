@@ -6,7 +6,7 @@ description: |
   and retire a model. The prompt is evidence, not a command: prose, one or
   more URLs, a pasted model switcher, or a screenshot. Each run derives the
   model, the vendor, and the action, then verifies the vendor doc page. It
-  edits the forge page and the bookmarks page, sweeps for leftovers, stages
+  edits the Models page and the bookmarks page, sweeps for leftovers, stages
   the change, and lists the copies outside this repo.
 
   Do NOT fire when:
@@ -26,7 +26,7 @@ description: |
     - "/restrike drop 3.7 flash, we are on 3.8 now" -> retire the rows and
       the bookmark, then sweep the CSS note and the riff example.
 when_to_use:
-    - new model on the forge page
+    - new model on the Models page
     - bump the model on the anvil site
     - add a model row
     - retire a model
@@ -41,9 +41,11 @@ allowed-tools:
     - Glob
     - AskUserQuestion
     - WebFetch
-    - Edit(/site/forge/balancing-the-anvil/index.html)
-    - Edit(/site/forge/balancing-the-anvil/balancing-the-anvil.css)
+    - Edit(/site/forge/models/index.html)
+    - Edit(/site/forge/models/models.css)
     - Edit(/site/bookmarks/index.html)
+    - Edit(/site/forge/balancing-the-anvil/index.html)
+    - Edit(/.claude/skills/restrike/SKILL.md)
     - Bash(curl:*)
     - Bash(git status:*)
     - Bash(git diff:*)
@@ -60,8 +62,9 @@ model: inherit
 
 A smith restrikes a piece to true it up. This skill restrikes the model
 roster on the anvil site when a vendor ships a new model, a new version, or
-retires an old one. It edits three files in this repo and nothing else. It
-reports the copies that live elsewhere.
+retires an old one. It edits three files in this repo. Step 6 allows one
+plan note fix on the Balancing page. It reports the copies that live
+elsewhere.
 
 The user invokes this skill. It never fires on its own, because it edits
 files and stages them. A typed `/restrike` is the go for those edits.
@@ -79,7 +82,7 @@ evidence, then derive three facts.
    matches no vendor, ask.
 3. **The action.** One of bump, add, retire, or swap.
    - Bump: the evidence names the new model as the successor of a row that
-     already exists on the forge page. A shared family word alone, such as
+     already exists on the Models page. A shared family word alone, such as
      `Flash`, is not enough. A new variant such as `Flash Lite` is an add.
    - Add: no existing row is the predecessor.
    - Retire: the prompt says to remove, drop, or retire a model.
@@ -125,7 +128,7 @@ Rules:
 1. An add or a bump needs a vendor doc URL in the prompt. When there is
    none, ask for one. Never derive a slug, never search for one, and never
    build a URL from the pattern alone.
-2. A retire needs no doc page. The existing href on the forge page is the
+2. A retire needs no doc page. The existing href on the Models page is the
    identity of the model.
 3. When the switcher and the launcher line disagree on the Anvil Target,
    report both values and ask. The user decides which side moves.
@@ -155,6 +158,12 @@ unavailable when the user shows or says that Junie does not list the model,
 or when the prompt gives no Junie evidence. On an add, never copy the Junie
 cell from the sibling row.
 
+The JetBrains group holds one row, Junie Lite. It is a tier, not a model
+release, so the table above has no JetBrains row. Its primary column is
+Junie. Its effort row reads `no effort setting` across three columns,
+until JetBrains adds an effort setting. Its bookmark is `Junie Lite` under
+`Junie Docs`. When a run must change this row, ask the user first.
+
 ## Row order
 
 Each vendor group has a fixed order. The user set it. Use the same order in
@@ -183,9 +192,10 @@ Rules:
 ## Where a model lives in this repo
 
 Every model name appears in these places. A run touches each one that
-applies. These three files are the only files this skill edits.
+applies. These three files are the only files this skill edits, apart from
+the Balancing page fix in step 6.
 
-1. **Forge harness table** in `site/forge/balancing-the-anvil/index.html`.
+1. **Forge harness table** in `site/forge/models/index.html`.
    One row per model. The row label is a link to the doc page. The primary
    cell carries a `marklabel` with the riff launcher name, such as
    `riff neon`. The form is `riff`, a space, and the launcher name.
@@ -197,9 +207,9 @@ applies. These three files are the only files this skill edits.
    - lowered: `movemark down` with the entity `&#10136;`.
 3. **Bookmarks link** in `site/bookmarks/index.html`. One entry under the
    vendor's bookmarks group, titled `<Model Name> Model`, with the doc URL.
-4. **Riff example code block** at the bottom of the forge page. It names three
-   launchers, one per vendor. A retire can leave a stale name here.
-5. **CSS min-width note** in `site/forge/balancing-the-anvil/balancing-the-anvil.css`.
+4. **Riff example code block** at the bottom of the Models page. It names
+   several launchers. A retire can leave a stale name here.
+5. **CSS min-width note** in `site/forge/models/models.css`.
    The comment above `.datatable.grid` names the widest `marklabel` and its
    character count. A new launcher name longer than the one named there, or a
    retire of that one, makes the note wrong. Update the comment, and recheck
@@ -261,11 +271,15 @@ State both to the user on every add and on every bump that changes effort.
    - Swap: write the new model into the slot of the retired row. Set every
      field as on an add, and take none from the retired row. Then do the
      checks of a retire.
-6. Sweep the site for the old name and the old slug with Grep. A bump and a
-   retire must leave zero hits under `site/`. An add sweeps for the new name
-   and expects exactly the rows it wrote. When a hit is in plan, ladder, or
+6. Sweep the site for the old name and the old slug with Grep. A retire, and
+   a bump that replaced the predecessor, must leave zero hits under `site/`.
+   An add sweeps for the new name and expects exactly the rows it wrote.
+   When a hit is in plan, ladder, or
    cost content, do not edit it. Report the line, propose the smallest edit
-   that removes the old name, and wait for the user's go.
+   that removes the old name, and wait for the user's go. That content lives
+   in `site/forge/balancing-the-anvil/index.html`. Edit that file only for
+   the proposed line, and only after the go. When that file already has
+   changes, report them and do not edit it.
 7. Sweep the follow-up paths below with Grep, read only. Report each file
    with one status: current, stale, or missing.
 8. Run `git diff` and confirm the change is only the lines you meant. Stage
@@ -316,8 +330,11 @@ file no longer exists, remove it and say so.
 
 - Never derive, search for, or invent a doc URL or a slug. Ask instead.
 - Never edit a file outside the three named in this skill. Report and stop.
+  The one exception is the Balancing page edit that step 6 allows.
+- In this skill file, change only the "Order today" column and the
+  follow-up list. Change nothing else in it.
 - Never run `git commit` or `git push`. The user commits.
-- Never change plan, ladder, or cost content on the forge page without the
+- Never change plan, ladder, or cost content on the Balancing page without the
   user's go. A typed `/restrike` is not that go. Step 6 says when to ask.
 - Never edit on top of an unrelated change in a target file.
 - Annotation prose on the site states the fact. No metaphors, no punchlines.

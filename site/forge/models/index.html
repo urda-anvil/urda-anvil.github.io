@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urda Anvil &middot; Models</title>
+  <meta name="description" content="Every model the anvil tracks, and how to riff with each.">
+  <meta property="og:site_name" content="Urda Anvil">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Models">
+  <meta property="og:description" content="Every model the anvil tracks, and how to riff with each.">
+  <meta property="og:url" content="https://anvil.urda.com/forge/models/">
+  <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="canonical" href="https://anvil.urda.com/forge/models/">
+  <link rel="icon" href="/res/img/favicon.ico">
+  <link rel="apple-touch-icon" href="/res/img/apple-touch-icon.png">
+  <link rel="manifest" href="/res/img/site.webmanifest">
+  <link rel="stylesheet" href="/res/css/anvil-core.css">
+  <link rel="stylesheet" href="/forge/models/models.css">
+  <script src="/res/js/prism.js" defer></script>
+  <script src="/res/js/anvil-anchors.js" defer></script>
+  <script src="/res/js/anvil-analytics.js" defer></script>
+</head>
+<body data-prismjs-copy-error="Copy manually">
+  <nav class="topnav" aria-label="Primary">
+    <div class="topnav-inner">
+      <a class="brand" href="/">
+        <img src="/res/img/icon-192.png" alt="" width="28" height="28">
+        <span>Urda Anvil</span>
+      </a>
+      <div class="navlinks">
+        <a href="/">Home</a>
+        <a href="/forged-statusline/">Forged Status Line</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header>
+      <h1><img class="spark" src="/res/img/spark.svg" alt=""> Models</h1>
+    </header>
+    <p class="lede">This page lists every model the anvil tracks, the harness that runs it, and the <a href="/forge/glossary/#effort">effort</a> it runs at. A <a href="/forge/glossary/#model">model</a> is the trained system that does the thinking. A <a href="/forge/glossary/#harness">harness</a> is the app that lets a model work on your files. A <code>riff</code> is one command that starts a model in its harness, with your flags already set. The anvil's <code>riff</code> is a bash function, shown <a href="#the-riff-bill-of-rights">below</a>, and you can build your own in any shell. For the plans behind these models, see <a href="/forge/balancing-the-anvil/">Balancing the Anvil</a>.</p>
+
+    <h2 class="divider-heading" id="model-coverage">Model Coverage</h2>
+
+    <p class="lede">The anvil runs each model through its vendor's harness. The cell where the two meet shows the <code>riff</code> the anvil uses to launch the model. Many models are also available in alternate harnesses. Junie, from JetBrains, is one of several, and it is the one the anvil tracks.</p>
+
+    <div class="datalegend">
+      <div class="item"><span class="legend-swatch primary"></span><span class="lbl"><b>Default Harness</b></span></div>
+      <div class="item"><span class="legend-swatch secondary"></span><span class="lbl"><b>Alternate Harness</b></span></div>
+      <div class="item"><span class="legend-swatch unavailable"></span><span class="lbl"><b>Unavailable</b></span></div>
+    </div>
+
+    <div class="datatable-wrap">
+      <table class="datatable grid">
+        <caption class="visually-hidden">Which model each CLI runs, and the riff command that launches it.</caption>
+        <thead>
+          <tr>
+            <th class="rowlabel-col" scope="col">Model</th>
+            <th scope="col">Claude</th>
+            <th scope="col">Codex</th>
+            <th scope="col">Antigravity</th>
+            <th scope="col">Junie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group g-anthropic"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Anthropic / Claude</span></th></tr>
+          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/fable-5-2/overview" target="_blank" rel="noopener noreferrer">Fable 5.2</a></th>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff fable</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview" target="_blank" rel="noopener noreferrer">Mythos 5.2</a></th>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff mythos</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td></tr>
+          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview" target="_blank" rel="noopener noreferrer">Opus 5.5</a></th>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff opus</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview" target="_blank" rel="noopener noreferrer">Sonnet 5.5</a></th>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff sonnet</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview" target="_blank" rel="noopener noreferrer">Haiku 5.5</a></th>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff haiku</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-openai"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>OpenAI / GPT</span></th></tr>
+          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra" target="_blank" rel="noopener noreferrer">GPT-6.2 Astra</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff astra</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol" target="_blank" rel="noopener noreferrer">GPT-6.2 Sol</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff sol</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra" target="_blank" rel="noopener noreferrer">GPT-6.1 Terra</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff terra</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6-luna" target="_blank" rel="noopener noreferrer">GPT-6 Luna</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff luna</span></span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-google"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Google / Gemini</span></th></tr>
+          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-carbon" target="_blank" rel="noopener noreferrer">Gemini 4 Carbon</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff carbon</span></span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-neon" target="_blank" rel="noopener noreferrer">Gemini 4 Neon</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff neon</span></span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen" target="_blank" rel="noopener noreferrer">Gemini 4 Hydrogen</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff hydrogen</span></span></td>
+            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-jetbrains"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>JetBrains / Junie</span></th></tr>
+          <tr class="row g-jetbrains"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite</a></th>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
+            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff lite</span></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="divider-heading" id="effort-per-model">Effort per Model</h2>
+
+    <p class="lede">Effort is how much thinking a model puts into a response. The table compares a model's default level with the level the anvil targets. Start from these targets, then tune each one to what works best for you.</p>
+
+    <div class="datatable-wrap">
+      <table class="datatable effort">
+        <caption class="visually-hidden">The reasoning effort each riff targets, beside the vendor's default.</caption>
+        <thead>
+          <tr>
+            <th class="rowlabel-col" scope="col">Model</th>
+            <th scope="col">Vendor Default</th>
+            <th scope="col">Anvil Target</th>
+            <th scope="col">Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Change column: how the riff target compares to the vendor
+               default. = unchanged, NE arrow (&#10138;) raised, SE arrow
+               (&#10136;) lowered. -->
+          <tr class="group g-anthropic"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Anthropic / Claude</span></th></tr>
+          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/fable-5-2/overview" target="_blank" rel="noopener noreferrer">Fable 5.2</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
+          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview" target="_blank" rel="noopener noreferrer">Mythos 5.2</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
+          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview" target="_blank" rel="noopener noreferrer">Opus 5.5</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
+          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview" target="_blank" rel="noopener noreferrer">Sonnet 5.5</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
+          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview" target="_blank" rel="noopener noreferrer">Haiku 5.5</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-openai"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>OpenAI / GPT</span></th></tr>
+          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra" target="_blank" rel="noopener noreferrer">GPT-6.2 Astra</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol" target="_blank" rel="noopener noreferrer">GPT-6.2 Sol</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra" target="_blank" rel="noopener noreferrer">GPT-6.1 Terra</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6-luna" target="_blank" rel="noopener noreferrer">GPT-6 Luna</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-google"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Google / Gemini</span></th></tr>
+          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-carbon" target="_blank" rel="noopener noreferrer">Gemini 4 Carbon</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-neon" target="_blank" rel="noopener noreferrer">Gemini 4 Neon</a></th><td>high</td><td>high</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen" target="_blank" rel="noopener noreferrer">Gemini 4 Hydrogen</a></th><td>high</td><td>high</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="group g-jetbrains"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>JetBrains / Junie</span></th></tr>
+          <tr class="g-jetbrains"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite</a></th><td colspan="3">no effort setting</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="divider-heading" id="the-riff-bill-of-rights">The riff bill of rights</h2>
+    <p class="lede">A <code>riff</code> is named after a musical riff, a short phrase you play again and again. Each one bakes in a harness, your model of choice, and any arguments you want. For example, you might run something like <code>riff opus</code> when the work in front of you calls for Opus. Whatever it launches, a <code>riff</code> owes you these:</p>
+    <ul class="ulist wide">
+      <li>Each model is a subcommand of one <code>riff</code> command, such as <code>riff opus</code>.</li>
+      <li>A <code>riff</code> never launches in your home directory or in <code>/</code>. It moves to a sandbox instead, so you can <code>riff</code> from anywhere.</li>
+      <li>A <code>riff</code> always returns you to the directory where you started.</li>
+      <li>A <code>riff</code> runs in the foreground and returns the exit code to your shell.</li>
+      <li>A <code>riff</code> passes extra arguments straight through to the CLI.</li>
+    </ul>
+
+    <div class="subhead">The smallest <code>riff</code>, one harness</div>
+    <pre class="codeblock"><code class="language-bash"># riff opus, riff sonnet: one vendor, one effort, nothing else
+riff() { claude --model "${1}" --effort high "${@:2}"; }</code></pre>
+
+    <div class="subhead">A more advanced <code>riff</code> setup in <code>bash</code> 4+</div>
+    <pre class="codeblock"><code class="language-bash"># riff &lt;model&gt; [args...]: one launcher, one model per subcommand
+riff() {
+  # the shared engine every model calls: run the CLI (blocking), then
+  # restore your working directory when the CLI exits, via a trap
+  _riff_shell() {
+    local bin="${1}" origin="${PWD}" sandbox="${AI_SHELL_SANDBOX:-${HOME}/sandbox}"; shift
+    # never turn an agent loose in your home dir (ssh keys, dotfiles, creds) or at /; sandbox it
+    # defaults to ~/sandbox, created on first use; override with AI_SHELL_SANDBOX
+    if [[ "${PWD}" == "${HOME}" || "${PWD}" == "/" ]]; then
+      mkdir -p "${sandbox}" || return
+      cd "${sandbox}" || return
+    fi
+
+    # ~~~~~ make it yours here: customizations, tab title, color, whatever ~~~~~
+
+    trap 'trap - RETURN; cd "${origin}"' RETURN  # back to where you started when the CLI exits
+    "${bin}" "${@}"                              # keep last so a Ctrl-C still runs the cleanup
+  }
+
+  # each model is just a thin declaration: a client, a model, and any flags you want
+  # defining a _riff_cmd_* function is all it takes to register it
+  _riff_cmd_fable()  { _riff_shell claude --model fable  --effort high  "${@}"; }
+  _riff_cmd_opus()   { _riff_shell claude --model opus   --effort high  "${@}"; }
+  _riff_cmd_sonnet() { _riff_shell claude --model sonnet --effort high  "${@}"; }
+  _riff_cmd_astra()  { _riff_shell codex  --model gpt-6.2-astra --config "model_reasoning_effort='low'"  "${@}"; }
+  _riff_cmd_sol()    { _riff_shell codex  --model gpt-6.2-sol --config "model_reasoning_effort='low'"    "${@}"; }
+  _riff_cmd_terra()  { _riff_shell codex  --model gpt-6.1-terra --config "model_reasoning_effort='low'"  "${@}"; }
+  _riff_cmd_luna()   { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
+  _riff_cmd_lite()   { _riff_shell junie  --model junie-lite "${@}"; }
+
+  # Tab completion: bash sets COMP_LINE only when it calls riff as a completer
+  if [[ -n "${COMP_LINE:-}" ]]; then
+    COMPREPLY=()
+    [[ "${COMP_CWORD}" -eq 1 ]] || return 0  # complete the model name only
+    mapfile -t COMPREPLY &lt; &lt;(compgen -W "$(compgen -A function _riff_cmd_ | sed 's/^_riff_cmd_//')" -- "${COMP_WORDS[COMP_CWORD]}")
+    return 0
+  fi
+
+  # dispatch: riff opus -&gt; _riff_cmd_opus, with any extra args passed along
+  local cmd="${1:-}"
+  shift
+  if declare -F "_riff_cmd_${cmd}" &gt;/dev/null; then
+    "_riff_cmd_${cmd}" "${@}"
+  else
+    printf 'usage: riff &lt;model&gt; [args...] (press Tab to list models)\n' &gt;&amp;2
+    return 2
+  fi
+}
+complete -F riff riff</code></pre>
+
+    <h2 class="divider-heading" id="references">References</h2>
+
+    <h3 class="subhead" id="model-notes">Model Notes</h3>
+    <p class="flow-aside wide" id="mythos-access"><span class="vendor-label g-anthropic">*Claude Mythos</span> requires Anthropic verification. See the <a href="https://support.claude.com/en/articles/14604842-cyber-verification-program" target="_blank" rel="noopener noreferrer">Cyber Verification Program</a>.</p>
+    <p class="flow-aside wide" id="daybreak-access"><span class="vendor-label g-openai">*OpenAI Daybreak</span> reduces cyber refusals for verified users. Some models need Daybreak Red, which requires organization approval. See the <a href="https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview" target="_blank" rel="noopener noreferrer">Trusted Access for Cyber overview</a>.</p>
+    <p class="flow-aside wide" id="junie-lite-model"><span class="vendor-label g-jetbrains">*Junie Lite</span> runs <code>GPT-6 Luna</code>. JetBrains can change the model without notice. The tier is a free baseline that is always available. See <a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite docs</a>.</p>
+
+    <footer class="foot">
+      <a href="https://github.com/urda">github.com/urda</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://github.com/urda-anvil">github.com/urda-anvil</a> <span class="sep" aria-hidden="true">&diams;</span>
+      <a href="https://anvil.urda.com/">anvil.urda.com</a>
+      <p class="creed">Working with AI is like working an anvil. You have to
+        hammer at it for a while before anything useful takes shape.
+        <span class="creed-attr">- Peter Urda</span></p>
+    </footer>
+  </main>
+</body>
+</html>

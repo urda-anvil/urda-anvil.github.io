@@ -54,7 +54,8 @@ Page stylesheets contain domain-specific accents, content widths, and exceptiona
 The bookmarks page needs no separate stylesheet.
 The MCP rider only maps tool types and permissions to chip colors.
 The Rules rider defines its catalog columns, load semantics, and page spacing.
-The balancing page retains its pricing and model table layouts.
+The balancing page retains its pricing table layouts.
+The Models rider holds the coverage and effort table layouts.
 The styleguide rider contains demonstration furniture.
 
 Catalog data stays in the Bookmarks and MCP HTML files.
@@ -228,7 +229,7 @@ Do not copy the site-specific catalog renderers or page riders as core assets.
 These rules keep a page readable for someone who has not seen the anvil before.
 
 - The first sentence of a page says what the page lists. Voice comes after.
-- The anvil metaphor lives in titles and the footer quote, not in a lede or a meta description.
+- The anvil metaphor lives in titles and the footer quote, not in a lede or a meta description. A lede may explain the page title.
 - A note never restates a value the reader can already see beside it.
 
 ## Audit findings

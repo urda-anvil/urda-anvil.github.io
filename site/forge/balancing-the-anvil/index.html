@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Urda Anvil &middot; Balancing the Anvil</title>
-  <meta name="description" content="The models on the anvil, each run with a simple riff command.">
+  <meta name="description" content="Reach the models you care about at a price you can afford, from free to all-in.">
   <meta property="og:site_name" content="Urda Anvil">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Balancing the Anvil">
-  <meta property="og:description" content="The models on the anvil, each run with a simple riff command.">
+  <meta property="og:description" content="Reach the models you care about at a price you can afford, from free to all-in.">
   <meta property="og:url" content="https://anvil.urda.com/forge/balancing-the-anvil/">
   <meta property="og:image" content="https://anvil.urda.com/res/img/icon.png">
   <meta name="twitter:card" content="summary">
@@ -19,11 +19,10 @@
   <link rel="manifest" href="/res/img/site.webmanifest">
   <link rel="stylesheet" href="/res/css/anvil-core.css">
   <link rel="stylesheet" href="/forge/balancing-the-anvil/balancing-the-anvil.css">
-  <script src="/res/js/prism.js" defer></script>
   <script src="/res/js/anvil-anchors.js" defer></script>
   <script src="/res/js/anvil-analytics.js" defer></script>
 </head>
-<body data-prismjs-copy-error="Copy manually">
+<body>
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
       <a class="brand" href="/">
@@ -41,155 +40,11 @@
     <header>
       <h1><img class="spark" src="/res/img/spark.svg" alt=""> Balancing the Anvil</h1>
     </header>
-    <p class="lede">This page lists the models on the anvil, the CLI that launches each, the effort each targets, and what the plans cost. These are the models on the anvil, the frontier. Each runs with a simple <code>riff</code> command, so you can focus on the model and the work at hand. <code>riff</code> is a bash function. <code>riff &lt;model&gt;</code> starts that model's CLI in the current directory with the model and effort flags preset.</p>
+    <p class="lede">This page shows ways to mix and match plans across vendors, from free to all-in. Balancing the anvil means finding the models that work best for you, at a price that fits your budget and your workflow. For the models themselves, see <a href="/forge/models/">Models</a>.</p>
 
-    <h2 class="divider-heading" id="model-coverage">Model Coverage</h2>
+    <h2 class="divider-heading" id="find-your-balance">Find Your Balance</h2>
 
-    <div class="datalegend">
-      <div class="item"><span class="legend-swatch primary"></span><span class="lbl"><b>Default Harness</b></span></div>
-      <div class="item"><span class="legend-swatch secondary"></span><span class="lbl"><b>Alternate Harness</b></span></div>
-      <div class="item"><span class="legend-swatch unavailable"></span><span class="lbl"><b>Unavailable</b></span></div>
-    </div>
-
-    <div class="datatable-wrap">
-      <table class="datatable grid">
-        <caption class="visually-hidden">Which model each CLI runs, and the riff command that launches it.</caption>
-        <thead>
-          <tr>
-            <th class="rowlabel-col" scope="col">Model</th>
-            <th scope="col">Claude</th>
-            <th scope="col">Codex</th>
-            <th scope="col">Antigravity</th>
-            <th scope="col">Junie</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="group g-anthropic"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Anthropic / Claude</span></th></tr>
-          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/fable-5-2/overview" target="_blank" rel="noopener noreferrer">Fable 5.2</a></th>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff fable</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview" target="_blank" rel="noopener noreferrer">Mythos 5.2</a></th>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff mythos</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td></tr>
-          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview" target="_blank" rel="noopener noreferrer">Opus 5.5</a></th>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff opus</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview" target="_blank" rel="noopener noreferrer">Sonnet 5.5</a></th>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff sonnet</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview" target="_blank" rel="noopener noreferrer">Haiku 5.5</a></th>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff haiku</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-openai"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>OpenAI / GPT</span></th></tr>
-          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra" target="_blank" rel="noopener noreferrer">GPT-6.2 Astra</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff astra</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol" target="_blank" rel="noopener noreferrer">GPT-6.2 Sol</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff sol</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra" target="_blank" rel="noopener noreferrer">GPT-6.1 Terra</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff terra</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6-luna" target="_blank" rel="noopener noreferrer">GPT-6 Luna</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff luna</span></span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-google"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Google / Gemini</span></th></tr>
-          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-carbon" target="_blank" rel="noopener noreferrer">Gemini 4 Carbon</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff carbon</span></span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-neon" target="_blank" rel="noopener noreferrer">Gemini 4 Neon</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff neon</span></span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-          <tr class="row g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen" target="_blank" rel="noopener noreferrer">Gemini 4 Hydrogen</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff hydrogen</span></span></td>
-            <td class="c secondary"><span class="markstack"><span class="datamark outline"></span><span class="visually-hidden">alternate harness</span><span class="marklabel"></span></span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-jetbrains"><th colspan="5" scope="rowgroup"><span class="glabel"><span class="gdot"></span>JetBrains / Junie</span></th></tr>
-          <tr class="row g-jetbrains"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite</a></th>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c unavailable"><span class="visually-hidden">unavailable</span></td>
-            <td class="c primary"><span class="markstack"><span class="datamark"></span><span class="visually-hidden">default harness</span><span class="marklabel">riff lite</span></span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2 class="divider-heading" id="effort-per-model">Effort per Model</h2>
-
-    <div class="datatable-wrap">
-      <table class="datatable effort">
-        <caption class="visually-hidden">The reasoning effort each riff targets, beside the vendor's default.</caption>
-        <thead>
-          <tr>
-            <th class="rowlabel-col" scope="col">Model</th>
-            <th scope="col">Vendor Default</th>
-            <th scope="col">Anvil Target</th>
-            <th scope="col">Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Change column: how the riff target compares to the vendor
-               default. = unchanged, NE arrow (&#10138;) raised, SE arrow
-               (&#10136;) lowered. -->
-          <tr class="group g-anthropic"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Anthropic / Claude</span></th></tr>
-          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/fable-5-2/overview" target="_blank" rel="noopener noreferrer">Fable 5.2</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
-          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview" target="_blank" rel="noopener noreferrer">Mythos 5.2</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
-          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/opus-5-5/overview" target="_blank" rel="noopener noreferrer">Opus 5.5</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
-          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview" target="_blank" rel="noopener noreferrer">Sonnet 5.5</a></th><td>medium</td><td>high</td><td><span class="visually-hidden">raised</span><span class="movemark up" aria-hidden="true">&#10138;</span></td></tr>
-          <tr class="g-anthropic"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview" target="_blank" rel="noopener noreferrer">Haiku 5.5</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-openai"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>OpenAI / GPT</span></th></tr>
-          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra" target="_blank" rel="noopener noreferrer">GPT-6.2 Astra</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol" target="_blank" rel="noopener noreferrer">GPT-6.2 Sol</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra" target="_blank" rel="noopener noreferrer">GPT-6.1 Terra</a></th><td>low</td><td>low</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-          <tr class="g-openai"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://developers.openai.com/api/docs/models/gpt-6-luna" target="_blank" rel="noopener noreferrer">GPT-6 Luna</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-google"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>Google / Gemini</span></th></tr>
-          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-carbon" target="_blank" rel="noopener noreferrer">Gemini 4 Carbon</a></th><td>medium</td><td>medium</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-neon" target="_blank" rel="noopener noreferrer">Gemini 4 Neon</a></th><td>high</td><td>high</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-          <tr class="g-google"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen" target="_blank" rel="noopener noreferrer">Gemini 4 Hydrogen</a></th><td>high</td><td>high</td><td><span class="visually-hidden">unchanged</span><span class="movemark eq" aria-hidden="true">=</span></td></tr>
-        </tbody>
-        <tbody>
-          <tr class="group g-jetbrains"><th colspan="4" scope="rowgroup"><span class="glabel"><span class="gdot"></span>JetBrains / Junie</span></th></tr>
-          <tr class="g-jetbrains"><th class="rowlabel" scope="row"><span class="rail" aria-hidden="true"></span><a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite</a></th><td colspan="3">no effort setting</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2 class="divider-heading" id="cost">Cost</h2>
-
-    <p class="lede">A tier is a combined monthly spend across one Claude plan and one ChatGPT plan. Two ladders climb the same seven tiers, one focused on Anthropic and the other on OpenAI. They are alternatives, not stages. A higher tier buys more usage of the same tools. What a free tier includes changes often, so check the vendor's plan page before you count on it. Pick the ladder focused on the model you reach for most, since the money buys depth in one vendor rather than savings. If you have no preference yet, either ladder's Apprentice tier is a fine place to start.</p>
+    <p class="lede">Many people lean on one vendor, Anthropic or OpenAI. Each ladder puts one of them first and climbs from free to all-in. To stay in one lane, follow that vendor's row. To mix and match, follow the full tiers, which add a plan from the other vendor as they climb. If you are still deciding, begin at Starter, where both are free. Free plans change often, so check the vendor's page before you count on one.</p>
 
     <fieldset class="tabgroup">
       <legend class="visually-hidden">Which vendor the ladder focuses on</legend>
@@ -227,7 +82,7 @@
 
     <div class="subhead">Add-ons <span class="note">(optional at any tier, not counted in the totals above)</span></div>
 
-    <p class="lede">You can reach for a tool without building around it. Two ladders, any number of add-ons. Gemini rides free on both of them, which is why Google sits here instead of climbing a third. JetBrains sits here too, since the IDEs are a choice and not every anvil runs them.</p>
+    <p class="lede">An add-on is a tool you pay for but do not build around. Google and JetBrains sit here, since not every anvil runs Gemini or a JetBrains IDE.</p>
 
     <div class="datatable-wrap">
       <table class="datatable numeric addons">
@@ -254,11 +109,11 @@
     <p class="flow-aside wide"><a class="plan-notes-link" href="#plan-notes">See plan notes.</a></p>
 
     <h2 class="divider-heading" id="urdas-anvil">Urda's Anvil</h2>
-    <p class="lede">Urda runs the <b>Anvil Professional</b> tier of the <span class="vendor-label g-anthropic">Anthropic Focused</span> ladder, plus the <span class="vendor-label g-jetbrains">JetBrains All Products Pack</span> add-on. <span class="vendor-label g-google">Google</span> sits on the Free tier. The Source column shows where each plan comes from.</p>
+    <p class="lede">Here is one balance in practice. Urda runs the <b>Anvil Professional</b> tier of the <span class="vendor-label g-anthropic">Anthropic Focused</span> ladder, plus the <span class="vendor-label g-jetbrains">JetBrains All Products Pack</span> add-on. <span class="vendor-label g-google">Google</span> sits on the Free tier.</p>
 
     <div class="datatable-wrap">
       <table class="datatable numeric picked">
-        <caption class="visually-hidden">The plan Urda runs today. One row per vendor. The Source column reads Anvil Professional for a plan from the Professional tier of the Anthropic Focused ladder. It reads Add-on for a chosen add-on. It reads None for a free tier. The last row gives the combined total.</caption>
+        <caption class="visually-hidden">The plans Urda runs. One row per vendor. The Source column reads Anvil Professional for a plan from the Professional tier of the Anthropic Focused ladder. It reads Add-on for a chosen add-on. It reads None for a free tier. The last row gives the combined total.</caption>
         <thead><tr><th class="rowlabel-col" scope="col">Vendor</th><th scope="col">Plan</th><th scope="col">Source</th><th scope="col">Monthly</th><th scope="col">Yearly</th></tr></thead>
         <tbody>
           <tr class="g-anthropic"><th class="rowlabel vendor-label" scope="row"><span class="rail" aria-hidden="true"></span>Anthropic</th><td>Claude Max</td><td>Anvil Professional</td><td>$100</td><td>$1,200</td></tr>
@@ -272,83 +127,15 @@
       </table>
     </div>
 
-    <h2 class="divider-heading" id="the-riff-bill-of-rights">The riff bill of rights</h2>
-    <p class="lede">What is a <code>riff</code>? A short shell command, named after a musical riff, a phrase you play again and again. A riff bakes in your model of choice and any additional arguments you want. You can have as many as you like; think of them as shortcuts you reach for often.</p>
-    <ul class="ulist">
-      <li>Each model is a subcommand of one <code>riff</code> command, such as <code>riff opus</code>.</li>
-      <li>Launches from your home directory or <code>/</code> are prevented and redirected into a sandbox (<code>~/sandbox</code>, created on first use).</li>
-      <li>Your original directory is restored when you are done.</li>
-      <li>The CLI runs in the foreground, and its exit code should return to the calling shell.</li>
-      <li>Tab completes the model name.</li>
-      <li>Extra arguments pass straight through to the CLI.</li>
-    </ul>
-
-    <div class="subhead">The smallest <code>riff</code>, two models</div>
-    <pre class="codeblock"><code class="language-bash"># riff opus, riff sonnet: one vendor, one effort, nothing else
-riff() { claude --model "${1}" --effort high "${@:2}"; }</code></pre>
-
-    <div class="subhead">A more advanced <code>riff</code> setup in <code>bash</code> 4+</div>
-    <pre class="codeblock"><code class="language-bash"># riff &lt;model&gt; [args...]: one launcher, one model per subcommand
-riff() {
-  # the shared engine every model calls: run the CLI (blocking), then
-  # restore your working directory when the CLI exits, via a trap
-  _riff_shell() {
-    local bin="${1}" origin="${PWD}" sandbox="${AI_SHELL_SANDBOX:-${HOME}/sandbox}"; shift
-    # never turn an agent loose in your home dir (ssh keys, dotfiles, creds) or at /; sandbox it
-    # defaults to ~/sandbox, created on first use; override with AI_SHELL_SANDBOX
-    if [[ "${PWD}" == "${HOME}" || "${PWD}" == "/" ]]; then
-      mkdir -p "${sandbox}" || return
-      cd "${sandbox}" || return
-    fi
-
-    # ~~~~~ make it yours here: customizations, tab title, color, whatever ~~~~~
-
-    trap 'trap - RETURN; cd "${origin}"' RETURN  # back to where you started when the CLI exits
-    "${bin}" "${@}"                              # keep last so a Ctrl-C still runs the cleanup
-  }
-
-  # each model is just a thin declaration: a client, a model, and any flags you want
-  # defining a _riff_cmd_* function is all it takes to register it
-  _riff_cmd_fable()  { _riff_shell claude --model fable  --effort high  "${@}"; }
-  _riff_cmd_opus()   { _riff_shell claude --model opus   --effort high  "${@}"; }
-  _riff_cmd_sonnet() { _riff_shell claude --model sonnet --effort high  "${@}"; }
-  _riff_cmd_astra()  { _riff_shell codex  --model gpt-6.2-astra --config "model_reasoning_effort='low'"  "${@}"; }
-  _riff_cmd_sol()    { _riff_shell codex  --model gpt-6.2-sol --config "model_reasoning_effort='low'"    "${@}"; }
-  _riff_cmd_terra()  { _riff_shell codex  --model gpt-6.1-terra --config "model_reasoning_effort='low'"  "${@}"; }
-  _riff_cmd_luna()   { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
-  _riff_cmd_lite()   { _riff_shell junie  --model junie-lite "${@}"; }
-
-  # Tab completion: bash sets COMP_LINE only when it calls riff as a completer
-  if [[ -n "${COMP_LINE:-}" ]]; then
-    COMPREPLY=()
-    [[ "${COMP_CWORD}" -eq 1 ]] || return 0  # complete the model name only
-    mapfile -t COMPREPLY &lt; &lt;(compgen -W "$(compgen -A function _riff_cmd_ | sed 's/^_riff_cmd_//')" -- "${COMP_WORDS[COMP_CWORD]}")
-    return 0
-  fi
-
-  # dispatch: riff opus -&gt; _riff_cmd_opus, with any extra args passed along
-  local cmd="${1:-}"
-  shift
-  if declare -F "_riff_cmd_${cmd}" &gt;/dev/null; then
-    "_riff_cmd_${cmd}" "${@}"
-  else
-    printf 'usage: riff &lt;model&gt; [args...] (press Tab to list models)\n' &gt;&amp;2
-    return 2
-  fi
-}
-complete -F riff riff</code></pre>
-
     <h2 class="divider-heading" id="references">References</h2>
 
     <h3 class="subhead" id="plan-notes">Plan Notes</h3>
     <div class="plan-notes">
       <div>
         <p class="flow-aside wide"><span class="vendor-label g-anthropic">*Anthropic Claude Pro</span> costs $20/month or $200/year. The tables use the annual rate, which saves $40.</p>
-        <p class="flow-aside wide" id="mythos-access"><span class="vendor-label g-anthropic">*Claude Mythos</span> requires Anthropic verification. See the <a href="https://support.claude.com/en/articles/14604842-cyber-verification-program" target="_blank" rel="noopener noreferrer">Cyber Verification Program</a>.</p>
       </div>
       <div>
         <p class="flow-aside wide"><span class="vendor-label g-openai">*OpenAI ChatGPT Pro 500</span> costs $500/month and falls outside these tiers.</p>
-        <p class="flow-aside wide" id="daybreak-access"><span class="vendor-label g-openai">*OpenAI Daybreak</span> reduces cyber refusals for verified users. Some models need Daybreak Red, which requires organization approval. See the <a href="https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview" target="_blank" rel="noopener noreferrer">Trusted Access for Cyber overview</a>.</p>
       </div>
       <div>
         <p class="flow-aside wide"><span class="vendor-label g-google">*Google AI Plus</span> costs $4.99/month or $49.99/year, rounded to $5 and $50.</p>
@@ -358,7 +145,6 @@ complete -F riff riff</code></pre>
       </div>
       <div>
         <p class="flow-aside wide" id="jetbrains-ai-credits"><span class="vendor-label g-jetbrains">*JetBrains All Products Pack</span> includes AI Pro with 10 AI Credits every 30 days for personal use. See <a href="https://www.jetbrains.com/help/ai-assistant/licensing-and-subscriptions.html" target="_blank" rel="noopener noreferrer">credit details</a>.</p>
-        <p class="flow-aside wide" id="junie-lite-model"><span class="vendor-label g-jetbrains">*Junie Lite</span> runs <code>GPT-6 Luna</code>. JetBrains can change the model without notice. The tier is a free baseline that is always available. See <a href="https://junie.jetbrains.com/docs/junie-lite.html" target="_blank" rel="noopener noreferrer">Junie Lite docs</a>.</p>
       </div>
     </div>
 
