@@ -100,8 +100,7 @@
 .datatable.pricing-sources { width: auto; min-width: 0; table-layout: auto; }
 .datatable.pricing-sources thead th.rowlabel-col { width: 120px; }
 .datatable.pricing-sources thead th { text-align: left; }
-.datatable.pricing-sources a,
-.flow-aside .plan-notes-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.datatable.pricing-sources a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---- picked plan table ----
    The "Urda's Anvil" table: one row per vendor, with a Source column that

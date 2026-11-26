@@ -749,6 +749,8 @@
   /* small muted footnote under a table or code block, e.g. an asterisked caveat */
   .flow-aside.wide { max-width: none; }
   .flow-aside { max-width: 40rem; margin: 2px 0 0; font-size: 12.8px; line-height: 1.35; color: var(--muted); }
+  /* link from under a table to the notes section for that table */
+  .flow-aside .notes-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
   /* ---- Page rail ----
      The sticky column needs align-items: start so it can move inside the grid.
