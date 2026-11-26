@@ -13,25 +13,23 @@ The site uses static HTML without a build step.
 GitHub Pages publishes `site/` on a push to `master`.
 
 Pages use root-relative paths, so they require HTTP and do not open through `file://`.
-Raw document disclosures require HTTP fetch support and retain direct file links as a fallback.
 
 ## Core assets
 
 Consumers can copy these assets without edits to their implementations.
 Load only the optional scripts that a page needs.
 
-| Asset under `site/res/` | Contract |
-| --- | --- |
-| `css/anvil-core.css` | Shared tokens, layout, typography, and components |
-| `js/anvil-anchors.js` | Permalinks for `main h2[id]` and `main h3[id]` |
-| `js/anvil-pagerail.js` | Authored or automatic outlines, with scroll tracking |
-| `js/anvil-content.js` | Lazy plain-text disclosure content |
-| `js/prism.js` | Vendored highlighting and copy controls |
-| `js/anvil-copy.js` | Copy button for `pre.codeblock` on pages without Prism |
-| `js/anvil-analytics.js` | Optional analytics for anvil.urda.com |
+| Asset under `site/res/` | Contract                                               |
+| ----------------------- | ------------------------------------------------------ |
+| `css/anvil-core.css`    | Shared tokens, layout, typography, and components      |
+| `js/anvil-anchors.js`   | Permalinks for `main h2[id]` and `main h3[id]`         |
+| `js/anvil-pagerail.js`  | Authored or automatic outlines, with scroll tracking   |
+| `js/anvil-content.js`   | Lazy plain-text disclosure content                     |
+| `js/prism.js`           | Vendored highlighting and copy controls                |
+| `js/anvil-copy.js`      | Copy button for `pre.codeblock` on pages without Prism |
+| `js/anvil-analytics.js` | Optional analytics for anvil.urda.com                  |
 
 The core CSS does not fetch fonts, images, or other stylesheets.
-Pages select their own image assets, metadata, and navigation destinations.
 The scripts use classic script tags, so they also work without a module server.
 Load them with `defer`, after any page renderer that creates their target elements.
 
@@ -42,26 +40,22 @@ Load them with `defer`, after any page renderer that creates their target elemen
 <script src="/res/js/anvil-pagerail.js" defer></script>
 ```
 
-Use root-relative paths from the site root.
 These scripts initialize the current document once.
 They do not observe later application mutations.
-Run a page renderer before them when it creates headings or outline content.
+
+Copy core assets from the same reviewed commit.
+Record that commit in the consumer repository's existing vendor documentation.
+Sync a script together with the stylesheet when the script uses new classes, such as `anvil-content.js` and `.disclosure`.
+Do not copy the site-specific catalog renderers or page riders as core assets.
 
 ## Ownership and cascade
 
 Reusable presentation belongs in `anvil-core.css`.
 Page stylesheets contain domain-specific accents, content widths, and exceptional spacing.
-The bookmarks page needs no separate stylesheet.
-The MCP rider only maps tool types and permissions to chip colors.
-The Rules rider defines its catalog columns, load semantics, and page spacing.
-The balancing page retains its pricing table layouts.
-The Models rider holds the coverage and effort table layouts.
-The styleguide rider contains demonstration furniture.
 
 Catalog data stays in the Bookmarks and MCP HTML files.
-Their adjacent scripts render the domain data.
+Their adjacent scripts render the domain data, so those catalogs require JavaScript.
 Core builds their outlines from the resulting headings.
-The pages no longer maintain separate outline data or builders.
 
 Navigation and footer markup remain static and consistent across pages.
 This preserves navigation without JavaScript and avoids a runtime template dependency.
@@ -70,7 +64,6 @@ Page titles, metadata, content, and relative paths remain page-owned.
 Tokens live in the unlayered `:root` rule.
 Components live in `@layer anvil`, after the reserved `vendor` layer.
 A page rider remains unlayered and overrides normal core declarations.
-This precedence does not describe declarations that use `!important`.
 
 Import third-party CSS into the vendor layer:
 
@@ -87,39 +80,16 @@ Keep that constraint when you modify these defaults.
 ## Tokens and components
 
 The `:root` rule is the canonical token list.
-It includes surfaces, text, the ember accent, status colors, vendor accents,
-font stacks, the corner radius, and `--pagerail-top` in pixels.
 Component accents such as `--chip`, `--mk`, and `--rail` have local fallbacks or draw nothing when unset.
 They are inputs to components, rather than global theme tokens.
 
 The [styleguide](site/styleguide/index.html) demonstrates the shared components.
-It includes navigation, cards, tables, tabs, code, disclosures, bookmark groups,
-metadata, chips, outlines, and footer elements.
-It supports visual inspection but does not prove compatibility by itself.
-
-Common component contracts:
-
-- `.sl-green`, `.sl-yellow`, `.sl-red`, `.sl-cyan`, `.sl-blue`, `.sl-gray`, and `.sl-white` set text colors from the corresponding status tokens.
-  Page riders can override these utilities for site-specific surfaces, such as light gallery cards.
-- `.chip` derives its text, border, and fill from `--chip`.
-  `.caps` adds uppercase chip typography.
-- `.g-anthropic`, `.g-openai`, `.g-google`, and `.g-jetbrains` supply vendor accents.
-  `.vendor-label` uses the inherited accent for text.
-- Table rows inherit `--mk` for their marks and borders.
-  A `.rowlabel` contains a decorative `.rail` span.
-  Existing inline rail backgrounds remain supported.
-- `.meta-row`, `.card-meta`, and `.code-label` provide shared metadata styles.
-- `.table-scroll` supplies plain horizontal overflow.
-  `.datatable-wrap` adds the data table frame.
-  Give a scroll region an accessible label and `tabindex="0"` when needed.
-- `.bookmark-groups` contains `.bm-vendor` headings and `.bm-group` sections.
-  Each `.bm-row` link contains `.bm-name`, `.bm-leader`, and `.bm-url` spans.
+Give a scroll region an accessible label and `tabindex="0"` when needed.
 
 ## Page outlines
 
 An authored `.pagerail` can contain ordinary fragment links.
 `anvil-pagerail.js` tracks valid targets and maintains one current entry per rail.
-It supports multiple rails and fragment navigation.
 
 For automatic entries, place the rail and `.railed` content inside `.withpagerail`:
 
@@ -138,12 +108,10 @@ For automatic entries, place the rail and `.railed` content inside `.withpagerai
 
 Automatic rails preserve the authored top entry and derive other entries from `h2[id]` and `h3[id]`.
 Each rail link requires an existing target on the page, such as `id="top"` for the top entry.
-The script ignores a link that has no target.
 A child heading becomes an indented entry.
 Permalink symbols and chips do not enter the labels.
 A heading can supply `data-rail-label`, `data-rail-ruled`, or `data-rail-dotted`.
 Dotted entries use the heading's inherited `--rail` accent.
-Without JavaScript, the headings and authored links remain usable.
 
 ## Code and disclosures
 
@@ -158,12 +126,7 @@ Core supplies the token theme and toolbar styles.
 
 Use `language-none` for plain text.
 Add `.compact` to place the toolbar beside a short code block.
-Standard blocks reserve space above their text for the toolbar.
 Set `data-toolbar-order="copy-to-clipboard"` when no language label is needed.
-Prism's `data-prismjs-copy` attributes customize the copy messages.
-Use `data-prismjs-copy-error="Copy manually"` on the body for a neutral fallback label.
-The plugin selects the code if both clipboard methods fail.
-Without JavaScript, code remains readable.
 
 Load `anvil-content.js` for a disclosure that fetches its source on first open:
 
@@ -174,11 +137,7 @@ Load `anvil-content.js` for a disclosure that fetches its source on first open:
 </details>
 ```
 
-The loader preserves the source text and line breaks.
-It treats text as text, rather than HTML, and tints lines that start with `#`.
-It attaches the optional Prism toolbar after a successful fetch.
 A failed fetch retains the fallback link.
-Closing and reopening the disclosure retries the fetch.
 
 Keep Prism grammars and plugins at the same version when you update the bundle.
 Add a styleguide sample for each new grammar.
@@ -195,35 +154,6 @@ A page that loads the script sends a beacon:
 Omit the script when analytics is unwanted.
 The script skips `file://` pages and avoids duplicate beacon elements.
 
-## Consumer migration
-
-Copy core assets from the same reviewed commit.
-Record that commit in the consumer repository's existing vendor documentation.
-Sync a script together with the stylesheet when the script uses new classes, such as `anvil-content.js` and `.disclosure`.
-A direct link to the deployed stylesheet remains possible, but it changes whenever this site deploys.
-A copied revision gives consumers a controlled update point.
-
-This revision changes these contracts:
-
-- Generic links in `.wrap` receive the core link style, including table and list links.
-- Standard Prism blocks reserve toolbar space above the code.
-- Generic section headings use low-specificity defaults, so component headings retain their own styles.
-- Vendor classes supply shared accents. Existing inline accent declarations still work.
-- The new disclosure module requires its script and the `.disclosure` class.
-- Core scripts initialize when they execute, if the document has finished its parse.
-  They no longer wait for `DOMContentLoaded`, so a later renderer gets no anchors, rail, or link rewrite.
-- `anvil-pagerail.js` initializes each `.pagerail` on the page and ignores a link that has no target.
-- The rail divider follows the entry that contains `.totop`, not the first entry.
-- A group `.gdot` and `.glabel` use `--mk`. A dot without a color is now muted, not invisible.
-- A merged row label with `rowspan` stays highlighted while any row of its group has hover.
-- An `h3` in a `.section` and a `.chip` in an `h2` receive default styles.
-- Core now defines `.disclosure`, `.meta-row`, `.card-meta`, `.code-label`, `.movemark`,
-  `.vendor-label`, `.table-scroll`, `.bm-*`, and `.g-*`. Rename a consumer class that collides.
-
-Consumers can retain authored rails, existing asset paths, and existing component markup.
-They can adopt the new components when their page riders duplicate those styles.
-Do not copy the site-specific catalog renderers or page riders as core assets.
-
 ## Copy
 
 These rules keep a page readable for someone who has not seen the anvil before.
@@ -231,12 +161,6 @@ These rules keep a page readable for someone who has not seen the anvil before.
 - The first sentence of a page says what the page lists. Voice comes after.
 - The anvil metaphor lives in titles and the footer quote, not in a lede or a meta description. A lede may explain the page title.
 - A note never restates a value the reader can already see beside it.
-
-## Audit findings
-
-Bookmarks and the MCP catalog still require JavaScript to render their data.
-Their navigation and footer remain static.
-Supporting those catalogs without JavaScript would require authored HTML or a generation step.
 
 ## Verification
 
