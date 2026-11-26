@@ -3,7 +3,7 @@
    tables, tabs, code, disclosures, chips, bookmarks, page rail, and footer.
    Tokens are unlayered. Components use @layer anvil. Page riders are
    unlayered and override normal core declarations. Import vendor CSS into
-   @layer vendor. See README.md for assets, markup, and consumer migration. */
+   @layer vendor. See docs/design-system.md for assets and markup. */
 
 /* ---- Design tokens ---- */
 /* Left unlayered on purpose: custom properties here beat same-named
@@ -43,7 +43,7 @@
 /* declared once, in priority order: a later layer wins over an earlier one
    regardless of specificity, and both lose to unlayered CSS (a page's rider,
    deliberately left unlayered). vendor is empty until something
-   imports into it (see README); it exists purely to sit below anvil in
+   imports into it (see docs/design-system.md); it exists purely to sit below anvil in
    advance. */
 @layer vendor, anvil;
 
