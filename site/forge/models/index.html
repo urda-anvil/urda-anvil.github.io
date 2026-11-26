@@ -228,14 +228,22 @@ riff() {
 
   # each model is just a thin declaration: a client, a model, and any flags you want
   # defining a _riff_cmd_* function is all it takes to register it
-  _riff_cmd_fable()  { _riff_shell claude --model fable  --effort high  "${@}"; }
-  _riff_cmd_opus()   { _riff_shell claude --model opus   --effort high  "${@}"; }
-  _riff_cmd_sonnet() { _riff_shell claude --model sonnet --effort high  "${@}"; }
-  _riff_cmd_astra()  { _riff_shell codex  --model gpt-6.2-astra --config "model_reasoning_effort='low'"  "${@}"; }
-  _riff_cmd_sol()    { _riff_shell codex  --model gpt-6.2-sol --config "model_reasoning_effort='low'"    "${@}"; }
-  _riff_cmd_terra()  { _riff_shell codex  --model gpt-6.1-terra --config "model_reasoning_effort='low'"  "${@}"; }
-  _riff_cmd_luna()   { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
-  _riff_cmd_lite()   { _riff_shell junie  --model junie-lite "${@}"; }
+  # Claude
+  _riff_cmd_fable()    { _riff_shell claude --model fable  --effort high  "${@}"; }
+  _riff_cmd_opus()     { _riff_shell claude --model opus   --effort high  "${@}"; }
+  _riff_cmd_sonnet()   { _riff_shell claude --model sonnet --effort high  "${@}"; }
+  _riff_cmd_haiku()    { _riff_shell claude --model haiku  --effort medium "${@}"; }
+  # Codex
+  _riff_cmd_astra()    { _riff_shell codex  --model gpt-6.2-astra --config "model_reasoning_effort='low'"  "${@}"; }
+  _riff_cmd_sol()      { _riff_shell codex  --model gpt-6.2-sol --config "model_reasoning_effort='low'"    "${@}"; }
+  _riff_cmd_terra()    { _riff_shell codex  --model gpt-6.1-terra --config "model_reasoning_effort='low'"  "${@}"; }
+  _riff_cmd_luna()     { _riff_shell codex  --model gpt-6-luna  --config "model_reasoning_effort='medium'" "${@}"; }
+  # Antigravity
+  _riff_cmd_carbon()   { _riff_shell agy    --model gemini-4-carbon-medium "${@}"; }
+  _riff_cmd_neon()     { _riff_shell agy    --model gemini-4-neon-high     "${@}"; }
+  _riff_cmd_hydrogen() { _riff_shell agy    --model gemini-4-hydrogen-high "${@}"; }
+  # Junie
+  _riff_cmd_lite()     { _riff_shell junie  --model junie-lite "${@}"; }
 
   # Tab completion: bash sets COMP_LINE only when it calls riff as a completer
   if [[ -n "${COMP_LINE:-}" ]]; then
