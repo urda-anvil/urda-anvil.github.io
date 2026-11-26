@@ -33,7 +33,7 @@
      across pages. A colored mark must also have a text label. */
   --rail-anthropic: var(--ember);
   --rail-openai: #3987e5;
-  --rail-google: #008300;
+  --rail-google: #00a000;
   --rail-jetbrains: #d55181;
 
   --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, 'Liberation Mono', monospace;

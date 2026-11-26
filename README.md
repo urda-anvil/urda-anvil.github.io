@@ -234,10 +234,6 @@ These rules keep a page readable for someone who has not seen the anvil before.
 
 ## Audit findings
 
-The existing Google accent, `#008300`, has 3.67:1 contrast against the panel color, `#11161f`.
-Small text uses this accent in vendor labels and group headings.
-The palette remains unchanged, but these uses need a text-contrast review.
-
 Bookmarks and the MCP catalog still require JavaScript to render their data.
 Their navigation and footer remain static.
 Supporting those catalogs without JavaScript would require authored HTML or a generation step.
