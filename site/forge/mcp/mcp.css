@@ -5,3 +5,7 @@
 .permission-chip.allow { --chip: var(--sl-green); }
 .permission-chip.ask { --chip: var(--sl-yellow); }
 .permission-chip.deny { --chip: var(--sl-red); }
+/* A folded tool table uses the disclosure frame instead of a second border. */
+.disclosure > .kv { margin: 0; border: 0; border-radius: 0; }
+/* A product under the "Not in use" heading is one level below a category. */
+.server h4 { margin: 22px 0 4px; font-size: 13px; color: var(--ink); }

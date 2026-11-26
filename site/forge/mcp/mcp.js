@@ -94,6 +94,38 @@
     return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   }
 
+  // Append one category: its heading, its optional note, and its tool table.
+  // A folded category puts the table inside a closed disclosure.
+  function appendCategory(sec, server, cat, headingTag, folded) {
+    const heading = document.createElement(headingTag);
+    heading.id = server.id + "-" + slug(cat.heading);
+    heading.textContent = cat.heading;
+    sec.appendChild(heading);
+
+    if (cat.note) {
+      const note = document.createElement("p");
+      note.textContent = cat.note;
+      sec.appendChild(note);
+    }
+
+    const table = buildToolTable(
+      cat.tools,
+      server.name + " " + cat.heading + " tools, with the type and permission each carries.",
+    );
+    if (!folded) {
+      sec.appendChild(table);
+      return;
+    }
+
+    const details = document.createElement("details");
+    details.className = "disclosure";
+    const summary = document.createElement("summary");
+    summary.textContent = "Show " + cat.tools.length + " denied tools";
+    details.appendChild(summary);
+    details.appendChild(table);
+    sec.appendChild(details);
+  }
+
   // Detail: one section per server, each with its prefix, reference, and tool table.
   // Ids sit on the headings rather than the sections so both the rail and
   // anvil-anchors.js have something to point at.
@@ -127,24 +159,25 @@
     }
 
     if (server.categories) {
-      for (const cat of server.categories) {
+      // A category where every tool is denied is a product that is not in use.
+      const isUnused = (cat) => cat.tools.every((tool) => tool.permission === "deny");
+      const inUse = server.categories.filter((cat) => !isUnused(cat));
+      const notInUse = server.categories.filter(isUnused);
+
+      for (const cat of inUse) {
+        appendCategory(sec, server, cat, "h3", false);
+      }
+
+      // Products that are not in use sit under one heading, so the rail shows
+      // one entry for all of them. Each of their tables is folded.
+      if (notInUse.length > 0) {
         const h3 = document.createElement("h3");
-        h3.id = server.id + "-" + slug(cat.heading);
-        h3.textContent = cat.heading;
+        h3.id = server.id + "-not-in-use";
+        h3.textContent = "Not in use";
         sec.appendChild(h3);
-
-        if (cat.note) {
-          const note = document.createElement("p");
-          note.textContent = cat.note;
-          sec.appendChild(note);
+        for (const cat of notInUse) {
+          appendCategory(sec, server, cat, "h4", true);
         }
-
-        sec.appendChild(
-          buildToolTable(
-            cat.tools,
-            server.name + " " + cat.heading + " tools, with the type and permission each carries.",
-          ),
-        );
       }
     } else {
       sec.appendChild(
